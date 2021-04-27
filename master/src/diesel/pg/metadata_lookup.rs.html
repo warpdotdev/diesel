@@ -172,6 +172,7 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
+<span id="172">172</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_parens</span>)]</span> <span class="comment">// FIXME: Remove this attribute once false positive is resolved.</span>
 
@@ -247,7 +248,8 @@
         }
         <span class="prelude-val">Some</span>(<span class="ident">schema</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">schema</span>],
         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="ident">search_path</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">dsl</span>::<span class="ident">sql</span>(<span class="string">&quot;SHOW search_path&quot;</span>).<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
+            <span class="ident">search_path</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">dsl</span>::<span class="ident">sql</span>::<span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">sql_types</span>::<span class="ident">Text</span><span class="op">&gt;</span>(<span class="string">&quot;SHOW search_path&quot;</span>)
+                .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
 
             <span class="ident">search_path</span>
                 .<span class="ident">split</span>(<span class="string">&#39;,&#39;</span>)

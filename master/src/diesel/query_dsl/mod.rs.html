@@ -1420,6 +1420,8 @@
 <span id="1417">1417</span>
 <span id="1418">1418</span>
 <span id="1419">1419</span>
+<span id="1420">1420</span>
+<span id="1421">1421</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Traits that construct SELECT statements</span>
 <span class="doccomment">//!</span>
@@ -1470,6 +1472,8 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">belonging_to_dsl</span>::<span class="ident">BelongingToDsl</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">combine_dsl</span>::<span class="ident">CombineDsl</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">join_dsl</span>::{<span class="ident">InternalJoinDsl</span>, <span class="ident">JoinOnDsl</span>, <span class="ident">JoinWithImplicitOnClause</span>};
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">load_dsl</span>::<span class="ident">CompatibleType</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">load_dsl</span>::<span class="ident">LoadQuery</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">save_changes_dsl</span>::{<span class="ident">SaveChangesDsl</span>, <span class="ident">UpdateAndFetchResults</span>};

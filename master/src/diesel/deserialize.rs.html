@@ -443,6 +443,19 @@
 <span id="440">440</span>
 <span id="441">441</span>
 <span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Types and traits related to deserializing values from the database</span>
 
@@ -450,8 +463,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::{<span class="self">self</span>, <span class="ident">Backend</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">expression</span>::<span class="ident">select_by</span>::<span class="ident">SelectBy</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">row</span>::{<span class="ident">NamedRow</span>, <span class="ident">Row</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sql_types</span>::{<span class="ident">SingleValue</span>, <span class="ident">SqlType</span>, <span class="ident">Untyped</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Selectable</span>;
 
 <span class="doccomment">/// A specialized result type representing the result of deserializing</span>
 <span class="doccomment">/// a value from the database.</span>
@@ -831,10 +846,21 @@
     <span class="kw">fn</span> <span class="ident">build_from_row</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">Row</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 }
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SqlTypeOrSelectable</span> {}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span> <span class="ident">SqlTypeOrSelectable</span> <span class="kw">for</span> <span class="ident">ST</span> <span class="kw">where</span> <span class="ident">ST</span>: <span class="ident">SqlType</span> <span class="op">+</span> <span class="ident">SingleValue</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">SqlTypeOrSelectable</span> <span class="kw">for</span> <span class="ident">SelectBy</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">DB</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">U</span>: <span class="ident">Selectable</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span>,
+{
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">FromSqlRow</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Queryable</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span>,
-    <span class="ident">ST</span>: <span class="ident">SqlType</span>,
+    <span class="ident">ST</span>: <span class="ident">SqlTypeOrSelectable</span>,
     <span class="ident">DB</span>: <span class="ident">Backend</span>,
     <span class="ident">T</span>::<span class="ident">Row</span>: <span class="ident">FromStaticSqlRow</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span>,
 {
@@ -880,7 +906,7 @@ where
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">StaticallySizedRow</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
-    <span class="ident">ST</span>: <span class="ident">SqlType</span> <span class="op">+</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">TupleSize</span>,
+    <span class="ident">ST</span>: <span class="ident">SqlTypeOrSelectable</span> <span class="op">+</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">TupleSize</span>,
     <span class="ident">T</span>: <span class="ident">Queryable</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">DB</span><span class="op">&gt;</span>,
     <span class="ident">DB</span>: <span class="ident">Backend</span>,
 {
