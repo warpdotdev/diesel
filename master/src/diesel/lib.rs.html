@@ -435,6 +435,9 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Diesel</span>
 <span class="doccomment">//!</span>
@@ -743,6 +746,9 @@
 
     <span class="doccomment">/// Represents the return type of `.group_by(expr)`</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GroupBy</span><span class="op">&lt;</span><span class="ident">Source</span>, <span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Source</span> <span class="kw">as</span> <span class="ident">GroupByDsl</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span>;
+
+    <span class="doccomment">/// Represents the return type of `.having(predicate)`</span>
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Having</span><span class="op">&lt;</span><span class="ident">Source</span>, <span class="ident">Predicate</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Source</span> <span class="kw">as</span> <span class="ident">HavingDsl</span><span class="op">&lt;</span><span class="ident">Predicate</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span>;
 
     <span class="doccomment">/// Represents the return type of `.union(rhs)`</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Union</span><span class="op">&lt;</span><span class="ident">Source</span>, <span class="ident">Rhs</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">CombinationClause</span><span class="op">&lt;</span>

@@ -1422,6 +1422,38 @@
 <span id="1419">1419</span>
 <span id="1420">1420</span>
 <span id="1421">1421</span>
+<span id="1422">1422</span>
+<span id="1423">1423</span>
+<span id="1424">1424</span>
+<span id="1425">1425</span>
+<span id="1426">1426</span>
+<span id="1427">1427</span>
+<span id="1428">1428</span>
+<span id="1429">1429</span>
+<span id="1430">1430</span>
+<span id="1431">1431</span>
+<span id="1432">1432</span>
+<span id="1433">1433</span>
+<span id="1434">1434</span>
+<span id="1435">1435</span>
+<span id="1436">1436</span>
+<span id="1437">1437</span>
+<span id="1438">1438</span>
+<span id="1439">1439</span>
+<span id="1440">1440</span>
+<span id="1441">1441</span>
+<span id="1442">1442</span>
+<span id="1443">1443</span>
+<span id="1444">1444</span>
+<span id="1445">1445</span>
+<span id="1446">1446</span>
+<span id="1447">1447</span>
+<span id="1448">1448</span>
+<span id="1449">1449</span>
+<span id="1450">1450</span>
+<span id="1451">1451</span>
+<span id="1452">1452</span>
+<span id="1453">1453</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Traits that construct SELECT statements</span>
 <span class="doccomment">//!</span>
@@ -1453,6 +1485,7 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">filter_dsl</span>;
 <span class="kw">mod</span> <span class="ident">group_by_dsl</span>;
+<span class="kw">mod</span> <span class="ident">having_dsl</span>;
 <span class="kw">mod</span> <span class="ident">join_dsl</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">limit_dsl</span>;
@@ -1490,6 +1523,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">filter_dsl</span>::<span class="kw-2">*</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">group_by_dsl</span>::<span class="ident">GroupByDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">having_dsl</span>::<span class="ident">HavingDsl</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">limit_dsl</span>::<span class="ident">LimitDsl</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">load_dsl</span>::{<span class="ident">ExecuteDsl</span>, <span class="ident">LoadQuery</span>};
     <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">locking_dsl</span>::{<span class="ident">LockingDsl</span>, <span class="ident">ModifyLockDsl</span>};
@@ -2308,6 +2342,36 @@
         <span class="self">Self</span>: <span class="ident">methods</span>::<span class="ident">GroupByDsl</span><span class="op">&lt;</span><span class="ident">GB</span><span class="op">&gt;</span>,
     {
         <span class="ident">methods</span>::<span class="ident">GroupByDsl</span>::<span class="ident">group_by</span>(<span class="self">self</span>, <span class="ident">group_by</span>)
+    }
+
+    <span class="doccomment">/// Adds to the `HAVING` clause of a query.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # include!(&quot;../doctest_setup.rs&quot;);</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     run_test();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
+    <span class="doccomment">/// #     use crate::schema::{users, posts};</span>
+    <span class="doccomment">/// #     use diesel::dsl::count;</span>
+    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// let data = users::table.inner_join(posts::table)</span>
+    <span class="doccomment">///     .group_by(users::id)</span>
+    <span class="doccomment">///     .having(count(posts::id).gt(1))</span>
+    <span class="doccomment">///     .select((users::name, count(posts::id)))</span>
+    <span class="doccomment">///     .load::&lt;(String, i64)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(vec![(String::from(&quot;Sean&quot;), 2)], data);</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">having</span><span class="op">&lt;</span><span class="ident">Predicate</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">predicate</span>: <span class="ident">Predicate</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Having</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Predicate</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="self">Self</span>: <span class="ident">methods</span>::<span class="ident">HavingDsl</span><span class="op">&lt;</span><span class="ident">Predicate</span><span class="op">&gt;</span>,
+    {
+        <span class="ident">methods</span>::<span class="ident">HavingDsl</span>::<span class="ident">having</span>(<span class="self">self</span>, <span class="ident">predicate</span>)
     }
 
     <span class="doccomment">/// Adds `FOR UPDATE` to the end of the select statement.</span>
