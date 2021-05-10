@@ -126,6 +126,28 @@
 <span id="123">123</span>
 <span id="124">124</span>
 <span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="self">self</span>, <span class="ident">Ident</span>, <span class="ident">Span</span>};
 <span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
@@ -142,13 +164,12 @@
     <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
     <span class="kw">pub</span> <span class="ident">sql_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">MetaItem</span>,
-    <span class="ident">column_name_from_attribute</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Ident</span><span class="op">&gt;</span>,
+    <span class="ident">column_name_from_attribute</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MetaItem</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Field</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_struct_field</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Field</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">column_name_from_attribute</span> <span class="op">=</span>
-            <span class="ident">MetaItem</span>::<span class="ident">with_name</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>, <span class="string">&quot;column_name&quot;</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">expect_ident_value</span>());
+        <span class="kw">let</span> <span class="ident">column_name_from_attribute</span> <span class="op">=</span> <span class="ident">MetaItem</span>::<span class="ident">with_name</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>, <span class="string">&quot;column_name&quot;</span>);
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">field</span>.<span class="ident">ident</span>.<span class="ident">clone</span>() {
             <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// https://github.com/rust-lang/rust/issues/47983#issuecomment-362817105</span>
@@ -178,9 +199,10 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Ident</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_name_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Ident</span> {
         <span class="self">self</span>.<span class="ident">column_name_from_attribute</span>
-            .<span class="ident">clone</span>()
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">expect_ident_value</span>())
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">name</span> {
                 <span class="ident">FieldName</span>::<span class="ident">Named</span>(<span class="kw-2">ref</span> <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">x</span>.<span class="ident">clone</span>(),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -190,6 +212,28 @@
                         )
                         .<span class="ident">emit</span>();
                     <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;unknown_column&quot;</span>, <span class="self">self</span>.<span class="ident">span</span>)
+                }
+            })
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">column_name_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+        <span class="self">self</span>.<span class="ident">column_name_from_attribute</span>
+            .<span class="ident">as_ref</span>()
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> {
+                <span class="ident">m</span>.<span class="ident">str_value</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+                    <span class="ident">e</span>.<span class="ident">emit</span>();
+                    <span class="ident">m</span>.<span class="ident">name</span>().<span class="ident">segments</span>.<span class="ident">first</span>().<span class="ident">unwrap</span>().<span class="ident">ident</span>.<span class="ident">to_string</span>()
+                })
+            })
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">name</span> {
+                <span class="ident">FieldName</span>::<span class="ident">Named</span>(<span class="kw-2">ref</span> <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">x</span>.<span class="ident">to_string</span>(),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="self">self</span>.<span class="ident">span</span>
+                        .<span class="ident">error</span>(
+                            <span class="string">&quot;All fields of tuple structs must be annotated with `#[column_name]`&quot;</span>,
+                        )
+                        .<span class="ident">emit</span>();
+                    <span class="string">&quot;unknown_column&quot;</span>.<span class="ident">to_string</span>()
                 }
             })
     }

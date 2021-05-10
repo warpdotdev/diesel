@@ -314,7 +314,7 @@
 
 <span class="kw">fn</span> <span class="ident">field_ty_serialize_as</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span>, <span class="ident">table_name</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Path</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Type</span> {
     <span class="kw">let</span> <span class="ident">inner_ty</span> <span class="op">=</span> <span class="ident">inner_of_option_ty</span>(<span class="kw-2">&amp;</span><span class="ident">ty</span>);
-    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
 
     <span class="macro">parse_quote</span><span class="macro">!</span>(
         <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">diesel</span>::<span class="ident">dsl</span>::<span class="ident">Eq</span><span class="op">&lt;</span>
@@ -326,7 +326,7 @@
 
 <span class="kw">fn</span> <span class="ident">field_expr_serialize_as</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span>, <span class="ident">table_name</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Path</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Expr</span> {
     <span class="kw">let</span> <span class="ident">field_access</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">name</span>.<span class="ident">access</span>();
-    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
     <span class="kw">let</span> <span class="ident">column</span>: <span class="ident">syn</span>::<span class="ident">Expr</span> <span class="op">=</span> <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">table_name</span>::#<span class="ident">column_name</span>);
 
     <span class="kw">if</span> <span class="ident">is_option_ty</span>(<span class="kw-2">&amp;</span><span class="ident">ty</span>) {
@@ -342,7 +342,7 @@
     <span class="ident">lifetime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Type</span> {
     <span class="kw">let</span> <span class="ident">inner_ty</span> <span class="op">=</span> <span class="ident">inner_of_option_ty</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span>);
-    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
 
     <span class="macro">parse_quote</span><span class="macro">!</span>(
         <span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">diesel</span>::<span class="ident">dsl</span>::<span class="ident">Eq</span><span class="op">&lt;</span>
@@ -358,7 +358,7 @@
     <span class="ident">lifetime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Expr</span> {
     <span class="kw">let</span> <span class="ident">field_access</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">name</span>.<span class="ident">access</span>();
-    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+    <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
     <span class="kw">let</span> <span class="ident">column</span>: <span class="ident">syn</span>::<span class="ident">Expr</span> <span class="op">=</span> <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">table_name</span>::#<span class="ident">column_name</span>);
     <span class="kw">if</span> <span class="ident">is_option_ty</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span>) {
         <span class="kw">if</span> <span class="ident">lifetime</span>.<span class="ident">is_some</span>() {

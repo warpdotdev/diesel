@@ -121,7 +121,7 @@
         <span class="prelude-val">Ok</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="op">&lt;</span>#<span class="ident">embed_ty</span> <span class="kw">as</span> <span class="ident">Selectable</span><span class="op">&lt;</span><span class="ident">__DB</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">SelectExpression</span>))
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="ident">table_name</span> <span class="op">=</span> <span class="ident">model</span>.<span class="ident">table_name</span>();
-        <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+        <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
         <span class="prelude-val">Ok</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">table_name</span>::#<span class="ident">column_name</span>))
     }
 }
@@ -132,7 +132,7 @@
         <span class="prelude-val">Ok</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="op">&lt;</span>#<span class="ident">embed_ty</span> <span class="kw">as</span> <span class="ident">Selectable</span><span class="op">&lt;</span><span class="ident">__DB</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">construct_selection</span>()))
     } <span class="kw">else</span> {
         <span class="kw">let</span> <span class="ident">table_name</span> <span class="op">=</span> <span class="ident">model</span>.<span class="ident">table_name</span>();
-        <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name</span>();
+        <span class="kw">let</span> <span class="ident">column_name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">column_name_ident</span>();
         <span class="prelude-val">Ok</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">table_name</span>::#<span class="ident">column_name</span>))
     }
 }
