@@ -13,6 +13,7 @@ generically to be included in prelude, but are often used when using Diesel.</p>
 <table><tr class="module-item"><td><a class="fn" href="fn.avg.html" title="diesel::dsl::avg fn">avg</a></td><td class="docblock-short"><p>Represents a SQL <code>AVG</code> function. This function can only take types which are
 Foldable.</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.count.html" title="diesel::dsl::count fn">count</a></td><td class="docblock-short"><p>Creates a SQL <code>COUNT</code> expression</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.count_distinct.html" title="diesel::dsl::count_distinct fn">count_distinct</a></td><td class="docblock-short"><p>Creates a SQL <code>COUNT(DISTINCT ...)</code> expression</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.count_star.html" title="diesel::dsl::count_star fn">count_star</a></td><td class="docblock-short"><p>Creates a SQL <code>COUNT(*)</code> expression</p>
 </td></tr><tr class="module-item"><td><a class="fn" href="fn.date.html" title="diesel::dsl::date fn">date</a></td><td class="docblock-short"><p>Represents the SQL <code>DATE</code> function. The argument should be a Timestamp
 expression, and the return value will be an expression of type Date.</p>
@@ -146,6 +147,7 @@ Which conveniently lets you omit the exact join condition.</p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.Update.html" title="diesel::dsl::Update type">Update</a></td><td class="docblock-short"><p>Represents the return type of <code>update(lhs).set(rhs)</code></p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.avg.html" title="diesel::dsl::avg type">avg</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.avg.html"><code>avg(expr)</code></a></p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.count.html" title="diesel::dsl::count type">count</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.count.html"><code>count(expr)</code></a></p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.count_distinct.html" title="diesel::dsl::count_distinct type">count_distinct</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.count_distinct.html"><code>count_distinct()</code></a></p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.count_star.html" title="diesel::dsl::count_star type">count_star</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.count_star.html"><code>count_star()</code></a></p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.date.html" title="diesel::dsl::date type">date</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.date.html"><code>date(expr)</code></a></p>
 </td></tr><tr class="module-item"><td><a class="type" href="type.exists.html" title="diesel::dsl::exists type">exists</a></td><td class="docblock-short"><p>The return type of <a href="../../diesel/dsl/fn.exists.html"><code>exists(expr)</code></a></p>
