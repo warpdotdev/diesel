@@ -84,15 +84,15 @@
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::insert_into;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     insert_into(users).values(name.eq(&quot;Ha%%0r&quot;))</span>
-<span class="doccomment">/// #         .execute(&amp;connection).unwrap();</span>
+<span class="doccomment">/// #         .execute(connection).unwrap();</span>
 <span class="doccomment">/// let users_with_percent = users.select(name)</span>
 <span class="doccomment">///     .filter(name.like(&quot;%😀%%&quot;).escape(&#39;😀&#39;))</span>
-<span class="doccomment">///     .load(&amp;connection);</span>
+<span class="doccomment">///     .load(connection);</span>
 <span class="doccomment">/// let users_without_percent = users.select(name)</span>
 <span class="doccomment">///     .filter(name.not_like(&quot;%a%%&quot;).escape(&#39;a&#39;))</span>
-<span class="doccomment">///     .load(&amp;connection);</span>
+<span class="doccomment">///     .load(connection);</span>
 <span class="doccomment">/// assert_eq!(Ok(vec![String::from(&quot;Ha%%0r&quot;)]), users_with_percent);</span>
 <span class="doccomment">/// assert_eq!(Ok(vec![String::from(&quot;Sean&quot;), String::from(&quot;Tess&quot;)]), users_without_percent);</span>
 <span class="doccomment">/// # }</span>

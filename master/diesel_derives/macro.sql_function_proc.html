@@ -118,14 +118,14 @@ are not supported on SQLite.</p>
 <span class="kw">use</span> <span class="ident">diesel</span>::<span class="ident">sql_types</span>::{<span class="ident">Integer</span>, <span class="ident">Double</span>};
 <span class="macro">sql_function</span><span class="macro">!</span>(<span class="kw">fn</span> <span class="ident">add_mul</span>(<span class="ident">x</span>: <span class="ident">Integer</span>, <span class="ident">y</span>: <span class="ident">Integer</span>, <span class="ident">z</span>: <span class="ident">Double</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Double</span>);
 
-<span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
 
-<span class="ident">add_mul</span>::<span class="ident">register_impl</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>, <span class="op">|</span><span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">y</span>: <span class="ident">i32</span>, <span class="ident">z</span>: <span class="ident">f64</span><span class="op">|</span> {
+<span class="ident">add_mul</span>::<span class="ident">register_impl</span>(<span class="ident">connection</span>, <span class="op">|</span><span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">y</span>: <span class="ident">i32</span>, <span class="ident">z</span>: <span class="ident">f64</span><span class="op">|</span> {
     (<span class="ident">x</span> <span class="op">+</span> <span class="ident">y</span>) <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="ident">z</span>
 })<span class="question-mark">?</span>;
 
 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">add_mul</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1.5</span>))
-    .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">4.5</span>, <span class="ident">result</span>);</pre></div>
 <h2 id="panics" class="section-header"><a href="#panics">Panics</a></h2>
 <p>If an implementation of the custom function panics and unwinding is enabled, the panic is
@@ -164,12 +164,12 @@ trait as a type parameter as shown in the examples below.</p>
 }
 
 <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> (::<span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>)<span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
 
-    <span class="ident">my_sum</span>::<span class="ident">register_impl</span>::<span class="op">&lt;</span><span class="ident">MySum</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    <span class="ident">my_sum</span>::<span class="ident">register_impl</span>::<span class="op">&lt;</span><span class="ident">MySum</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">total_score</span> <span class="op">=</span> <span class="ident">players</span>.<span class="ident">select</span>(<span class="ident">my_sum</span>(<span class="ident">score</span>))
-        .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+        .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The total score of all the players is: {}&quot;</span>, <span class="ident">total_score</span>);
 
@@ -202,12 +202,12 @@ trait as a type parameter as shown in the examples below.</p>
 }
 
 <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> (::<span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>)<span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SqliteConnection</span>::<span class="ident">establish</span>(<span class="string">&quot;:memory:&quot;</span>)<span class="question-mark">?</span>;
 
-    <span class="ident">range_max</span>::<span class="ident">register_impl</span>::<span class="op">&lt;</span><span class="ident">RangeMax</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    <span class="ident">range_max</span>::<span class="ident">register_impl</span>::<span class="op">&lt;</span><span class="ident">RangeMax</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">student_avgs</span>.<span class="ident">select</span>(<span class="ident">range_max</span>(<span class="ident">s1_avg</span>, <span class="ident">s2_avg</span>))
-        .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+        .<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">max_semeseter_avg</span>) <span class="op">=</span> <span class="ident">result</span> {
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;The largest semester average is: {}&quot;</span>, <span class="ident">max_semeseter_avg</span>);

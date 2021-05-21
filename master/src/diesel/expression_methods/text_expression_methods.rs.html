@@ -183,7 +183,7 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE users (</span>
     <span class="doccomment">/// #         id INTEGER PRIMARY KEY,</span>
     <span class="doccomment">/// #         name VARCHAR(255) NOT NULL,</span>
@@ -195,10 +195,10 @@
     <span class="doccomment">/// #             (id.eq(1), name.eq(&quot;Sean&quot;), hair_color.eq(Some(&quot;Green&quot;))),</span>
     <span class="doccomment">/// #             (id.eq(2), name.eq(&quot;Tess&quot;), hair_color.eq(None)),</span>
     <span class="doccomment">/// #         ])</span>
-    <span class="doccomment">/// #         .execute(&amp;connection)</span>
+    <span class="doccomment">/// #         .execute(connection)</span>
     <span class="doccomment">/// #         .unwrap();</span>
     <span class="doccomment">/// #</span>
-    <span class="doccomment">/// let names = users.select(name.concat(&quot; the Greatest&quot;)).load(&amp;connection);</span>
+    <span class="doccomment">/// let names = users.select(name.concat(&quot; the Greatest&quot;)).load(connection);</span>
     <span class="doccomment">/// let expected_names = vec![</span>
     <span class="doccomment">///     &quot;Sean the Greatest&quot;.to_string(),</span>
     <span class="doccomment">///     &quot;Tess the Greatest&quot;.to_string(),</span>
@@ -206,7 +206,7 @@
     <span class="doccomment">/// assert_eq!(Ok(expected_names), names);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // If the value is nullable, the output will be nullable</span>
-    <span class="doccomment">/// let names = users.select(hair_color.concat(&quot;ish&quot;)).load(&amp;connection);</span>
+    <span class="doccomment">/// let names = users.select(hair_color.concat(&quot;ish&quot;)).load(connection);</span>
     <span class="doccomment">/// let expected_names = vec![</span>
     <span class="doccomment">///     Some(&quot;Greenish&quot;.to_string()),</span>
     <span class="doccomment">///     None,</span>
@@ -240,12 +240,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let starts_with_s = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(name.like(&quot;S%&quot;))</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;], starts_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -276,12 +276,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let doesnt_start_with_s = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(name.not_like(&quot;S%&quot;))</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Tess&quot;], doesnt_start_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>

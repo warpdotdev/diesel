@@ -545,13 +545,13 @@
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn result_main() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">//! #</span>
-<span class="doccomment">//! # let conn = connection_setup::establish_connection();</span>
+<span class="doccomment">//! # let conn = &amp;mut connection_setup::establish_connection();</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # // Create some example data by using typical SQL statements.</span>
-<span class="doccomment">//! # connection_setup::create_user_table(&amp;conn);</span>
+<span class="doccomment">//! # connection_setup::create_user_table(conn);</span>
 <span class="doccomment">//! # // Create some example data by using typical SQL statements.</span>
-<span class="doccomment">//! # connection_setup::create_user_table(&amp;conn);</span>
-<span class="doccomment">//! # sql_query(&quot;INSERT INTO users (name) VALUES (&#39;Sean&#39;), (&#39;Tess&#39;)&quot;).execute(&amp;conn)?;</span>
+<span class="doccomment">//! # connection_setup::create_user_table(conn);</span>
+<span class="doccomment">//! # sql_query(&quot;INSERT INTO users (name) VALUES (&#39;Sean&#39;), (&#39;Tess&#39;)&quot;).execute(conn)?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let users = diesel_dynamic_schema::table(&quot;users&quot;);</span>
 <span class="doccomment">//!     let id = users.column::&lt;Untyped, _&gt;(&quot;id&quot;);</span>
@@ -563,7 +563,7 @@
 <span class="doccomment">//!     select.add_field(name);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let actual_data: Vec&lt;DynamicRow&lt;NamedField&lt;MyDynamicValue&gt;&gt;&gt; =</span>
-<span class="doccomment">//!         users.select(select).load(&amp;conn)?;</span>
+<span class="doccomment">//!         users.select(select).load(conn)?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     assert_eq!(</span>
 <span class="doccomment">//!         actual_data[0][&quot;name&quot;],</span>
@@ -635,21 +635,21 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">diesel</span>::<span class="ident">expression</span>::<span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">diesel</span>::<span class="ident">pg</span>::<span class="ident">Pg</span> {
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="ident">out</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">diesel</span>::<span class="ident">expression</span>::<span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">diesel</span>::<span class="ident">sqlite</span>::<span class="ident">Sqlite</span> {
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="ident">out</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">diesel</span>::<span class="ident">expression</span>::<span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">diesel</span>::<span class="ident">mysql</span>::<span class="ident">Mysql</span> {
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="ident">out</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>)
     }
 }

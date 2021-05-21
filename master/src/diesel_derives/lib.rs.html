@@ -1528,7 +1528,7 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = connection_no_data();</span>
+<span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
 <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE users (id INTEGER PRIMARY KEY, name VARCHAR(255) NOT NULL)&quot;).unwrap();</span>
 <span class="doccomment">/// let user = InsertableUser {</span>
 <span class="doccomment">///     id: 1,</span>
@@ -1537,12 +1537,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(user)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(</span>
 <span class="doccomment">///     Ok(&quot;THOMAS&quot;.to_string()),</span>
-<span class="doccomment">///     users.select(name).first(&amp;connection)</span>
+<span class="doccomment">///     users.select(name).first(connection)</span>
 <span class="doccomment">/// );</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
@@ -1653,8 +1653,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1708,8 +1708,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1754,8 +1754,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1841,9 +1841,9 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let first_user = sql_query(&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;)</span>
-<span class="doccomment">///     .get_result(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1894,9 +1894,9 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let first_user = sql_query(&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;)</span>
-<span class="doccomment">///     .get_result(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1940,9 +1940,9 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let first_user = sql_query(&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;)</span>
-<span class="doccomment">///     .get_result(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -2252,14 +2252,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
 <span class="doccomment">/// # fn run_test() -&gt; Result&lt;(), Box&lt;::std::error::Error&gt;&gt; {</span>
-<span class="doccomment">/// let connection = SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
+<span class="doccomment">/// let connection = &amp;mut SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// add_mul::register_impl(&amp;connection, |x: i32, y: i32, z: f64| {</span>
+<span class="doccomment">/// add_mul::register_impl(connection, |x: i32, y: i32, z: f64| {</span>
 <span class="doccomment">///     (x + y) as f64 * z</span>
 <span class="doccomment">/// })?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let result = select(add_mul(1, 2, 1.5))</span>
-<span class="doccomment">///     .get_result::&lt;f64&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result::&lt;f64&gt;(connection)?;</span>
 <span class="doccomment">/// assert_eq!(4.5, result);</span>
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
@@ -2327,14 +2327,14 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
 <span class="doccomment">/// fn run() -&gt; Result&lt;(), Box&lt;dyn (::std::error::Error)&gt;&gt; {</span>
 <span class="doccomment">/// #    use self::players::dsl::*;</span>
-<span class="doccomment">///     let connection = SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
+<span class="doccomment">///     let connection = &amp;mut SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
 <span class="doccomment">/// #    connection.execute(&quot;create table players (id integer primary key autoincrement, score integer)&quot;).unwrap();</span>
 <span class="doccomment">/// #    connection.execute(&quot;insert into players (score) values (10), (20), (30)&quot;).unwrap();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     my_sum::register_impl::&lt;MySum, _&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     my_sum::register_impl::&lt;MySum, _&gt;(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     let total_score = players.select(my_sum(score))</span>
-<span class="doccomment">///         .get_result::&lt;i32&gt;(&amp;connection)?;</span>
+<span class="doccomment">///         .get_result::&lt;i32&gt;(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     println!(&quot;The total score of all the players is: {}&quot;, total_score);</span>
 <span class="doccomment">///</span>
@@ -2403,14 +2403,14 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
 <span class="doccomment">/// fn run() -&gt; Result&lt;(), Box&lt;dyn (::std::error::Error)&gt;&gt; {</span>
 <span class="doccomment">/// #    use self::student_avgs::dsl::*;</span>
-<span class="doccomment">///     let connection = SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
+<span class="doccomment">///     let connection = &amp;mut SqliteConnection::establish(&quot;:memory:&quot;)?;</span>
 <span class="doccomment">/// #    connection.execute(&quot;create table student_avgs (id integer primary key autoincrement, s1_avg float, s2_avg float)&quot;).unwrap();</span>
 <span class="doccomment">/// #    connection.execute(&quot;insert into student_avgs (s1_avg, s2_avg) values (85.5, 90), (79.8, 80.1)&quot;).unwrap();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     range_max::register_impl::&lt;RangeMax&lt;f32&gt;, _, _&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     range_max::register_impl::&lt;RangeMax&lt;f32&gt;, _, _&gt;(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     let result = student_avgs.select(range_max(s1_avg, s2_avg))</span>
-<span class="doccomment">///         .get_result::&lt;Option&lt;f32&gt;&gt;(&amp;connection)?;</span>
+<span class="doccomment">///         .get_result::&lt;Option&lt;f32&gt;&gt;(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     if let Some(max_semeseter_avg) = result {</span>
 <span class="doccomment">///         println!(&quot;The largest semester average is: {}&quot;, max_semeseter_avg);</span>

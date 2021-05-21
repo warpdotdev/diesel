@@ -65,7 +65,7 @@ single database column, but is a type that implements
 }
 
 <span class="kw">let</span> <span class="ident">first_user</span> <span class="op">=</span> <span class="ident">sql_query</span>(<span class="string">&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;</span>)
-    .<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">User</span> { <span class="ident">id</span>: <span class="number">1</span>, <span class="ident">name</span>: <span class="string">&quot;Sean&quot;</span>.<span class="ident">into</span>() };
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">first_user</span>);</pre></div>
 <p>If we want to do additional work during deserialization, we can use
@@ -100,7 +100,7 @@ single database column, but is a type that implements
 }
 
 <span class="kw">let</span> <span class="ident">first_user</span> <span class="op">=</span> <span class="ident">sql_query</span>(<span class="string">&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;</span>)
-    .<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">User</span> { <span class="ident">id</span>: <span class="number">1</span>, <span class="ident">name</span>: <span class="string">&quot;sean&quot;</span>.<span class="ident">into</span>() };
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">first_user</span>);</pre></div>
 <p>The custom derive generates impls similar to the follownig one</p>
@@ -127,7 +127,7 @@ single database column, but is a type that implements
 }
 
 <span class="kw">let</span> <span class="ident">first_user</span> <span class="op">=</span> <span class="ident">sql_query</span>(<span class="string">&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;</span>)
-    .<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">User</span> { <span class="ident">id</span>: <span class="number">1</span>, <span class="ident">name</span>: <span class="string">&quot;Sean&quot;</span>.<span class="ident">into</span>() };
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">first_user</span>);</pre></div>
 </div></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="diesel_derives" data-search-js="../search-index.js"></div>

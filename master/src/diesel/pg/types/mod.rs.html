@@ -807,12 +807,12 @@
     <span class="doccomment">/// # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use self::contacts::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     diesel::sql_query(&quot;CREATE TABLE contacts (</span>
     <span class="doccomment">/// #         id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #         name VARCHAR NOT NULL,</span>
     <span class="doccomment">/// #         address JSONB NOT NULL</span>
-    <span class="doccomment">/// #     )&quot;).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     )&quot;).execute(connection)?;</span>
     <span class="doccomment">/// let santas_address: serde_json::Value = serde_json::from_str(r#&quot;{</span>
     <span class="doccomment">///     &quot;street&quot;: &quot;Article Circle Expressway 1&quot;,</span>
     <span class="doccomment">///     &quot;city&quot;: &quot;North Pole&quot;,</span>
@@ -822,7 +822,7 @@
     <span class="doccomment">/// let inserted_address = insert_into(contacts)</span>
     <span class="doccomment">///     .values((name.eq(&quot;Claus&quot;), address.eq(&amp;santas_address)))</span>
     <span class="doccomment">///     .returning(address)</span>
-    <span class="doccomment">///     .get_result::&lt;serde_json::Value&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_result::&lt;serde_json::Value&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(santas_address, inserted_address);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -864,7 +864,7 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use self::items::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE items (</span>
     <span class="doccomment">/// #         id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #         name VARCHAR NOT NULL,</span>
@@ -873,7 +873,7 @@
     <span class="doccomment">/// let inserted_price = insert_into(items)</span>
     <span class="doccomment">///     .values((name.eq(&quot;Shiny Thing&quot;), price.eq(Cents(123_456))))</span>
     <span class="doccomment">///     .returning(price)</span>
-    <span class="doccomment">///     .get_result(&amp;connection);</span>
+    <span class="doccomment">///     .get_result(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(Cents(123_456)), inserted_price);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -908,15 +908,15 @@
     <span class="doccomment">/// # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use self::devices::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     diesel::sql_query(&quot;CREATE TABLE devices (</span>
     <span class="doccomment">/// #         id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #         macaddr MACADDR NOT NULL</span>
-    <span class="doccomment">/// #     )&quot;).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     )&quot;).execute(connection)?;</span>
     <span class="doccomment">/// let inserted_macaddr = insert_into(devices)</span>
     <span class="doccomment">///     .values(macaddr.eq([0x08, 0x00, 0x2b, 0x01, 0x02, 0x03]))</span>
     <span class="doccomment">///     .returning(macaddr)</span>
-    <span class="doccomment">///     .get_result::&lt;[u8; 6]&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_result::&lt;[u8; 6]&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!([0x08, 0x00, 0x2b, 0x01, 0x02, 0x03], inserted_macaddr);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -965,16 +965,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use self::clients::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     diesel::sql_query(&quot;CREATE TABLE clients (</span>
     <span class="doccomment">/// #         id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #         ip_address INET NOT NULL</span>
-    <span class="doccomment">/// #     )&quot;).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     )&quot;).execute(connection)?;</span>
     <span class="doccomment">/// let addr = &quot;10.1.9.32/32&quot;.parse::&lt;IpNetwork&gt;()?;</span>
     <span class="doccomment">/// let inserted_address = insert_into(clients)</span>
     <span class="doccomment">///     .values(ip_address.eq(&amp;addr))</span>
     <span class="doccomment">///     .returning(ip_address)</span>
-    <span class="doccomment">///     .get_result(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_result(connection)?;</span>
     <span class="doccomment">/// assert_eq!(addr, inserted_address);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1022,16 +1022,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use self::clients::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     diesel::sql_query(&quot;CREATE TABLE clients (</span>
     <span class="doccomment">/// #         id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #         ip_address CIDR NOT NULL</span>
-    <span class="doccomment">/// #     )&quot;).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     )&quot;).execute(connection)?;</span>
     <span class="doccomment">/// let addr = &quot;10.1.9.32/32&quot;.parse::&lt;IpNetwork&gt;()?;</span>
     <span class="doccomment">/// let inserted_addr = insert_into(clients)</span>
     <span class="doccomment">///     .values(ip_address.eq(&amp;addr))</span>
     <span class="doccomment">///     .returning(ip_address)</span>
-    <span class="doccomment">///     .get_result(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_result(connection)?;</span>
     <span class="doccomment">/// assert_eq!(addr, inserted_addr);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>

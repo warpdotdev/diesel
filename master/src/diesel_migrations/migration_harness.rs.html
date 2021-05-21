@@ -272,6 +272,29 @@
 <span id="269">269</span>
 <span id="270">270</span>
 <span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">diesel</span>::<span class="ident">backend</span>::<span class="ident">Backend</span>;
 <span class="kw">use</span> <span class="ident">diesel</span>::<span class="ident">dsl</span>;
@@ -301,16 +324,17 @@
 <span class="doccomment">/// A migration harness is an entity which applies migration to an existing database</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">MigrationHarness</span><span class="op">&lt;</span><span class="ident">DB</span>: <span class="ident">Backend</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Checks if the database represented by the current harness has unapplied migrations</span>
-    <span class="kw">fn</span> <span class="ident">has_pending_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">has_pending_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">pending_migrations</span>(<span class="ident">source</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="op">!</span><span class="ident">p</span>.<span class="ident">is_empty</span>())
     }
 
     <span class="doccomment">/// Execute all unapplied migrations for a given migration source</span>
     <span class="kw">fn</span> <span class="ident">run_pending_migrations</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">S</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">run_migrations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">pending_migrations</span>(<span class="ident">source</span>)<span class="question-mark">?</span>)
+        <span class="kw">let</span> <span class="ident">pending</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pending_migrations</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">run_migrations</span>(<span class="kw-2">&amp;</span><span class="ident">pending</span>)
     }
 
     <span class="doccomment">/// Execute all migrations in the given list</span>
@@ -318,14 +342,17 @@
     <span class="doccomment">/// This method does not check if a certain migration was already applied or not</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">fn</span> <span class="ident">run_migrations</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">migrations</span>: <span class="kw-2">&amp;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>],
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">migrations</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">run_migration</span>(<span class="ident">m</span>)).<span class="ident">collect</span>()
     }
 
     <span class="doccomment">/// Execute the next migration from the given migration source</span>
-    <span class="kw">fn</span> <span class="ident">run_next_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">run_next_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="ident">S</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pending_migrations</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pending_migrations</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">next_migration</span> <span class="op">=</span> <span class="ident">pending_migrations</span>
             .<span class="ident">first</span>()
@@ -335,7 +362,7 @@
 
     <span class="doccomment">/// Revert all applied migrations from a given migration source</span>
     <span class="kw">fn</span> <span class="ident">revert_all_migrations</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">S</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">applied_versions</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">applied_migrations</span>()<span class="question-mark">?</span>;
@@ -360,7 +387,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method returns a error if the given migration source does not</span>
     <span class="doccomment">/// contain the last applied migration</span>
-    <span class="kw">fn</span> <span class="ident">revert_last_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">revert_last_migration</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="ident">S</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">applied_versions</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">applied_migrations</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">migrations</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">migrations</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">last_migration_version</span> <span class="op">=</span> <span class="ident">applied_versions</span>
@@ -380,7 +410,7 @@
     <span class="doccomment">/// The returned migration list is sorted in ascending order by the individual version</span>
     <span class="doccomment">/// of each migration</span>
     <span class="kw">fn</span> <span class="ident">pending_migrations</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">MigrationSource</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">S</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">applied_versions</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">applied_migrations</span>()<span class="question-mark">?</span>;
@@ -405,16 +435,20 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Types implementing this trait should call [`Migration::run`] internally and record</span>
     <span class="doccomment">/// that a specific migration version was executed afterwards.</span>
-    <span class="kw">fn</span> <span class="ident">run_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">run_migration</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>)
+        <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Revert a single migration</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Types implementing this trait should call [`Migration::revert`] internally</span>
     <span class="doccomment">/// and record that a specific migration version was reverted afterwards.</span>
-    <span class="kw">fn</span> <span class="ident">revert_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">revert_migration</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Get a list of already applied migration versions</span>
-    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">MigrationHarness</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">C</span>
@@ -436,40 +470,46 @@
         <span class="op">&gt;</span>,
     <span class="op">&gt;</span>: <span class="ident">ExecuteDsl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">run_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">apply_migration</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-            <span class="ident">migration</span>.<span class="ident">run</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn</span> <span class="ident">run_migration</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">apply_migration</span> <span class="op">=</span> <span class="op">|</span><span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">C</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+            <span class="ident">migration</span>.<span class="ident">run</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
             <span class="ident">diesel</span>::<span class="ident">insert_into</span>(<span class="ident">__diesel_schema_migrations</span>::<span class="ident">table</span>)
                 .<span class="ident">values</span>(<span class="ident">__diesel_schema_migrations</span>::<span class="ident">version</span>.<span class="ident">eq</span>(<span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>()))
-                .<span class="ident">execute</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+                .<span class="ident">execute</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         };
 
         <span class="kw">if</span> <span class="ident">migration</span>.<span class="ident">metadata</span>().<span class="ident">run_in_transaction</span>() {
             <span class="self">self</span>.<span class="ident">transaction</span>(<span class="ident">apply_migration</span>)<span class="question-mark">?</span>;
         } <span class="kw">else</span> {
-            <span class="ident">apply_migration</span>()<span class="question-mark">?</span>;
+            <span class="ident">apply_migration</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(<span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>().<span class="ident">as_owned</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">revert_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">revert_migration</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-            <span class="ident">migration</span>.<span class="ident">revert</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn</span> <span class="ident">revert_migration</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">revert_migration</span> <span class="op">=</span> <span class="op">|</span><span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">C</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+            <span class="ident">migration</span>.<span class="ident">revert</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
             <span class="ident">diesel</span>::<span class="ident">delete</span>(<span class="ident">__diesel_schema_migrations</span>::<span class="ident">table</span>.<span class="ident">find</span>(<span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>()))
-                .<span class="ident">execute</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+                .<span class="ident">execute</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         };
 
         <span class="kw">if</span> <span class="ident">migration</span>.<span class="ident">metadata</span>().<span class="ident">run_in_transaction</span>() {
             <span class="self">self</span>.<span class="ident">transaction</span>(<span class="ident">revert_migration</span>)<span class="question-mark">?</span>;
         } <span class="kw">else</span> {
-            <span class="ident">revert_migration</span>()<span class="question-mark">?</span>;
+            <span class="ident">revert_migration</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(<span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>().<span class="ident">as_owned</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">setup_database</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">__diesel_schema_migrations</span>::<span class="ident">table</span>
             .<span class="ident">select</span>(<span class="ident">__diesel_schema_migrations</span>::<span class="ident">version</span>)
@@ -481,13 +521,13 @@
 <span class="doccomment">/// A migration harness that writes messages</span>
 <span class="doccomment">/// into some output for each applied/reverted migration</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HarnessWithOutput</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">W</span><span class="op">&gt;</span> {
-    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>,
+    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span>,
     <span class="ident">output</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">W</span><span class="op">&gt;</span> <span class="ident">HarnessWithOutput</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">W</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new `HarnessWithOutput` that writes to a specific writer</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>(<span class="ident">harness</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>, <span class="ident">output</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>(<span class="ident">harness</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span>, <span class="ident">output</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">C</span>: <span class="ident">MigrationHarness</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
         <span class="ident">DB</span>: <span class="ident">Backend</span>,
@@ -502,7 +542,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">HarnessWithOutput</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Stdout</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new `HarnessWithOutput` that writes to stdout</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_to_stdout</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>(<span class="ident">harness</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_to_stdout</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>(<span class="ident">harness</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">C</span>: <span class="ident">MigrationHarness</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
         <span class="ident">DB</span>: <span class="ident">Backend</span>,
@@ -520,7 +560,10 @@
     <span class="ident">C</span>: <span class="ident">MigrationHarness</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
     <span class="ident">DB</span>: <span class="ident">Backend</span>,
 {
-    <span class="kw">fn</span> <span class="ident">run_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">run_migration</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">MigrationVersion</span>::<span class="ident">from</span>(<span class="string">&quot;00000000000000&quot;</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">output</span>.<span class="ident">try_borrow_mut</span>()<span class="question-mark">?</span>;
             <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;Running migration {}&quot;</span>, <span class="ident">migration</span>.<span class="ident">name</span>())<span class="question-mark">?</span>;
@@ -528,7 +571,10 @@
         <span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">run_migration</span>(<span class="ident">migration</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">revert_migration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">revert_migration</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">migration</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Migration</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">migration</span>.<span class="ident">name</span>().<span class="ident">version</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">MigrationVersion</span>::<span class="ident">from</span>(<span class="string">&quot;00000000000000&quot;</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">output</span>.<span class="ident">try_borrow_mut</span>()<span class="question-mark">?</span>;
             <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">output</span>, <span class="string">&quot;Rolling back migration {}&quot;</span>, <span class="ident">migration</span>.<span class="ident">name</span>())<span class="question-mark">?</span>;
@@ -536,12 +582,12 @@
         <span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">revert_migration</span>(<span class="ident">migration</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">applied_migrations</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MigrationVersion</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">applied_migrations</span>()
     }
 }
 
-<span class="kw">fn</span> <span class="ident">setup_database</span><span class="op">&lt;</span><span class="ident">Conn</span>: <span class="ident">MigrationConnection</span><span class="op">&gt;</span>(<span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">setup_database</span><span class="op">&lt;</span><span class="ident">Conn</span>: <span class="ident">MigrationConnection</span><span class="op">&gt;</span>(<span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
     <span class="ident">conn</span>.<span class="ident">setup</span>()
 }
 </pre></div>

@@ -432,16 +432,16 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::dsl::sql;</span>
     <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text, Bool};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let seans_id = users</span>
     <span class="doccomment">///     .select(id)</span>
     <span class="doccomment">///     .filter(sql::&lt;Bool&gt;(&quot;name = &quot;).bind::&lt;Text, _&gt;(&quot;Sean&quot;))</span>
-    <span class="doccomment">///     .get_result(&amp;connection);</span>
+    <span class="doccomment">///     .get_result(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), seans_id);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let tess_id = sql::&lt;Integer&gt;(&quot;SELECT id FROM users WHERE name = &quot;)</span>
     <span class="doccomment">///     .bind::&lt;Text, _&gt;(&quot;Tess&quot;)</span>
-    <span class="doccomment">///     .get_result(&amp;connection);</span>
+    <span class="doccomment">///     .get_result(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(2), tess_id);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -462,9 +462,9 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::dsl::sql;</span>
     <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text, Bool};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     diesel::insert_into(users).values(name.eq(&quot;Ryan&quot;))</span>
-    <span class="doccomment">/// #           .execute(&amp;connection).unwrap();</span>
+    <span class="doccomment">/// #           .execute(connection).unwrap();</span>
     <span class="doccomment">/// let query = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(</span>
@@ -473,7 +473,7 @@
     <span class="doccomment">///         .sql(&quot; AND name &lt;&gt; &quot;)</span>
     <span class="doccomment">///         .bind::&lt;Text, _&gt;(&quot;Ryan&quot;)</span>
     <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .get_results(&amp;connection);</span>
+    <span class="doccomment">///     .get_results(connection);</span>
     <span class="doccomment">/// let expected = vec![&quot;Tess&quot;.to_string()];</span>
     <span class="doccomment">/// assert_eq!(Ok(expected), query);</span>
     <span class="doccomment">/// # }</span>
@@ -514,16 +514,16 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::dsl::sql;</span>
     <span class="doccomment">/// #     use diesel::sql_types::Bool;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     diesel::insert_into(users).values(name.eq(&quot;Ryan&quot;))</span>
-    <span class="doccomment">/// #           .execute(&amp;connection).unwrap();</span>
+    <span class="doccomment">/// #           .execute(connection).unwrap();</span>
     <span class="doccomment">/// let query = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(</span>
     <span class="doccomment">///         sql::&lt;Bool&gt;(&quot;id &gt; 1&quot;)</span>
     <span class="doccomment">///         .sql(&quot; AND name &lt;&gt; &#39;Ryan&#39;&quot;)</span>
     <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .get_results(&amp;connection);</span>
+    <span class="doccomment">///     .get_results(connection);</span>
     <span class="doccomment">/// let expected = vec![&quot;Tess&quot;.to_string()];</span>
     <span class="doccomment">/// assert_eq!(Ok(expected), query);</span>
     <span class="doccomment">/// # }</span>
@@ -607,8 +607,8 @@
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::sql_types::Bool;</span>
 <span class="doccomment">/// use diesel::dsl::sql;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let user = users.filter(sql::&lt;Bool&gt;(&quot;name = &#39;Sean&#39;&quot;)).first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let user = users.filter(sql::&lt;Bool&gt;(&quot;name = &#39;Sean&#39;&quot;)).first(connection)?;</span>
 <span class="doccomment">/// let expected = (1, String::from(&quot;Sean&quot;));</span>
 <span class="doccomment">/// assert_eq!(expected, user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -618,10 +618,10 @@
 <span class="doccomment">/// #     use crate::schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::dsl::sql;</span>
 <span class="doccomment">/// #     use diesel::sql_types::{Bool, Integer, Text};</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     diesel::insert_into(users)</span>
 <span class="doccomment">/// #         .values(name.eq(&quot;Ryan&quot;))</span>
-<span class="doccomment">/// #         .execute(&amp;connection).unwrap();</span>
+<span class="doccomment">/// #         .execute(connection).unwrap();</span>
 <span class="doccomment">/// let query = users</span>
 <span class="doccomment">///     .select(name)</span>
 <span class="doccomment">///     .filter(</span>
@@ -630,7 +630,7 @@
 <span class="doccomment">///         .sql(&quot; AND name &lt;&gt; &quot;)</span>
 <span class="doccomment">///         .bind::&lt;Text, _&gt;(&quot;Ryan&quot;)</span>
 <span class="doccomment">///     )</span>
-<span class="doccomment">///     .get_results(&amp;connection);</span>
+<span class="doccomment">///     .get_results(connection);</span>
 <span class="doccomment">/// let expected = vec![&quot;Tess&quot;.to_string()];</span>
 <span class="doccomment">/// assert_eq!(Ok(expected), query);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -689,9 +689,9 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::dsl::sql;</span>
     <span class="doccomment">/// #     use diesel::sql_types::{Integer, Bool};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     diesel::insert_into(users).values(name.eq(&quot;Ryan&quot;))</span>
-    <span class="doccomment">/// #           .execute(&amp;connection).unwrap();</span>
+    <span class="doccomment">/// #           .execute(connection).unwrap();</span>
     <span class="doccomment">/// let query = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(</span>
@@ -699,7 +699,7 @@
     <span class="doccomment">///         .bind::&lt;Integer,_&gt;(1)</span>
     <span class="doccomment">///         .sql(&quot; AND name &lt;&gt; &#39;Ryan&#39;&quot;)</span>
     <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .get_results(&amp;connection);</span>
+    <span class="doccomment">///     .get_results(connection);</span>
     <span class="doccomment">/// let expected = vec![&quot;Tess&quot;.to_string()];</span>
     <span class="doccomment">/// assert_eq!(Ok(expected), query);</span>
     <span class="doccomment">/// # }</span>

@@ -386,8 +386,8 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::{posts, users};</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
-    <span class="doccomment">/// #     diesel::delete(posts::table).execute(&amp;conn)?;</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// #     diesel::delete(posts::table).execute(conn)?;</span>
     <span class="doccomment">/// users::table</span>
     <span class="doccomment">///     .select((</span>
     <span class="doccomment">///         users::name.concat(&quot;&#39;s First Post&quot;),</span>
@@ -395,11 +395,11 @@
     <span class="doccomment">///     ))</span>
     <span class="doccomment">///     .insert_into(posts::table)</span>
     <span class="doccomment">///     .into_columns((posts::title, posts::user_id))</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_posts = posts::table</span>
     <span class="doccomment">///     .select(posts::title)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(conn)?;</span>
     <span class="doccomment">/// let expected = vec![&quot;Sean&#39;s First Post&quot;, &quot;Tess&#39;s First Post&quot;];</span>
     <span class="doccomment">/// assert_eq!(expected, inserted_posts);</span>
     <span class="doccomment">/// #     Ok(())</span>

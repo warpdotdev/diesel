@@ -1114,6 +1114,54 @@
 <span id="1111">1111</span>
 <span id="1112">1112</span>
 <span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! PostgreSQL specific expression methods</span>
 
@@ -1137,11 +1185,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let distinct = users.select(id).filter(name.is_distinct_from(&quot;Sean&quot;));</span>
     <span class="doccomment">/// let not_distinct = users.select(id).filter(name.is_not_distinct_from(&quot;Sean&quot;));</span>
-    <span class="doccomment">/// assert_eq!(Ok(2), distinct.first(&amp;connection));</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), not_distinct.first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(2), distinct.first(connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), not_distinct.first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">is_not_distinct_from</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl</span>::<span class="ident">IsNotDistinctFrom</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>
@@ -1164,11 +1212,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let distinct = users.select(id).filter(name.is_distinct_from(&quot;Sean&quot;));</span>
     <span class="doccomment">/// let not_distinct = users.select(id).filter(name.is_not_distinct_from(&quot;Sean&quot;));</span>
-    <span class="doccomment">/// assert_eq!(Ok(2), distinct.first(&amp;connection));</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), not_distinct.first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(2), distinct.first(connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), not_distinct.first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">is_distinct_from</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl</span>::<span class="ident">IsDistinctFrom</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>
@@ -1216,23 +1264,23 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::timestamps::dsl::*;</span>
     <span class="doccomment">/// #     use chrono::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE timestamps (\&quot;timestamp\&quot;</span>
     <span class="doccomment">/// #         timestamp NOT NULL)&quot;)?;</span>
     <span class="doccomment">/// let christmas_morning = NaiveDate::from_ymd(2017, 12, 25)</span>
     <span class="doccomment">///     .and_hms(8, 0, 0);</span>
     <span class="doccomment">/// diesel::insert_into(timestamps)</span>
     <span class="doccomment">///     .values(timestamp.eq(christmas_morning))</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let utc_time = timestamps</span>
     <span class="doccomment">///     .select(timestamp.at_time_zone(&quot;UTC&quot;))</span>
-    <span class="doccomment">///     .first(&amp;connection)?;</span>
+    <span class="doccomment">///     .first(connection)?;</span>
     <span class="doccomment">/// assert_eq!(christmas_morning, utc_time);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let eastern_time = timestamps</span>
     <span class="doccomment">///     .select(timestamp.at_time_zone(&quot;EST&quot;))</span>
-    <span class="doccomment">///     .first(&amp;connection)?;</span>
+    <span class="doccomment">///     .first(connection)?;</span>
     <span class="doccomment">/// let five_hours_later = christmas_morning + Duration::hours(5);</span>
     <span class="doccomment">/// assert_eq!(five_hours_later, eastern_time);</span>
     <span class="doccomment">/// #     Ok(())</span>
@@ -1277,7 +1325,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::posts::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS posts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE posts (id SERIAL PRIMARY KEY, tags TEXT[] NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// #</span>
@@ -1287,21 +1335,21 @@
     <span class="doccomment">///         tags.eq(vec![&quot;awesome&quot;, &quot;great&quot;]),</span>
     <span class="doccomment">///         tags.eq(vec![&quot;cool&quot;, &quot;great&quot;]),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.overlaps_with(vec![&quot;horrid&quot;, &quot;cool&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 3], data);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.overlaps_with(vec![&quot;cool&quot;, &quot;great&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2, 3], data);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.overlaps_with(vec![&quot;horrid&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert!(data.is_empty());</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1336,22 +1384,22 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::posts::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS posts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE posts (id SERIAL PRIMARY KEY, tags TEXT[] NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// diesel::insert_into(posts)</span>
     <span class="doccomment">///     .values(tags.eq(vec![&quot;cool&quot;, &quot;awesome&quot;]))</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let cool_posts = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.contains(vec![&quot;cool&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1], cool_posts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let amazing_posts = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.contains(vec![&quot;cool&quot;, &quot;amazing&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert!(amazing_posts.is_empty());</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1387,22 +1435,22 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::posts::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS posts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE posts (id SERIAL PRIMARY KEY, tags TEXT[] NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// diesel::insert_into(posts)</span>
     <span class="doccomment">///     .values(tags.eq(vec![&quot;cool&quot;, &quot;awesome&quot;]))</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.is_contained_by(vec![&quot;cool&quot;, &quot;awesome&quot;, &quot;amazing&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1], data);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = posts.select(id)</span>
     <span class="doccomment">///     .filter(tags.is_contained_by(vec![&quot;cool&quot;]))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert!(data.is_empty());</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1463,7 +1511,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::nullable_numbers::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE nullable_numbers (nullable_number INTEGER)&quot;)?;</span>
     <span class="doccomment">/// diesel::insert_into(nullable_numbers)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
@@ -1471,16 +1519,16 @@
     <span class="doccomment">///         nullable_number.eq(Some(1)),</span>
     <span class="doccomment">///         nullable_number.eq(Some(2)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let asc_default_nulls = nullable_numbers.select(nullable_number)</span>
     <span class="doccomment">///     .order(nullable_number.asc())</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![Some(1), Some(2), None], asc_default_nulls);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let asc_nulls_first = nullable_numbers.select(nullable_number)</span>
     <span class="doccomment">///     .order(nullable_number.asc().nulls_first())</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![None, Some(1), Some(2)], asc_nulls_first);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1511,7 +1559,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::nullable_numbers::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = connection_no_data();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut connection_no_data();</span>
     <span class="doccomment">/// #     connection.execute(&quot;CREATE TABLE nullable_numbers (nullable_number INTEGER)&quot;)?;</span>
     <span class="doccomment">/// diesel::insert_into(nullable_numbers)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
@@ -1519,16 +1567,16 @@
     <span class="doccomment">///         nullable_number.eq(Some(1)),</span>
     <span class="doccomment">///         nullable_number.eq(Some(2)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let desc_default_nulls = nullable_numbers.select(nullable_number)</span>
     <span class="doccomment">///     .order(nullable_number.desc())</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![None, Some(2), Some(1)], desc_default_nulls);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let desc_nulls_last = nullable_numbers.select(nullable_number)</span>
     <span class="doccomment">///     .order(nullable_number.desc().nulls_last())</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![Some(2), Some(1), None], desc_nulls_last);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1556,11 +1604,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let starts_with_s = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.ilike(&quot;s%&quot;).or(species.ilike(&quot;s%&quot;)))</span>
-    <span class="doccomment">///     .get_results::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_results::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;spider&quot;], starts_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1585,11 +1633,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let doesnt_start_with_s = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.not_ilike(&quot;s%&quot;).and(species.not_ilike(&quot;s%&quot;)))</span>
-    <span class="doccomment">///     .get_results::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_results::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;dog&quot;], doesnt_start_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1613,11 +1661,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let starts_with_s = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.similar_to(&quot;s%&quot;).or(species.similar_to(&quot;s%&quot;)))</span>
-    <span class="doccomment">///     .get_results::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_results::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;spider&quot;], starts_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1641,11 +1689,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let doesnt_start_with_s = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.not_similar_to(&quot;s%&quot;).and(species.not_similar_to(&quot;s%&quot;)))</span>
-    <span class="doccomment">///     .get_results::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_results::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;dog&quot;], doesnt_start_with_s);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1754,22 +1802,22 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::posts::dsl::*;</span>
     <span class="doccomment">/// #     use std::collections::Bound;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS posts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE posts (id SERIAL PRIMARY KEY, versions INT4RANGE NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// diesel::insert_into(posts)</span>
     <span class="doccomment">///     .values(versions.eq((Bound::Included(5), Bound::Unbounded)))</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let cool_posts = posts.select(id)</span>
     <span class="doccomment">///     .filter(versions.contains(42))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1], cool_posts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let amazing_posts = posts.select(id)</span>
     <span class="doccomment">///     .filter(versions.contains(1))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert!(amazing_posts.is_empty());</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1822,32 +1870,38 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3/24&quot;).unwrap()),</span>
     <span class="doccomment">///                  address.eq(IpNetwork::from_str(&quot;10.0.3.4/23&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains(IpNetwork::from_str(&quot;10.0.2.5&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains(IpNetwork::from_str(&quot;10.0.2.5/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains(IpNetwork::from_str(&quot;10.0.3.31&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![2], my_hosts);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -1878,32 +1932,38 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3/24&quot;).unwrap()),</span>
     <span class="doccomment">///                  address.eq(IpNetwork::from_str(&quot;10.0.3.4/23&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains_or_eq(IpNetwork::from_str(&quot;10.0.2.5&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains_or_eq(IpNetwork::from_str(&quot;10.0.2.5/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.contains_or_eq(IpNetwork::from_str(&quot;10.0.3.31&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![2], my_hosts);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -1934,32 +1994,38 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3/24&quot;).unwrap()),</span>
     <span class="doccomment">///                  address.eq(IpNetwork::from_str(&quot;10.0.3.4/23&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.is_contained_by(IpNetwork::from_str(&quot;10.0.2.5/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(my_hosts.len(), 0);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.is_contained_by(IpNetwork::from_str(&quot;10.0.3.31/23&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.is_contained_by(IpNetwork::from_str(&quot;10.0.3.31/22&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -1990,27 +2056,33 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3/24&quot;).unwrap()),</span>
     <span class="doccomment">///                  address.eq(IpNetwork::from_str(&quot;10.0.3.4/23&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.is_contained_by_or_eq(IpNetwork::from_str(&quot;10.0.2.5/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.is_contained_by_or_eq(IpNetwork::from_str(&quot;10.0.3.31/23&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -2041,32 +2113,38 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3/24&quot;).unwrap()),</span>
     <span class="doccomment">///                  address.eq(IpNetwork::from_str(&quot;10.0.3.4/23&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.overlaps_with(IpNetwork::from_str(&quot;10.0.2.5/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.overlaps_with(IpNetwork::from_str(&quot;10.0.3.31/24&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![2], my_hosts);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let my_hosts = hosts.select(id)</span>
     <span class="doccomment">///     .filter(address.overlaps_with(IpNetwork::from_str(&quot;10.0.3.31/23&quot;).unwrap()))</span>
-    <span class="doccomment">///     .load::&lt;i32&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .load::&lt;i32&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(vec![1, 2], my_hosts);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -2097,21 +2175,27 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let addr = hosts</span>
     <span class="doccomment">///     .select(address.and(IpNetwork::from_str(&quot;0.0.0.255&quot;).unwrap()))</span>
-    <span class="doccomment">///     .first::&lt;IpNetwork&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .first::&lt;IpNetwork&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(addr, IpNetwork::from_str(&quot;0.0.0.3&quot;).unwrap());</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -2142,21 +2226,27 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.3&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let addr = hosts</span>
     <span class="doccomment">///     .select(address.or(IpNetwork::from_str(&quot;0.0.0.255&quot;).unwrap()))</span>
-    <span class="doccomment">///     .first::&lt;IpNetwork&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .first::&lt;IpNetwork&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(addr, IpNetwork::from_str(&quot;10.0.2.255&quot;).unwrap());</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -2187,21 +2277,27 @@
     <span class="doccomment">/// #     run_test().unwrap();</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(feature = &quot;ipnetwork&quot;)]</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::hosts::dsl::*;</span>
     <span class="doccomment">/// #     use ipnetwork::IpNetwork;</span>
     <span class="doccomment">/// #     use std::str::FromStr;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS hosts&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE hosts (id SERIAL PRIMARY KEY, address INET NOT NULL)&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(hosts)</span>
     <span class="doccomment">///     .values(vec![address.eq(IpNetwork::from_str(&quot;10.0.2.53&quot;).unwrap())])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let offset = hosts</span>
     <span class="doccomment">///     .select(address.diff(IpNetwork::from_str(&quot;10.0.2.42&quot;).unwrap()))</span>
-    <span class="doccomment">///     .first::&lt;i64&gt;(&amp;conn)?;</span>
+    <span class="doccomment">///     .first::&lt;i64&gt;(conn)?;</span>
     <span class="doccomment">/// assert_eq!(offset, 11);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # #[cfg(not(feature = &quot;ipnetwork&quot;))]</span>
+    <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>

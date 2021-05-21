@@ -379,10 +379,10 @@
     <span class="doccomment">/// #     use diesel::sql_query;</span>
     <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text};</span>
     <span class="doccomment">/// #</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     diesel::insert_into(users::table)</span>
     <span class="doccomment">/// #         .values(users::name.eq(&quot;Jim&quot;))</span>
-    <span class="doccomment">/// #         .execute(&amp;connection).unwrap();</span>
+    <span class="doccomment">/// #         .execute(connection).unwrap();</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// # let users = sql_query(&quot;SELECT * FROM users WHERE id &gt; $1 AND name != $2&quot;);</span>
     <span class="doccomment">/// # #[cfg(not(feature = &quot;postgres&quot;))]</span>
@@ -391,7 +391,7 @@
     <span class="doccomment">/// # let users = users</span>
     <span class="doccomment">///     .bind::&lt;Integer, _&gt;(1)</span>
     <span class="doccomment">///     .bind::&lt;Text, _&gt;(&quot;Tess&quot;)</span>
-    <span class="doccomment">///     .get_results(&amp;connection);</span>
+    <span class="doccomment">///     .get_results(connection);</span>
     <span class="doccomment">/// let expected_users = vec![</span>
     <span class="doccomment">///     User { id: 3, name: &quot;Jim&quot;.into() },</span>
     <span class="doccomment">/// ];</span>
@@ -509,10 +509,10 @@
     <span class="doccomment">/// #     use diesel::sql_query;</span>
     <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text};</span>
     <span class="doccomment">/// #</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     diesel::insert_into(users::table)</span>
     <span class="doccomment">/// #         .values(users::name.eq(&quot;Jim&quot;))</span>
-    <span class="doccomment">/// #         .execute(&amp;connection).unwrap();</span>
+    <span class="doccomment">/// #         .execute(connection).unwrap();</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// # let users = sql_query(&quot;SELECT * FROM users WHERE id &gt; $1 AND name != $2&quot;);</span>
     <span class="doccomment">/// # #[cfg(not(feature = &quot;postgres&quot;))]</span>
@@ -521,7 +521,7 @@
     <span class="doccomment">/// # let users = users</span>
     <span class="doccomment">///     .bind::&lt;Integer, _&gt;(1)</span>
     <span class="doccomment">///     .bind::&lt;Text, _&gt;(&quot;Tess&quot;)</span>
-    <span class="doccomment">///     .get_results(&amp;connection);</span>
+    <span class="doccomment">///     .get_results(connection);</span>
     <span class="doccomment">/// let expected_users = vec![</span>
     <span class="doccomment">///     User { id: 3, name: &quot;Jim&quot;.into() },</span>
     <span class="doccomment">/// ];</span>

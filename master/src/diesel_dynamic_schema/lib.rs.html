@@ -168,11 +168,11 @@
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn result_main() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">//! #</span>
-<span class="doccomment">//! # let conn = establish_connection();</span>
+<span class="doccomment">//! # let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # // Create some example data by using typical SQL statements.</span>
-<span class="doccomment">//! # connection_setup::create_user_table(&amp;conn);</span>
-<span class="doccomment">//! # sql_query(&quot;INSERT INTO users (name) VALUES (&#39;Sean&#39;), (&#39;Tess&#39;)&quot;).execute(&amp;conn)?;</span>
+<span class="doccomment">//! # connection_setup::create_user_table(conn);</span>
+<span class="doccomment">//! # sql_query(&quot;INSERT INTO users (name) VALUES (&#39;Sean&#39;), (&#39;Tess&#39;)&quot;).execute(conn)?;</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! // Use diesel-dynamic-schema to create a table and columns.</span>
 <span class="doccomment">//! let users = table(&quot;users&quot;);</span>
@@ -183,7 +183,7 @@
 <span class="doccomment">//! let results = users</span>
 <span class="doccomment">//!     .select((id, name))</span>
 <span class="doccomment">//!     .filter(name.eq(&quot;Sean&quot;))</span>
-<span class="doccomment">//!     .load::&lt;(i32, String)&gt;(&amp;conn)?;</span>
+<span class="doccomment">//!     .load::&lt;(i32, String)&gt;(conn)?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # assert_eq!(results.len(), 1);</span>
 <span class="doccomment">//! # assert_eq!(results[0].1, &quot;Sean&quot;);</span>

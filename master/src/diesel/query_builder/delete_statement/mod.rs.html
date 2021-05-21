@@ -291,14 +291,14 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let deleted_rows = diesel::delete(users)</span>
     <span class="doccomment">///     .filter(name.eq(&quot;Sean&quot;))</span>
-    <span class="doccomment">///     .execute(&amp;connection);</span>
+    <span class="doccomment">///     .execute(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), deleted_rows);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let expected_names = vec![&quot;Tess&quot;.to_string()];</span>
-    <span class="doccomment">/// let names = users.select(name).load(&amp;connection);</span>
+    <span class="doccomment">/// let names = users.select(name).load(connection);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Ok(expected_names), names);</span>
     <span class="doccomment">/// # }</span>
@@ -333,7 +333,7 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use std::collections::HashMap;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     let mut params = HashMap::new();</span>
     <span class="doccomment">/// #     params.insert(&quot;sean_has_been_a_jerk&quot;, true);</span>
     <span class="doccomment">/// let mut query = diesel::delete(users)</span>
@@ -343,11 +343,11 @@
     <span class="doccomment">///     query = query.filter(name.eq(&quot;Sean&quot;));</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let deleted_rows = query.execute(&amp;connection)?;</span>
+    <span class="doccomment">/// let deleted_rows = query.execute(connection)?;</span>
     <span class="doccomment">/// assert_eq!(1, deleted_rows);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let expected_names = vec![&quot;Tess&quot;];</span>
-    <span class="doccomment">/// let names = users.select(name).load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// let names = users.select(name).load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(expected_names, names);</span>
     <span class="doccomment">/// #     Ok(())</span>
@@ -447,10 +447,10 @@
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let deleted_name = diesel::delete(users.filter(name.eq(&quot;Sean&quot;)))</span>
     <span class="doccomment">///     .returning(name)</span>
-    <span class="doccomment">///     .get_result(&amp;connection);</span>
+    <span class="doccomment">///     .get_result(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(&quot;Sean&quot;.to_string()), deleted_name);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(not(feature = &quot;postgres&quot;))]</span>

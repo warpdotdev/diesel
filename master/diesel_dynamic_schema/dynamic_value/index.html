@@ -16,7 +16,7 @@ specified number of fields from the database.</p>
     <span class="ident">select</span>.<span class="ident">add_field</span>(<span class="ident">name</span>);
 
     <span class="kw">let</span> <span class="ident">actual_data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DynamicRow</span><span class="op">&lt;</span><span class="ident">NamedField</span><span class="op">&lt;</span><span class="ident">MyDynamicValue</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
-        <span class="ident">users</span>.<span class="ident">select</span>(<span class="ident">select</span>).<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">conn</span>)<span class="question-mark">?</span>;
+        <span class="ident">users</span>.<span class="ident">select</span>(<span class="ident">select</span>).<span class="ident">load</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
 
     <span class="macro">assert_eq</span><span class="macro">!</span>(
         <span class="ident">actual_data</span>[<span class="number">0</span>][<span class="string">&quot;name&quot;</span>],

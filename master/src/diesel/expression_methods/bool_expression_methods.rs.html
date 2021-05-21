@@ -128,18 +128,18 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// diesel::insert_into(animals)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
     <span class="doccomment">///         (species.eq(&quot;ferret&quot;), legs.eq(4), name.eq(&quot;Freddy&quot;)),</span>
     <span class="doccomment">///         (species.eq(&quot;ferret&quot;), legs.eq(4), name.eq(&quot;Jack&quot;)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = animals.select((species, name))</span>
     <span class="doccomment">///     .filter(species.eq(&quot;ferret&quot;).and(name.eq(&quot;Jack&quot;)))</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// let expected = vec![</span>
     <span class="doccomment">///     (String::from(&quot;ferret&quot;), Some(String::from(&quot;Jack&quot;))),</span>
     <span class="doccomment">/// ];</span>
@@ -174,18 +174,18 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// diesel::insert_into(animals)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
     <span class="doccomment">///         (species.eq(&quot;ferret&quot;), legs.eq(4), name.eq(&quot;Freddy&quot;)),</span>
     <span class="doccomment">///         (species.eq(&quot;ferret&quot;), legs.eq(4), name.eq(&quot;Jack&quot;)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = animals.select((species, name))</span>
     <span class="doccomment">///     .filter(species.eq(&quot;ferret&quot;).or(name.eq(&quot;Jack&quot;)))</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// let expected = vec![</span>
     <span class="doccomment">///     (String::from(&quot;dog&quot;), Some(String::from(&quot;Jack&quot;))),</span>
     <span class="doccomment">///     (String::from(&quot;ferret&quot;), Some(String::from(&quot;Freddy&quot;))),</span>

@@ -507,9 +507,9 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users.select(id).filter(name.eq(&quot;Sean&quot;));</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), data.first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), data.first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;=&quot;</span>)]</span>
@@ -530,9 +530,9 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users.select(id).filter(name.ne(&quot;Sean&quot;));</span>
-    <span class="doccomment">/// assert_eq!(Ok(2), data.first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(2), data.first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;&lt;&gt;&quot;</span>)]</span>
@@ -563,22 +563,22 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users;</span>
     <span class="doccomment">/// #     use schema::posts;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;INSERT INTO users (name) VALUES</span>
     <span class="doccomment">/// #         (&#39;Jim&#39;)&quot;).unwrap();</span>
     <span class="doccomment">/// let data = users::table.select(users::id).filter(users::name.eq_any(vec![&quot;Sean&quot;, &quot;Jim&quot;]));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![1, 3]), data.load(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![1, 3]), data.load(connection));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Calling `eq_any` with an empty array is the same as doing `WHERE 1=0`</span>
     <span class="doccomment">/// let data = users::table.select(users::id).filter(users::name.eq_any(Vec::&lt;String&gt;::new()));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![]), data.load::&lt;i32&gt;(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![]), data.load::&lt;i32&gt;(connection));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Calling `eq_any` with a subquery is the same as using</span>
     <span class="doccomment">/// // `WHERE {column} IN {subquery}`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let subquery = users::table.filter(users::name.eq(&quot;Sean&quot;)).select(users::id).into_boxed();</span>
     <span class="doccomment">/// let data = posts::table.select(posts::id).filter(posts::user_id.eq_any(subquery));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![1, 2]), data.load::&lt;i32&gt;(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![1, 2]), data.load::&lt;i32&gt;(connection));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -605,18 +605,18 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;INSERT INTO users (name) VALUES</span>
     <span class="doccomment">/// #         (&#39;Jim&#39;)&quot;).unwrap();</span>
     <span class="doccomment">/// let data = users.select(id).filter(name.ne_all(vec![&quot;Sean&quot;, &quot;Jim&quot;]));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![2]), data.load(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![2]), data.load(connection));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = users.select(id).filter(name.ne_all(vec![&quot;Tess&quot;]));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![1, 3]), data.load(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![1, 3]), data.load(connection));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Calling `ne_any` with an empty array is the same as doing `WHERE 1=1`</span>
     <span class="doccomment">/// let data = users.select(id).filter(name.ne_all(Vec::&lt;String&gt;::new()));</span>
-    <span class="doccomment">/// assert_eq!(Ok(vec![1, 2, 3]), data.load(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(vec![1, 2, 3]), data.load(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;in&quot;</span>)]</span>
@@ -641,12 +641,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let data = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.is_null())</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;spider&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -667,12 +667,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let data = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(name.is_not_null())</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;dog&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -693,11 +693,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(id.gt(1))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;Tess&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -724,11 +724,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(id.ge(2))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;Tess&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -755,11 +755,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(id.lt(2))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;Sean&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -786,11 +786,11 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .filter(id.le(2))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;Sean&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -813,12 +813,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let data = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(legs.between(2, 6))</span>
-    <span class="doccomment">///     .first(&amp;connection);</span>
+    <span class="doccomment">///     .first(connection);</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// assert_eq!(Ok(&quot;dog&quot;.to_string()), data);</span>
     <span class="doccomment">/// # }</span>
@@ -849,12 +849,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let data = animals</span>
     <span class="doccomment">///     .select(species)</span>
     <span class="doccomment">///     .filter(legs.not_between(2, 6))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;spider&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -884,12 +884,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// let names = users</span>
     <span class="doccomment">///     .select(name)</span>
     <span class="doccomment">///     .order(name.desc())</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Tess&quot;, &quot;Sean&quot;], names);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -961,12 +961,12 @@
     <span class="doccomment">/// fn main() {</span>
     <span class="doccomment">///     use self::users::dsl::*;</span>
     <span class="doccomment">///     use self::posts::dsl::{posts, author_name};</span>
-    <span class="doccomment">///     let connection = establish_connection();</span>
+    <span class="doccomment">///     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///     let data = users.inner_join(posts)</span>
     <span class="doccomment">///         .filter(name.nullable().eq(author_name))</span>
     <span class="doccomment">///         .select(name)</span>
-    <span class="doccomment">///         .load::&lt;String&gt;(&amp;connection);</span>
+    <span class="doccomment">///         .load::&lt;String&gt;(connection);</span>
     <span class="doccomment">///     println!(&quot;{:?}&quot;, data);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>

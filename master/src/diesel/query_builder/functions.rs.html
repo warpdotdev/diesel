@@ -592,6 +592,7 @@
 <span id="589">589</span>
 <span id="590">590</span>
 <span id="591">591</span>
+<span id="592">592</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">delete_statement</span>::<span class="ident">DeleteStatement</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">insert_statement</span>::{<span class="ident">Insert</span>, <span class="ident">InsertOrIgnore</span>, <span class="ident">Replace</span>};
@@ -621,10 +622,10 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let updated_row = diesel::update(users.filter(id.eq(1)))</span>
 <span class="doccomment">///     .set(name.eq(&quot;James&quot;))</span>
-<span class="doccomment">///     .get_result(&amp;connection);</span>
+<span class="doccomment">///     .get_result(connection);</span>
 <span class="doccomment">/// // On backends that support it, you can call `get_result` instead of `execute`</span>
 <span class="doccomment">/// // to have `RETURNING *` automatically appended to the query. Alternatively, you</span>
 <span class="doccomment">/// // can explicitly return an expression by using the `returning` method before</span>
@@ -653,7 +654,7 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// # use self::users::dsl::*;</span>
-<span class="doccomment">/// # let connection = establish_connection();</span>
+<span class="doccomment">/// # let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// # connection.execute(&quot;DROP TABLE users&quot;).unwrap();</span>
 <span class="doccomment">/// # connection.execute(&quot;CREATE TABLE users (</span>
 <span class="doccomment">/// #     id SERIAL PRIMARY KEY,</span>
@@ -663,7 +664,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let updated_row = diesel::update(users.filter(id.eq(1)))</span>
 <span class="doccomment">///     .set((name.eq(&quot;James&quot;), surname.eq(&quot;Bond&quot;)))</span>
-<span class="doccomment">///     .get_result(&amp;connection);</span>
+<span class="doccomment">///     .get_result(connection);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok((1, &quot;James&quot;.to_string(), &quot;Bond&quot;.to_string())), updated_row);</span>
 <span class="doccomment">/// # }</span>
@@ -694,13 +695,13 @@
 <span class="doccomment">/// #     delete();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
+<span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn delete() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// #     let get_count = || users.count().first::&lt;i64&gt;(&amp;connection);</span>
-<span class="doccomment">/// let old_count = get_count();</span>
-<span class="doccomment">/// diesel::delete(users.filter(id.eq(1))).execute(&amp;connection)?;</span>
-<span class="doccomment">/// assert_eq!(old_count.map(|count| count - 1), get_count());</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let old_count = users.count().first::&lt;i64&gt;(connection);</span>
+<span class="doccomment">/// diesel::delete(users.filter(id.eq(1))).execute(connection)?;</span>
+<span class="doccomment">/// assert_eq!(old_count.map(|count| count - 1), users.count().first(connection));</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
@@ -716,10 +717,9 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn delete() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// #     let get_count = || users.count().first::&lt;i64&gt;(&amp;connection);</span>
-<span class="doccomment">/// diesel::delete(users).execute(&amp;connection)?;</span>
-<span class="doccomment">/// assert_eq!(Ok(0), get_count());</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// diesel::delete(users).execute(connection)?;</span>
+<span class="doccomment">/// assert_eq!(Ok(0), users.count().first::&lt;i64&gt;(connection));</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
@@ -749,10 +749,10 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let rows_inserted = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;name.eq(&quot;Sean&quot;))</span>
-<span class="doccomment">///     .execute(&amp;connection);</span>
+<span class="doccomment">///     .execute(connection);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok(1), rows_inserted);</span>
 <span class="doccomment">///</span>
@@ -763,7 +763,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rows_inserted = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;new_users)</span>
-<span class="doccomment">///     .execute(&amp;connection);</span>
+<span class="doccomment">///     .execute(connection);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok(2), rows_inserted);</span>
 <span class="doccomment">/// # }</span>
@@ -776,12 +776,12 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// #     diesel::delete(users).execute(&amp;connection).unwrap();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// #     diesel::delete(users).execute(connection).unwrap();</span>
 <span class="doccomment">/// let new_user = (id.eq(1), name.eq(&quot;Sean&quot;));</span>
 <span class="doccomment">/// let rows_inserted = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;new_user)</span>
-<span class="doccomment">///     .execute(&amp;connection);</span>
+<span class="doccomment">///     .execute(connection);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok(1), rows_inserted);</span>
 <span class="doccomment">///</span>
@@ -792,7 +792,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let rows_inserted = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;new_users)</span>
-<span class="doccomment">///     .execute(&amp;connection);</span>
+<span class="doccomment">///     .execute(connection);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(Ok(2), rows_inserted);</span>
 <span class="doccomment">/// # }</span>
@@ -812,14 +812,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// // Insert one record at a time</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let new_user = NewUser { name: &quot;Ruby Rhod&quot; };</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;new_user)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Insert many records</span>
@@ -831,7 +831,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let inserted_names = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;new_users)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
@@ -860,13 +860,13 @@
 <span class="doccomment">/// # #[cfg(not(feature = &quot;sqlite&quot;))]</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::brands::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// // Insert `Red`</span>
 <span class="doccomment">/// let new_brand = NewBrand { color: Some(&quot;Red&quot;.into()) };</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(brands)</span>
 <span class="doccomment">///     .values(&amp;new_brand)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Insert the default color</span>
@@ -874,7 +874,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(brands)</span>
 <span class="doccomment">///     .values(&amp;new_brand)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -906,13 +906,13 @@
 <span class="doccomment">/// # #[cfg(not(feature = &quot;sqlite&quot;))]</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::brands::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// // Insert `Red`</span>
 <span class="doccomment">/// let new_brand = NewBrand { accent: Some(Some(&quot;Red&quot;.into())) };</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(brands)</span>
 <span class="doccomment">///     .values(&amp;new_brand)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Insert the default accent</span>
@@ -920,7 +920,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(brands)</span>
 <span class="doccomment">///     .values(&amp;new_brand)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Insert `NULL`</span>
@@ -928,7 +928,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// diesel::insert_into(brands)</span>
 <span class="doccomment">///     .values(&amp;new_brand)</span>
-<span class="doccomment">///     .execute(&amp;connection)</span>
+<span class="doccomment">///     .execute(connection)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -954,8 +954,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::{posts, users};</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
-<span class="doccomment">/// #     diesel::delete(posts::table).execute(&amp;conn)?;</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
+<span class="doccomment">/// #     diesel::delete(posts::table).execute(conn)?;</span>
 <span class="doccomment">/// let new_posts = users::table</span>
 <span class="doccomment">///     .select((</span>
 <span class="doccomment">///         users::name.concat(&quot;&#39;s First Post&quot;),</span>
@@ -964,11 +964,11 @@
 <span class="doccomment">/// diesel::insert_into(posts::table)</span>
 <span class="doccomment">///     .values(new_posts)</span>
 <span class="doccomment">///     .into_columns((posts::title, posts::user_id))</span>
-<span class="doccomment">///     .execute(&amp;conn)?;</span>
+<span class="doccomment">///     .execute(conn)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let inserted_posts = posts::table</span>
 <span class="doccomment">///     .select(posts::title)</span>
-<span class="doccomment">///     .load::&lt;String&gt;(&amp;conn)?;</span>
+<span class="doccomment">///     .load::&lt;String&gt;(conn)?;</span>
 <span class="doccomment">/// let expected = vec![&quot;Sean&#39;s First Post&quot;, &quot;Tess&#39;s First Post&quot;];</span>
 <span class="doccomment">/// assert_eq!(expected, inserted_posts);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -983,14 +983,14 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let inserted_names = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;vec![</span>
 <span class="doccomment">///         name.eq(&quot;Diva Plavalaguna&quot;),</span>
 <span class="doccomment">///         name.eq(&quot;Father Vito Cornelius&quot;),</span>
 <span class="doccomment">///     ])</span>
 <span class="doccomment">///     .returning(name)</span>
-<span class="doccomment">///     .get_results(&amp;connection);</span>
+<span class="doccomment">///     .get_results(connection);</span>
 <span class="doccomment">/// assert_eq!(Ok(vec![&quot;Diva Plavalaguna&quot;.to_string(), &quot;Father Vito Cornelius&quot;.to_string()]), inserted_names);</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// # #[cfg(not(feature = &quot;postgres&quot;))]</span>
@@ -1024,20 +1024,20 @@
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::{delete, insert_or_ignore_into};</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// #     diesel::delete(users).execute(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// #     diesel::delete(users).execute(connection)?;</span>
 <span class="doccomment">/// insert_or_ignore_into(users)</span>
 <span class="doccomment">///     .values((id.eq(1), name.eq(&quot;Jim&quot;)))</span>
-<span class="doccomment">///     .execute(&amp;connection)?;</span>
+<span class="doccomment">///     .execute(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// insert_or_ignore_into(users)</span>
 <span class="doccomment">///     .values(&amp;vec![</span>
 <span class="doccomment">///         (id.eq(1), name.eq(&quot;Sean&quot;)),</span>
 <span class="doccomment">///         (id.eq(2), name.eq(&quot;Tess&quot;)),</span>
 <span class="doccomment">///     ])</span>
-<span class="doccomment">///     .execute(&amp;connection)?;</span>
+<span class="doccomment">///     .execute(connection)?;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let names = users.select(name).order(id).load::&lt;String&gt;(&amp;connection)?;</span>
+<span class="doccomment">/// let names = users.select(name).order(id).load::&lt;String&gt;(connection)?;</span>
 <span class="doccomment">/// assert_eq!(vec![String::from(&quot;Jim&quot;), String::from(&quot;Tess&quot;)], names);</span>
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
@@ -1078,22 +1078,22 @@
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::{insert_into, replace_into};</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     conn.execute(&quot;DELETE FROM users&quot;).unwrap();</span>
 <span class="doccomment">/// replace_into(users)</span>
 <span class="doccomment">///     .values(&amp;vec![</span>
 <span class="doccomment">///         (id.eq(1), name.eq(&quot;Sean&quot;)),</span>
 <span class="doccomment">///         (id.eq(2), name.eq(&quot;Tess&quot;)),</span>
 <span class="doccomment">///     ])</span>
-<span class="doccomment">///     .execute(&amp;conn)</span>
+<span class="doccomment">///     .execute(conn)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// replace_into(users)</span>
 <span class="doccomment">///     .values((id.eq(1), name.eq(&quot;Jim&quot;)))</span>
-<span class="doccomment">///     .execute(&amp;conn)</span>
+<span class="doccomment">///     .execute(conn)</span>
 <span class="doccomment">///     .unwrap();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let names = users.select(name).order(id).load::&lt;String&gt;(&amp;conn);</span>
+<span class="doccomment">/// let names = users.select(name).order(id).load::&lt;String&gt;(conn);</span>
 <span class="doccomment">/// assert_eq!(Ok(vec![&quot;Jim&quot;.into(), &quot;Tess&quot;.into()]), names);</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)] fn main() {}</span>
@@ -1145,9 +1145,9 @@
 <span class="doccomment">/// #     use diesel::sql_query;</span>
 <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text};</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let users = sql_query(&quot;SELECT * FROM users ORDER BY id&quot;)</span>
-<span class="doccomment">///     .load(&amp;connection);</span>
+<span class="doccomment">///     .load(connection);</span>
 <span class="doccomment">/// let expected_users = vec![</span>
 <span class="doccomment">///     User { id: 1, name: &quot;Sean&quot;.into() },</span>
 <span class="doccomment">///     User { id: 2, name: &quot;Tess&quot;.into() },</span>
@@ -1160,19 +1160,21 @@
 <span class="doccomment">/// #     use diesel::sql_query;</span>
 <span class="doccomment">/// #     use diesel::sql_types::{Integer, Text};</span>
 <span class="doccomment">/// #</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     diesel::insert_into(users::table)</span>
 <span class="doccomment">/// #         .values(users::name.eq(&quot;Jim&quot;))</span>
-<span class="doccomment">/// #         .execute(&amp;connection).unwrap();</span>
+<span class="doccomment">/// #         .execute(connection).unwrap();</span>
 <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
 <span class="doccomment">/// #     let users = sql_query(&quot;SELECT * FROM users WHERE id &gt; $1 AND name != $2&quot;);</span>
 <span class="doccomment">/// #     #[cfg(not(feature = &quot;postgres&quot;))]</span>
+<span class="doccomment">/// // Checkout the documentation of your database for the correct</span>
+<span class="doccomment">/// // bind placeholder</span>
 <span class="doccomment">/// let users = sql_query(&quot;SELECT * FROM users WHERE id &gt; ? AND name &lt;&gt; ?&quot;)</span>
 <span class="doccomment">/// # ;</span>
 <span class="doccomment">/// let users = users</span>
 <span class="doccomment">///     .bind::&lt;Integer, _&gt;(1)</span>
 <span class="doccomment">///     .bind::&lt;Text, _&gt;(&quot;Tess&quot;)</span>
-<span class="doccomment">///     .get_results(&amp;connection);</span>
+<span class="doccomment">///     .get_results(connection);</span>
 <span class="doccomment">/// let expected_users = vec![</span>
 <span class="doccomment">///     User { id: 3, name: &quot;Jim&quot;.into() },</span>
 <span class="doccomment">/// ];</span>

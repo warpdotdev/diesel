@@ -83,27 +83,27 @@
 <span class="doccomment">/// #     use self::users::dsl::*;</span>
 <span class="doccomment">/// use diesel::upsert::*;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
 <span class="doccomment">/// conn.execute(&quot;ALTER TABLE users ADD CONSTRAINT users_name UNIQUE (name)&quot;).unwrap();</span>
 <span class="doccomment">/// let user = User { id: 1, name: &quot;Sean&quot; };</span>
 <span class="doccomment">/// let same_name_different_id = User { id: 2, name: &quot;Sean&quot; };</span>
 <span class="doccomment">/// let same_id_different_name = User { id: 1, name: &quot;Pascal&quot; };</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+<span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;same_name_different_id)</span>
 <span class="doccomment">///     .on_conflict(on_constraint(&quot;users_name&quot;))</span>
 <span class="doccomment">///     .do_nothing()</span>
-<span class="doccomment">///     .execute(&amp;conn);</span>
+<span class="doccomment">///     .execute(conn);</span>
 <span class="doccomment">/// assert_eq!(Ok(0), inserted_row_count);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let pk_conflict_result = diesel::insert_into(users)</span>
 <span class="doccomment">///     .values(&amp;same_id_different_name)</span>
 <span class="doccomment">///     .on_conflict(on_constraint(&quot;users_name&quot;))</span>
 <span class="doccomment">///     .do_nothing()</span>
-<span class="doccomment">///     .execute(&amp;conn);</span>
+<span class="doccomment">///     .execute(conn);</span>
 <span class="doccomment">/// assert!(pk_conflict_result.is_err());</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>

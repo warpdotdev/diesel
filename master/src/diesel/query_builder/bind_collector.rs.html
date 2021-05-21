@@ -101,7 +101,7 @@
     <span class="kw">fn</span> <span class="ident">push_bound_value</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bind</span>: <span class="kw-2">&amp;</span><span class="ident">U</span>,
-        <span class="ident">metadata_lookup</span>: <span class="kw-2">&amp;</span><span class="ident">DB</span>::<span class="ident">MetadataLookup</span>,
+        <span class="ident">metadata_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">DB</span>::<span class="ident">MetadataLookup</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">DB</span>: <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -140,7 +140,7 @@
     <span class="kw">fn</span> <span class="ident">push_bound_value</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bind</span>: <span class="kw-2">&amp;</span><span class="ident">U</span>,
-        <span class="ident">metadata_lookup</span>: <span class="kw-2">&amp;</span><span class="ident">DB</span>::<span class="ident">MetadataLookup</span>,
+        <span class="ident">metadata_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">DB</span>::<span class="ident">MetadataLookup</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">DB</span>: <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,

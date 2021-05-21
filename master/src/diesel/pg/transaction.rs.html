@@ -402,10 +402,25 @@
 <span id="399">399</span>
 <span id="400">400</span>
 <span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">backend</span>::<span class="ident">Backend</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">connection</span>::<span class="ident">TransactionManager</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">connection</span>::{<span class="ident">AnsiTransactionManager</span>, <span class="ident">TransactionManager</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">pg</span>::<span class="ident">Pg</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">query_builder</span>::{<span class="ident">AstPass</span>, <span class="ident">QueryBuilder</span>, <span class="ident">QueryFragment</span>};
@@ -421,17 +436,19 @@
 <span class="doccomment">/// [`.build_transaction`]: PgConnection::build_transaction()</span>
 <span class="doccomment">/// [pg-docs]: https://www.postgresql.org/docs/current/static/sql-set-transaction.html</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span> <span class="comment">// False positive. Connection isn&#39;t Debug.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Transaction builder does nothing unless you call `run` on it&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PgConnection</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span>,
     <span class="ident">isolation_level</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">IsolationLevel</span><span class="op">&gt;</span>,
     <span class="ident">read_mode</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ReadMode</span><span class="op">&gt;</span>,
     <span class="ident">deferrable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Deferrable</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PgConnection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">C</span>: <span class="ident">Connection</span><span class="op">&lt;</span><span class="ident">Backend</span> <span class="op">=</span> <span class="ident">Pg</span>, <span class="ident">TransactionManager</span> <span class="op">=</span> <span class="ident">AnsiTransactionManager</span><span class="op">&gt;</span>,
+{
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connection</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">connection</span>,
             <span class="ident">isolation_level</span>: <span class="prelude-val">None</span>,
@@ -462,25 +479,25 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use users_for_read_only::table as users;</span>
     <span class="doccomment">/// #     use users_for_read_only::columns::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// #     sql_query(&quot;CREATE TABLE IF NOT EXISTS users_for_read_only (</span>
     <span class="doccomment">/// #       id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #       name TEXT NOT NULL</span>
-    <span class="doccomment">/// #     )&quot;).execute(&amp;conn)?;</span>
+    <span class="doccomment">/// #     )&quot;).execute(conn)?;</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .read_only()</span>
-    <span class="doccomment">///     .run::&lt;_, diesel::result::Error, _&gt;(|| {</span>
-    <span class="doccomment">///         let read_attempt = users.select(name).load::&lt;String&gt;(&amp;conn);</span>
+    <span class="doccomment">///     .run::&lt;_, diesel::result::Error, _&gt;(|conn| {</span>
+    <span class="doccomment">///         let read_attempt = users.select(name).load::&lt;String&gt;(conn);</span>
     <span class="doccomment">///         assert!(read_attempt.is_ok());</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///         let write_attempt = diesel::insert_into(users)</span>
     <span class="doccomment">///             .values(name.eq(&quot;Ruby&quot;))</span>
-    <span class="doccomment">///             .execute(&amp;conn);</span>
+    <span class="doccomment">///             .execute(conn);</span>
     <span class="doccomment">///         assert!(write_attempt.is_err());</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///         Ok(())</span>
     <span class="doccomment">///     })?;</span>
-    <span class="doccomment">/// #     sql_query(&quot;DROP TABLE users_for_read_only&quot;).execute(&amp;conn)?;</span>
+    <span class="doccomment">/// #     sql_query(&quot;DROP TABLE users_for_read_only&quot;).execute(conn)?;</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -507,20 +524,20 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .read_write()</span>
-    <span class="doccomment">///     .run(|| {</span>
+    <span class="doccomment">///     .run(|conn| {</span>
     <span class="doccomment">/// #         sql_query(&quot;CREATE TABLE IF NOT EXISTS users (</span>
     <span class="doccomment">/// #             id SERIAL PRIMARY KEY,</span>
     <span class="doccomment">/// #             name TEXT NOT NULL</span>
-    <span class="doccomment">/// #         )&quot;).execute(&amp;conn)?;</span>
-    <span class="doccomment">///         let read_attempt = users.select(name).load::&lt;String&gt;(&amp;conn);</span>
+    <span class="doccomment">/// #         )&quot;).execute(conn)?;</span>
+    <span class="doccomment">///         let read_attempt = users.select(name).load::&lt;String&gt;(conn);</span>
     <span class="doccomment">///         assert!(read_attempt.is_ok());</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///         let write_attempt = diesel::insert_into(users)</span>
     <span class="doccomment">///             .values(name.eq(&quot;Ruby&quot;))</span>
-    <span class="doccomment">///             .execute(&amp;conn);</span>
+    <span class="doccomment">///             .execute(conn);</span>
     <span class="doccomment">///         assert!(write_attempt.is_ok());</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #       Err(RollbackTransaction)</span>
@@ -548,10 +565,10 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .deferrable()</span>
-    <span class="doccomment">///     .run(|| Ok(()))</span>
+    <span class="doccomment">///     .run(|conn| Ok(()))</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deferrable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -575,10 +592,10 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .not_deferrable()</span>
-    <span class="doccomment">///     .run(|| Ok(()))</span>
+    <span class="doccomment">///     .run(|conn| Ok(()))</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">not_deferrable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -602,10 +619,10 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .read_committed()</span>
-    <span class="doccomment">///     .run(|| Ok(()))</span>
+    <span class="doccomment">///     .run(|conn| Ok(()))</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_committed</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -626,10 +643,10 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .repeatable_read()</span>
-    <span class="doccomment">///     .run(|| Ok(()))</span>
+    <span class="doccomment">///     .run(|conn| Ok(()))</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repeatable_read</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -650,10 +667,10 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = connection_no_transaction();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut connection_no_transaction();</span>
     <span class="doccomment">/// conn.build_transaction()</span>
     <span class="doccomment">///     .serializable()</span>
-    <span class="doccomment">///     .run(|| Ok(()))</span>
+    <span class="doccomment">///     .run(|conn| Ok(()))</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">serializable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
@@ -672,31 +689,30 @@
     <span class="doccomment">/// the original error will be returned, otherwise the error generated by the rollback</span>
     <span class="doccomment">/// will be returned. In the second case the connection should be considered broken</span>
     <span class="doccomment">/// as it contains a uncommitted unabortable open transaction.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span>,
         <span class="ident">E</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">query_builder</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Pg</span> <span class="kw">as</span> <span class="ident">Backend</span><span class="op">&gt;</span>::<span class="ident">QueryBuilder</span>::<span class="ident">default</span>();
         <span class="self">self</span>.<span class="ident">to_sql</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">query_builder</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">sql</span> <span class="op">=</span> <span class="ident">query_builder</span>.<span class="ident">finish</span>();
-        <span class="kw">let</span> <span class="ident">transaction_manager</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">connection</span>.<span class="ident">transaction_manager</span>;
 
-        <span class="ident">transaction_manager</span>.<span class="ident">begin_transaction_sql</span>(<span class="self">self</span>.<span class="ident">connection</span>, <span class="kw-2">&amp;</span><span class="ident">sql</span>)<span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">f</span>() {
+        <span class="ident">AnsiTransactionManager</span>::<span class="ident">begin_transaction_sql</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">connection</span>, <span class="kw-2">&amp;</span><span class="ident">sql</span>)<span class="question-mark">?</span>;
+        <span class="kw">match</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">connection</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">transaction_manager</span>.<span class="ident">commit_transaction</span>(<span class="self">self</span>.<span class="ident">connection</span>)<span class="question-mark">?</span>;
+                <span class="ident">AnsiTransactionManager</span>::<span class="ident">commit_transaction</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">connection</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
             }
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">transaction_manager</span>.<span class="ident">rollback_transaction</span>(<span class="self">self</span>.<span class="ident">connection</span>)<span class="question-mark">?</span>;
+                <span class="ident">AnsiTransactionManager</span>::<span class="ident">rollback_transaction</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">connection</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>)
             }
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">Pg</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">Pg</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TransactionBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">Pg</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="ident">out</span>.<span class="ident">push_sql</span>(<span class="string">&quot;BEGIN TRANSACTION&quot;</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">isolation_level</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">isolation_level</span> {
@@ -779,28 +795,42 @@
     <span class="kw">let</span> <span class="ident">database_url</span> <span class="op">=</span> <span class="ident">dotenv</span>::<span class="ident">var</span>(<span class="string">&quot;PG_DATABASE_URL&quot;</span>)
         .<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">dotenv</span>::<span class="ident">var</span>(<span class="string">&quot;DATABASE_URL&quot;</span>))
         .<span class="ident">expect</span>(<span class="string">&quot;DATABASE_URL must be set in order to run tests&quot;</span>);
-    <span class="kw">let</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">PgConnection</span>::<span class="ident">establish</span>(<span class="kw-2">&amp;</span><span class="ident">database_url</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">conn</span> <span class="op">=</span> <span class="ident">PgConnection</span>::<span class="ident">establish</span>(<span class="kw-2">&amp;</span><span class="ident">database_url</span>).<span class="ident">unwrap</span>();
 
-    <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">conn</span>.<span class="ident">build_transaction</span>();
-    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">t</span>, <span class="string">&quot;BEGIN TRANSACTION&quot;</span>);
-    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">read_only</span>(), <span class="string">&quot;BEGIN TRANSACTION READ ONLY&quot;</span>);
-    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">read_write</span>(), <span class="string">&quot;BEGIN TRANSACTION READ WRITE&quot;</span>);
-    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">deferrable</span>(), <span class="string">&quot;BEGIN TRANSACTION DEFERRABLE&quot;</span>);
-    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">not_deferrable</span>(), <span class="string">&quot;BEGIN TRANSACTION NOT DEFERRABLE&quot;</span>);
+    <span class="macro">assert_sql</span><span class="macro">!</span>(<span class="ident">conn</span>.<span class="ident">build_transaction</span>(), <span class="string">&quot;BEGIN TRANSACTION&quot;</span>);
     <span class="macro">assert_sql</span><span class="macro">!</span>(
-        <span class="ident">t</span>.<span class="ident">read_committed</span>(),
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">read_only</span>(),
+        <span class="string">&quot;BEGIN TRANSACTION READ ONLY&quot;</span>
+    );
+    <span class="macro">assert_sql</span><span class="macro">!</span>(
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">read_write</span>(),
+        <span class="string">&quot;BEGIN TRANSACTION READ WRITE&quot;</span>
+    );
+    <span class="macro">assert_sql</span><span class="macro">!</span>(
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">deferrable</span>(),
+        <span class="string">&quot;BEGIN TRANSACTION DEFERRABLE&quot;</span>
+    );
+    <span class="macro">assert_sql</span><span class="macro">!</span>(
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">not_deferrable</span>(),
+        <span class="string">&quot;BEGIN TRANSACTION NOT DEFERRABLE&quot;</span>
+    );
+    <span class="macro">assert_sql</span><span class="macro">!</span>(
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">read_committed</span>(),
         <span class="string">&quot;BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED&quot;</span>
     );
     <span class="macro">assert_sql</span><span class="macro">!</span>(
-        <span class="ident">t</span>.<span class="ident">repeatable_read</span>(),
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">repeatable_read</span>(),
         <span class="string">&quot;BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ&quot;</span>
     );
     <span class="macro">assert_sql</span><span class="macro">!</span>(
-        <span class="ident">t</span>.<span class="ident">serializable</span>(),
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>().<span class="ident">serializable</span>(),
         <span class="string">&quot;BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE&quot;</span>
     );
     <span class="macro">assert_sql</span><span class="macro">!</span>(
-        <span class="ident">t</span>.<span class="ident">serializable</span>().<span class="ident">deferrable</span>().<span class="ident">read_only</span>(),
+        <span class="ident">conn</span>.<span class="ident">build_transaction</span>()
+            .<span class="ident">serializable</span>()
+            .<span class="ident">deferrable</span>()
+            .<span class="ident">read_only</span>(),
         <span class="string">&quot;BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY DEFERRABLE&quot;</span>
     );
 }

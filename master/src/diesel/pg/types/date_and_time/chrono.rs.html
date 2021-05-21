@@ -304,15 +304,6 @@
 <span id="301">301</span>
 <span id="302">302</span>
 <span id="303">303</span>
-<span id="304">304</span>
-<span id="305">305</span>
-<span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! This module makes it possible to map `chrono::DateTime` values to postgres `Date`</span>
 <span class="doccomment">//! and `Timestamp` fields. It is enabled with the `chrono` feature.</span>
@@ -446,183 +437,174 @@
 
     <span class="kw">use</span> <span class="self">self</span>::<span class="ident">chrono</span>::<span class="ident">naive</span>::<span class="ident">MAX_DATE</span>;
     <span class="kw">use</span> <span class="self">self</span>::<span class="ident">chrono</span>::{<span class="ident">Duration</span>, <span class="ident">FixedOffset</span>, <span class="ident">NaiveDate</span>, <span class="ident">NaiveTime</span>, <span class="ident">TimeZone</span>, <span class="ident">Utc</span>};
-    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dotenv</span>::<span class="ident">dotenv</span>;
 
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dsl</span>::{<span class="ident">now</span>, <span class="ident">sql</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">select</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sql_types</span>::{<span class="ident">Date</span>, <span class="ident">Time</span>, <span class="ident">Timestamp</span>, <span class="ident">Timestamptz</span>};
-
-    <span class="kw">fn</span> <span class="ident">connection</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PgConnection</span> {
-        <span class="ident">dotenv</span>().<span class="ident">ok</span>();
-
-        <span class="kw">let</span> <span class="ident">connection_url</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="string">&quot;PG_DATABASE_URL&quot;</span>)
-            .<span class="ident">or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> ::<span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="string">&quot;DATABASE_URL&quot;</span>))
-            .<span class="ident">expect</span>(<span class="string">&quot;DATABASE_URL must be set in order to run tests&quot;</span>);
-        <span class="ident">PgConnection</span>::<span class="ident">establish</span>(<span class="kw-2">&amp;</span><span class="ident">connection_url</span>).<span class="ident">unwrap</span>()
-    }
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test_helpers</span>::<span class="ident">connection</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unix_epoch_encodes_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamp</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01&#39;&quot;</span>).<span class="ident">eq</span>(<span class="ident">time</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unix_epoch_encodes_correctly_with_utc_timezone</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Utc</span>.<span class="ident">ymd</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamptz</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01Z&#39;::timestamptz&quot;</span>).<span class="ident">eq</span>(<span class="ident">time</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unix_epoch_encodes_correctly_with_timezone</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">FixedOffset</span>::<span class="ident">west</span>(<span class="number">3600</span>).<span class="ident">ymd</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamptz</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01 01:00:00Z&#39;::timestamptz&quot;</span>).<span class="ident">eq</span>(<span class="ident">time</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unix_epoch_decodes_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">epoch_from_sql</span> <span class="op">=</span>
-            <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamp</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01&#39;::timestamp&quot;</span>)).<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>);
+            <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamp</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01&#39;::timestamp&quot;</span>)).<span class="ident">get_result</span>(<span class="ident">connection</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">time</span>), <span class="ident">epoch_from_sql</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unix_epoch_decodes_correctly_with_timezone</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Utc</span>.<span class="ident">ymd</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">epoch_from_sql</span> <span class="op">=</span>
-            <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamptz</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01Z&#39;::timestamptz&quot;</span>)).<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>);
+            <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Timestamptz</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;1970-01-01Z&#39;::timestamptz&quot;</span>)).<span class="ident">get_result</span>(<span class="ident">connection</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">time</span>), <span class="ident">epoch_from_sql</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">times_relative_to_now_encode_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Utc</span>::<span class="ident">now</span>().<span class="ident">naive_utc</span>() <span class="op">+</span> <span class="ident">Duration</span>::<span class="ident">seconds</span>(<span class="number">60</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">now</span>.<span class="ident">at_time_zone</span>(<span class="string">&quot;utc&quot;</span>).<span class="ident">lt</span>(<span class="ident">time</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">Utc</span>::<span class="ident">now</span>().<span class="ident">naive_utc</span>() <span class="op">-</span> <span class="ident">Duration</span>::<span class="ident">seconds</span>(<span class="number">60</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">now</span>.<span class="ident">at_time_zone</span>(<span class="string">&quot;utc&quot;</span>).<span class="ident">gt</span>(<span class="ident">time</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">times_with_timezones_round_trip_after_conversion</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">FixedOffset</span>::<span class="ident">east</span>(<span class="number">3600</span>).<span class="ident">ymd</span>(<span class="number">2016</span>, <span class="number">1</span>, <span class="number">2</span>).<span class="ident">and_hms</span>(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2016</span>, <span class="number">1</span>, <span class="number">1</span>).<span class="ident">and_hms</span>(<span class="number">20</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">time</span>.<span class="ident">into_sql</span>::<span class="op">&lt;</span><span class="ident">Timestamptz</span><span class="op">&gt;</span>().<span class="ident">at_time_zone</span>(<span class="string">&quot;EDT&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">expected</span>), <span class="ident">query</span>.<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">expected</span>), <span class="ident">query</span>.<span class="ident">get_result</span>(<span class="ident">connection</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">times_of_day_encode_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
 
         <span class="kw">let</span> <span class="ident">midnight</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;00:00:00&#39;::time&quot;</span>).<span class="ident">eq</span>(<span class="ident">midnight</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">noon</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms</span>(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;12:00:00&#39;::time&quot;</span>).<span class="ident">eq</span>(<span class="ident">noon</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">roughly_half_past_eleven</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms_micro</span>(<span class="number">23</span>, <span class="number">37</span>, <span class="number">4</span>, <span class="number">2200</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;23:37:04.002200&#39;::time&quot;</span>).<span class="ident">eq</span>(<span class="ident">roughly_half_past_eleven</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">times_of_day_decode_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">midnight</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;00:00:00&#39;::time&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">midnight</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">midnight</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="ident">connection</span>));
 
         <span class="kw">let</span> <span class="ident">noon</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms</span>(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;12:00:00&#39;::time&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">noon</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">noon</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="ident">connection</span>));
 
         <span class="kw">let</span> <span class="ident">roughly_half_past_eleven</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms_micro</span>(<span class="number">23</span>, <span class="number">37</span>, <span class="number">4</span>, <span class="number">2200</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Time</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;23:37:04.002200&#39;::time&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="prelude-val">Ok</span>(<span class="ident">roughly_half_past_eleven</span>),
-            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
+            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveTime</span><span class="op">&gt;</span>(<span class="ident">connection</span>)
         );
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">dates_encode_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">january_first_2000</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2000</span>, <span class="number">1</span>, <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;2000-1-1&#39;&quot;</span>).<span class="ident">eq</span>(<span class="ident">january_first_2000</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">distant_past</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="op">-</span><span class="number">398</span>, <span class="number">4</span>, <span class="number">11</span>); <span class="comment">// year 0 is 1 BC in this function</span>
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;399-4-11 BC&#39;&quot;</span>).<span class="ident">eq</span>(<span class="ident">distant_past</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">julian_epoch</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="op">-</span><span class="number">4713</span>, <span class="number">11</span>, <span class="number">24</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;J0&#39;::date&quot;</span>).<span class="ident">eq</span>(<span class="ident">julian_epoch</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">max_date</span> <span class="op">=</span> <span class="ident">MAX_DATE</span>;
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;262143-12-31&#39;::date&quot;</span>).<span class="ident">eq</span>(<span class="ident">max_date</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">january_first_2018</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;2018-1-1&#39;::date&quot;</span>).<span class="ident">eq</span>(<span class="ident">january_first_2018</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
 
         <span class="kw">let</span> <span class="ident">distant_future</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">72_400</span>, <span class="number">1</span>, <span class="number">8</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;72400-1-8&#39;::date&quot;</span>).<span class="ident">eq</span>(<span class="ident">distant_future</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>).<span class="ident">unwrap</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">connection</span>).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">dates_decode_correctly</span>() {
-        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="ident">connection</span>();
+        <span class="kw">let</span> <span class="ident">connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">connection</span>();
         <span class="kw">let</span> <span class="ident">january_first_2000</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2000</span>, <span class="number">1</span>, <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;2000-1-1&#39;::date&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="prelude-val">Ok</span>(<span class="ident">january_first_2000</span>),
-            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
+            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>)
         );
 
         <span class="kw">let</span> <span class="ident">distant_past</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="op">-</span><span class="number">398</span>, <span class="number">4</span>, <span class="number">11</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;399-4-11 BC&#39;::date&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">distant_past</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">distant_past</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>));
 
         <span class="kw">let</span> <span class="ident">julian_epoch</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="op">-</span><span class="number">4713</span>, <span class="number">11</span>, <span class="number">24</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;J0&#39;::date&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">julian_epoch</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">julian_epoch</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>));
 
         <span class="kw">let</span> <span class="ident">max_date</span> <span class="op">=</span> <span class="ident">MAX_DATE</span>;
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;262143-12-31&#39;::date&quot;</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">max_date</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Ok</span>(<span class="ident">max_date</span>), <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>));
 
         <span class="kw">let</span> <span class="ident">january_first_2018</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;2018-1-1&#39;::date&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="prelude-val">Ok</span>(<span class="ident">january_first_2018</span>),
-            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
+            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>)
         );
 
         <span class="kw">let</span> <span class="ident">distant_future</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">72_400</span>, <span class="number">1</span>, <span class="number">8</span>);
         <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">select</span>(<span class="ident">sql</span>::<span class="op">&lt;</span><span class="ident">Date</span><span class="op">&gt;</span>(<span class="string">&quot;&#39;72400-1-8&#39;::date&quot;</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="prelude-val">Ok</span>(<span class="ident">distant_future</span>),
-            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)
+            <span class="ident">query</span>.<span class="ident">get_result</span>::<span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>(<span class="ident">connection</span>)
         );
     }
 }

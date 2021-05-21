@@ -81,8 +81,8 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// assert_eq!(Ok(Some(8)), animals.select(max(legs)).first(&amp;connection));</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// assert_eq!(Ok(Some(8)), animals.select(max(legs)).first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="attribute">#[<span class="ident">aggregate</span>]</span>
     <span class="kw">fn</span> <span class="ident">max</span><span class="op">&lt;</span><span class="ident">ST</span>: <span class="ident">SqlOrdAggregate</span><span class="op">&gt;</span>(<span class="ident">expr</span>: <span class="ident">ST</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ST</span>::<span class="ident">Ret</span>;
@@ -100,8 +100,8 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// assert_eq!(Ok(Some(4)), animals.select(min(legs)).first(&amp;connection));</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// assert_eq!(Ok(Some(4)), animals.select(min(legs)).first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="attribute">#[<span class="ident">aggregate</span>]</span>
     <span class="kw">fn</span> <span class="ident">min</span><span class="op">&lt;</span><span class="ident">ST</span>: <span class="ident">SqlOrdAggregate</span><span class="op">&gt;</span>(<span class="ident">expr</span>: <span class="ident">ST</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ST</span>::<span class="ident">Ret</span>;

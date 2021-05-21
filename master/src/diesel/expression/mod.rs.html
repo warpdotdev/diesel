@@ -841,6 +841,8 @@
 <span id="838">838</span>
 <span id="839">839</span>
 <span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! AST types representing various typed SQL expressions.</span>
 <span class="doccomment">//!</span>
@@ -982,7 +984,7 @@
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span> <span class="ident">TypedExpressionType</span> <span class="kw">for</span> <span class="ident">ST</span> <span class="kw">where</span> <span class="ident">ST</span>: <span class="ident">SingleValue</span> {}
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>: <span class="ident">Backend</span><span class="op">&gt;</span> <span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">Untyped</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DB</span> {
-        <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">DB</span>::<span class="ident">MetadataLookup</span>, <span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DB</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+        <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">DB</span>::<span class="ident">MetadataLookup</span>, <span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DB</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
             <span class="ident">row</span>.<span class="ident">push</span>(<span class="prelude-val">None</span>)
         }
     }
@@ -1005,7 +1007,7 @@
     <span class="doccomment">/// The exact return value of this function is considerded to be a</span>
     <span class="doccomment">/// backend specific implementation detail. You should not rely on those</span>
     <span class="doccomment">/// values if you not own the corresponding backend</span>
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DB</span>
@@ -1013,7 +1015,7 @@
     <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">T</span>: <span class="ident">SingleValue</span>,
 {
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="ident">out</span>.<span class="ident">push</span>(<span class="prelude-val">Some</span>(<span class="op">&lt;</span><span class="ident">DB</span> <span class="kw">as</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">metadata</span>(<span class="ident">lookup</span>)))
     }
 }
@@ -1080,10 +1082,10 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// use diesel::sql_types::Text;</span>
-<span class="doccomment">/// #   let conn = establish_connection();</span>
+<span class="doccomment">/// #   let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let names = users::table</span>
 <span class="doccomment">///     .select(&quot;The Amazing &quot;.into_sql::&lt;Text&gt;().concat(users::name))</span>
-<span class="doccomment">///     .load(&amp;conn);</span>
+<span class="doccomment">///     .load(conn);</span>
 <span class="doccomment">/// let expected_names = vec![</span>
 <span class="doccomment">///     &quot;The Amazing Sean&quot;.to_string(),</span>
 <span class="doccomment">///     &quot;The Amazing Tess&quot;.to_string(),</span>
@@ -1201,8 +1203,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.select(User::as_select()).first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.select(User::as_select()).first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1241,8 +1243,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.select(User::as_select()).first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.select(User::as_select()).first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -1491,7 +1493,7 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// enum Search {</span>
 <span class="doccomment">///     Id(i32),</span>
 <span class="doccomment">///     Name(String),</span>
@@ -1510,12 +1512,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let user_one = users::table</span>
 <span class="doccomment">///     .filter(find_user(Search::Id(1)))</span>
-<span class="doccomment">///     .first(&amp;conn)?;</span>
+<span class="doccomment">///     .first(conn)?;</span>
 <span class="doccomment">/// assert_eq!((1, String::from(&quot;Sean&quot;)), user_one);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let tess = users::table</span>
 <span class="doccomment">///     .filter(find_user(Search::Name(&quot;Tess&quot;.into())))</span>
-<span class="doccomment">///     .first(&amp;conn)?;</span>
+<span class="doccomment">///     .first(conn)?;</span>
 <span class="doccomment">/// assert_eq!((2, String::from(&quot;Tess&quot;)), tess);</span>
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
@@ -1536,7 +1538,7 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// enum NameOrConst {</span>
 <span class="doccomment">///     Name,</span>
 <span class="doccomment">///     Const(String),</span>
@@ -1574,22 +1576,24 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let user_one = users::table</span>
 <span class="doccomment">///     .select(selection(NameOrConst::Name))</span>
-<span class="doccomment">///     .first::&lt;String&gt;(&amp;conn)?;</span>
+<span class="doccomment">///     .first::&lt;String&gt;(conn)?;</span>
 <span class="doccomment">/// assert_eq!(String::from(&quot;Sean&quot;), user_one);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let with_name = users::table</span>
 <span class="doccomment">///     .group_by(users::name)</span>
 <span class="doccomment">///     .select(selection(NameOrConst::Const(&quot;Jane Doe&quot;.into())))</span>
-<span class="doccomment">///     .first::&lt;String&gt;(&amp;conn)?;</span>
+<span class="doccomment">///     .first::&lt;String&gt;(conn)?;</span>
 <span class="doccomment">/// assert_eq!(String::from(&quot;Jane Doe&quot;), with_name);</span>
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## More advanced query source</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// This example is a bit contrived, but in general, if you want to for example filter based on</span>
 <span class="doccomment">/// different criteria on a joined table, you can use `InnerJoinQuerySource` and</span>
 <span class="doccomment">/// `LeftJoinQuerySource` in the QS parameter of `BoxableExpression`.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// # include!(&quot;../doctest_setup.rs&quot;);</span>
 <span class="doccomment">/// # use schema::{users, posts};</span>
@@ -1601,7 +1605,7 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let conn = establish_connection();</span>
+<span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
 <span class="doccomment">/// enum UserPostFilter {</span>
 <span class="doccomment">///     User(i32),</span>
 <span class="doccomment">///     Post(i32),</span>
@@ -1625,7 +1629,7 @@
 <span class="doccomment">///     .inner_join(posts::table)</span>
 <span class="doccomment">///     .filter(filter_user_posts(UserPostFilter::User(2)))</span>
 <span class="doccomment">///     .select((posts::title, users::name))</span>
-<span class="doccomment">///     .first::&lt;(String, String)&gt;(&amp;conn)?;</span>
+<span class="doccomment">///     .first::&lt;(String, String)&gt;(conn)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(</span>
 <span class="doccomment">///     (&quot;My first post too&quot;.to_string(), &quot;Tess&quot;.to_string()),</span>

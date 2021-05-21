@@ -48,15 +48,15 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// use diesel::dsl::not;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let users_with_name = users.select(id).filter(name.eq(&quot;Sean&quot;));</span>
 <span class="doccomment">/// let users_not_with_name = users.select(id).filter(</span>
 <span class="doccomment">///     not(name.eq(&quot;Sean&quot;)));</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// assert_eq!(Ok(1), users_with_name.first(&amp;connection));</span>
-<span class="doccomment">/// assert_eq!(Ok(2), users_not_with_name.first(&amp;connection));</span>
+<span class="doccomment">/// assert_eq!(Ok(1), users_with_name.first(connection));</span>
+<span class="doccomment">/// assert_eq!(Ok(2), users_not_with_name.first(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">not</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">expr</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">not</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>

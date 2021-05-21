@@ -797,7 +797,7 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// diesel::infix_operator!(MyEq, &quot; = &quot;);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use diesel::expression::AsExpression;</span>
@@ -813,7 +813,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let users_with_name = users.select(id).filter(my_eq(name, &quot;Sean&quot;));</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// assert_eq!(Ok(1), users_with_name.first(&amp;connection));</span>
+<span class="doccomment">/// assert_eq!(Ok(1), users_with_name.first(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>

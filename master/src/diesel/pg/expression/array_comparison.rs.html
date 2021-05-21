@@ -191,12 +191,12 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     connection.execute(&quot;INSERT INTO users (name) VALUES (&#39;Jim&#39;)&quot;).unwrap();</span>
 <span class="doccomment">/// let sean = (1, &quot;Sean&quot;.to_string());</span>
 <span class="doccomment">/// let jim = (3, &quot;Jim&quot;.to_string());</span>
 <span class="doccomment">/// let data = users.filter(name.eq(any(vec![&quot;Sean&quot;, &quot;Jim&quot;])));</span>
-<span class="doccomment">/// assert_eq!(Ok(vec![sean, jim]), data.load(&amp;connection));</span>
+<span class="doccomment">/// assert_eq!(Ok(vec![sean, jim]), data.load(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">any</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">vals</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Any</span><span class="op">&lt;</span><span class="ident">T</span>::<span class="ident">Expression</span><span class="op">&gt;</span>
@@ -219,11 +219,11 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     connection.execute(&quot;INSERT INTO users (name) VALUES (&#39;Jim&#39;)&quot;).unwrap();</span>
 <span class="doccomment">/// let tess = (2, &quot;Tess&quot;.to_string());</span>
 <span class="doccomment">/// let data = users.filter(name.ne(all(vec![&quot;Sean&quot;, &quot;Jim&quot;])));</span>
-<span class="doccomment">/// assert_eq!(Ok(vec![tess]), data.load(&amp;connection));</span>
+<span class="doccomment">/// assert_eq!(Ok(vec![tess]), data.load(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">all</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">vals</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">All</span><span class="op">&lt;</span><span class="ident">T</span>::<span class="ident">Expression</span><span class="op">&gt;</span>

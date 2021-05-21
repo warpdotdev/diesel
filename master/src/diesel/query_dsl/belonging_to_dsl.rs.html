@@ -84,21 +84,21 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// #     use self::users::dsl::*;</span>
 <span class="doccomment">/// #     use self::posts::dsl::{posts, title};</span>
-<span class="doccomment">/// let sean = users.filter(name.eq(&quot;Sean&quot;)).first::&lt;User&gt;(&amp;connection)?;</span>
-<span class="doccomment">/// let tess = users.filter(name.eq(&quot;Tess&quot;)).first::&lt;User&gt;(&amp;connection)?;</span>
+<span class="doccomment">/// let sean = users.filter(name.eq(&quot;Sean&quot;)).first::&lt;User&gt;(connection)?;</span>
+<span class="doccomment">/// let tess = users.filter(name.eq(&quot;Tess&quot;)).first::&lt;User&gt;(connection)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let seans_posts = Post::belonging_to(&amp;sean)</span>
 <span class="doccomment">///     .select(title)</span>
-<span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
 <span class="doccomment">/// assert_eq!(vec![&quot;My first post&quot;, &quot;About Rust&quot;], seans_posts);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // A vec or slice can be passed as well</span>
 <span class="doccomment">/// let more_posts = Post::belonging_to(&amp;vec![sean, tess])</span>
 <span class="doccomment">///     .select(title)</span>
-<span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
 <span class="doccomment">/// assert_eq!(vec![&quot;My first post&quot;, &quot;About Rust&quot;, &quot;My first post too&quot;], more_posts);</span>
 <span class="doccomment">/// #     Ok(())</span>
 <span class="doccomment">/// # }</span>

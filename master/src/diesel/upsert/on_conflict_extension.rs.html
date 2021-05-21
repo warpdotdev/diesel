@@ -420,7 +420,7 @@
     <span class="doccomment">/// # #[cfg(any(feature = &quot;sqlite&quot;, feature = &quot;postgres&quot;))]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -430,13 +430,13 @@
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;user)</span>
     <span class="doccomment">///     .on_conflict_do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), inserted_row_count);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;user)</span>
     <span class="doccomment">///     .on_conflict_do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(0), inserted_row_count);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
@@ -451,7 +451,7 @@
     <span class="doccomment">/// # #[cfg(any(feature = &quot;sqlite&quot;, feature = &quot;postgres&quot;))]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
@@ -461,7 +461,7 @@
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![user, user])</span>
     <span class="doccomment">///     .on_conflict_do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// assert_eq!(Ok(1), inserted_row_count);</span>
     <span class="doccomment">/// # }</span>
@@ -494,7 +494,7 @@
     <span class="doccomment">/// # #[cfg(any(feature = &quot;sqlite&quot;, feature = &quot;postgres&quot;))]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -504,20 +504,20 @@
     <span class="doccomment">/// let same_name_different_id = User { id: 2, name: &quot;Sean&quot; };</span>
     <span class="doccomment">/// let same_id_different_name = User { id: 1, name: &quot;Pascal&quot; };</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;same_name_different_id)</span>
     <span class="doccomment">///     .on_conflict(name)</span>
     <span class="doccomment">///     .do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(0), inserted_row_count);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let pk_conflict_result = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;same_id_different_name)</span>
     <span class="doccomment">///     .on_conflict(name)</span>
     <span class="doccomment">///     .do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert!(pk_conflict_result.is_err());</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
@@ -550,7 +550,7 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// use diesel::upsert::*;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT, hair_color TEXT)&quot;).unwrap();</span>
     <span class="doccomment">/// conn.execute(&quot;CREATE UNIQUE INDEX users_name_hair_color ON users (name, hair_color)&quot;).unwrap();</span>
@@ -558,20 +558,20 @@
     <span class="doccomment">/// let same_name_different_hair_color = User { id: 2, name: &quot;Sean&quot;, hair_color: &quot;brown&quot; };</span>
     <span class="doccomment">/// let same_name_same_hair_color = User { id: 3, name: &quot;Sean&quot;, hair_color: &quot;black&quot; };</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;same_name_different_hair_color)</span>
     <span class="doccomment">///     .on_conflict((name, hair_color))</span>
     <span class="doccomment">///     .do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), inserted_row_count);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_row_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;same_name_same_hair_color)</span>
     <span class="doccomment">///     .on_conflict((name, hair_color))</span>
     <span class="doccomment">///     .do_nothing()</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(0), inserted_row_count);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
@@ -655,7 +655,7 @@
     <span class="doccomment">/// # #[cfg(any(feature = &quot;sqlite&quot;, feature = &quot;postgres&quot;))]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -663,17 +663,17 @@
     <span class="doccomment">/// let user = User { id: 1, name: &quot;Pascal&quot; };</span>
     <span class="doccomment">/// let user2 = User { id: 1, name: &quot;Sean&quot; };</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let insert_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;user2)</span>
     <span class="doccomment">///     .on_conflict(id)</span>
     <span class="doccomment">///     .do_update()</span>
     <span class="doccomment">///     .set(name.eq(&quot;I DONT KNOW ANYMORE&quot;))</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), insert_count);</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let users_in_db = users.load(&amp;conn);</span>
+    <span class="doccomment">/// let users_in_db = users.load(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(vec![(1, &quot;I DONT KNOW ANYMORE&quot;.to_string())]), users_in_db);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
@@ -688,7 +688,7 @@
     <span class="doccomment">/// # #[cfg(any(feature = &quot;sqlite&quot;, feature = &quot;postgres&quot;))]</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;sqlite&quot;)]</span>
@@ -696,17 +696,17 @@
     <span class="doccomment">/// let user = User { id: 1, name: &quot;Pascal&quot; };</span>
     <span class="doccomment">/// let user2 = User { id: 1, name: &quot;Sean&quot; };</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let insert_count = diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;user2)</span>
     <span class="doccomment">///     .on_conflict(id)</span>
     <span class="doccomment">///     .do_update()</span>
     <span class="doccomment">///     .set(&amp;user2)</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), insert_count);</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let users_in_db = users.load(&amp;conn);</span>
+    <span class="doccomment">/// let users_in_db = users.load(conn);</span>
     <span class="doccomment">/// assert_eq!(Ok(vec![(1, &quot;Sean&quot;.to_string())]), users_in_db);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
@@ -723,7 +723,7 @@
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
     <span class="doccomment">/// use diesel::upsert::excluded;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// #     conn.execute(&quot;TRUNCATE TABLE users&quot;).unwrap();</span>
     <span class="doccomment">/// let user = User { id: 1, name: &quot;Pascal&quot; };</span>
@@ -731,7 +731,7 @@
     <span class="doccomment">/// let user3 = User { id: 2, name: &quot;Tess&quot; };</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(&amp;conn));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), diesel::insert_into(users).values(&amp;user).execute(conn));</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// let insert_count = diesel::insert_into(users)</span>
@@ -739,12 +739,12 @@
     <span class="doccomment">///     .on_conflict(id)</span>
     <span class="doccomment">///     .do_update()</span>
     <span class="doccomment">///     .set(name.eq(excluded(name)))</span>
-    <span class="doccomment">///     .execute(&amp;conn);</span>
+    <span class="doccomment">///     .execute(conn);</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// assert_eq!(Ok(2), insert_count);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
-    <span class="doccomment">/// let users_in_db = users.load(&amp;conn);</span>
+    <span class="doccomment">/// let users_in_db = users.load(conn);</span>
     <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
     <span class="doccomment">/// assert_eq!(Ok(vec![(1, &quot;Sean&quot;.to_string()), (2, &quot;Tess&quot;.to_string())]), users_in_db);</span>
     <span class="doccomment">/// # }</span>

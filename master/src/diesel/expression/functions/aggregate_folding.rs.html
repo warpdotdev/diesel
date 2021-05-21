@@ -85,8 +85,8 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// assert_eq!(Ok(Some(12i64)), animals.select(sum(legs)).first(&amp;connection));</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// assert_eq!(Ok(Some(12i64)), animals.select(sum(legs)).first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">aggregate</span>]</span>
@@ -119,13 +119,13 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use bigdecimal::BigDecimal;</span>
     <span class="doccomment">/// #     use self::numbers::dsl::*;</span>
-    <span class="doccomment">/// #     let conn = establish_connection();</span>
+    <span class="doccomment">/// #     let conn = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     conn.execute(&quot;DROP TABLE IF EXISTS numbers&quot;)?;</span>
     <span class="doccomment">/// #     conn.execute(&quot;CREATE TABLE numbers (number INTEGER)&quot;)?;</span>
     <span class="doccomment">/// diesel::insert_into(numbers)</span>
     <span class="doccomment">///     .values(&amp;vec![number.eq(1), number.eq(2)])</span>
-    <span class="doccomment">///     .execute(&amp;conn)?;</span>
-    <span class="doccomment">/// let average = numbers.select(avg(number)).get_result(&amp;conn)?;</span>
+    <span class="doccomment">///     .execute(conn)?;</span>
+    <span class="doccomment">/// let average = numbers.select(avg(number)).get_result(conn)?;</span>
     <span class="doccomment">/// let expected = &quot;1.5&quot;.parse::&lt;BigDecimal&gt;().unwrap();</span>
     <span class="doccomment">/// assert_eq!(Some(expected), average);</span>
     <span class="doccomment">/// #     Ok(())</span>

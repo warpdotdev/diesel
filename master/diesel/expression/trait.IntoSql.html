@@ -16,7 +16,7 @@ select a constant value.</p>
 <span class="kw">use</span> <span class="ident">diesel</span>::<span class="ident">sql_types</span>::<span class="ident">Text</span>;
 <span class="kw">let</span> <span class="ident">names</span> <span class="op">=</span> <span class="ident">users</span>::<span class="ident">table</span>
     .<span class="ident">select</span>(<span class="string">&quot;The Amazing &quot;</span>.<span class="ident">into_sql</span>::<span class="op">&lt;</span><span class="ident">Text</span><span class="op">&gt;</span>().<span class="ident">concat</span>(<span class="ident">users</span>::<span class="ident">name</span>))
-    .<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">conn</span>);
+    .<span class="ident">load</span>(<span class="ident">conn</span>);
 <span class="kw">let</span> <span class="ident">expected_names</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
     <span class="string">&quot;The Amazing Sean&quot;</span>.<span class="ident">to_string</span>(),
     <span class="string">&quot;The Amazing Tess&quot;</span>.<span class="ident">to_string</span>(),

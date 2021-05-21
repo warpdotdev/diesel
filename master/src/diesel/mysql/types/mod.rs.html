@@ -360,25 +360,25 @@
 }
 
 <span class="kw">impl</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">TinyInt</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Mysql</span> {
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span>()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
         <span class="ident">MysqlType</span>::<span class="ident">UnsignedTiny</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">SmallInt</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Mysql</span> {
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span>()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
         <span class="ident">MysqlType</span>::<span class="ident">UnsignedShort</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">Integer</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Mysql</span> {
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span>()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
         <span class="ident">MysqlType</span>::<span class="ident">UnsignedLong</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">BigInt</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Mysql</span> {
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span>()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">_lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ()) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MysqlType</span> {
         <span class="ident">MysqlType</span>::<span class="ident">UnsignedLongLong</span>
     }
 }

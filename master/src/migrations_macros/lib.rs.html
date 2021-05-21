@@ -157,7 +157,7 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;postgres&quot;)]</span>
 <span class="doccomment">/// # fn migration_connection() -&gt; diesel::PgConnection {</span>
 <span class="doccomment">/// #    let connection_url = database_url_from_env(&quot;PG_DATABASE_URL&quot;);</span>
-<span class="doccomment">/// #    let conn = diesel::PgConnection::establish(&amp;connection_url).unwrap();</span>
+<span class="doccomment">/// #    let mut conn = diesel::PgConnection::establish(&amp;connection_url).unwrap();</span>
 <span class="doccomment">/// #    conn.begin_test_transaction().unwrap();</span>
 <span class="doccomment">/// #    conn</span>
 <span class="doccomment">/// # }</span>
@@ -165,7 +165,7 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;sqlite&quot;)]</span>
 <span class="doccomment">/// # fn migration_connection() -&gt; diesel::SqliteConnection {</span>
 <span class="doccomment">/// #    let connection_url = database_url_from_env(&quot;SQLITE_DATABASE_URL&quot;);</span>
-<span class="doccomment">/// #    let conn = diesel::SqliteConnection::establish(&amp;connection_url).unwrap();</span>
+<span class="doccomment">/// #    let mut conn = diesel::SqliteConnection::establish(&amp;connection_url).unwrap();</span>
 <span class="doccomment">/// #    conn.begin_test_transaction().unwrap();</span>
 <span class="doccomment">/// #    conn</span>
 <span class="doccomment">/// # }</span>
@@ -173,7 +173,7 @@
 <span class="doccomment">/// # #[cfg(feature = &quot;mysql&quot;)]</span>
 <span class="doccomment">/// # fn migration_connection() -&gt; diesel::MysqlConnection {</span>
 <span class="doccomment">/// #    let connection_url = database_url_from_env(&quot;MYSQL_DATABASE_URL&quot;);</span>
-<span class="doccomment">/// #    let conn = diesel::MysqlConnection::establish(&amp;connection_url).unwrap();</span>
+<span class="doccomment">/// #    let mut conn = diesel::MysqlConnection::establish(&amp;connection_url).unwrap();</span>
 <span class="doccomment">/// #    conn</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
@@ -186,11 +186,11 @@
 <span class="doccomment">/// # pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!(&quot;../../migrations/sqlite&quot;);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #     let connection = migration_connection();</span>
-<span class="doccomment">/// #     run_migrations(&amp;connection).unwrap();</span>
+<span class="doccomment">/// #     let connection = &amp;mut migration_connection();</span>
+<span class="doccomment">/// #     run_migrations(connection).unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn run_migrations(connection: &amp;impl MigrationHarness&lt;DB&gt;) -&gt; Result&lt;(), Box&lt;dyn Error + Send + Sync + &#39;static&gt;&gt; {</span>
+<span class="doccomment">/// fn run_migrations(connection: &amp;mut impl MigrationHarness&lt;DB&gt;) -&gt; Result&lt;(), Box&lt;dyn Error + Send + Sync + &#39;static&gt;&gt; {</span>
 <span class="doccomment">/// #   #[cfg(feature = &quot;mysql&quot;)]</span>
 <span class="doccomment">/// #   connection.revert_all_migrations(MIGRATIONS)?;</span>
 <span class="doccomment">///</span>

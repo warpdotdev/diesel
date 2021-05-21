@@ -140,14 +140,14 @@
 <span class="doccomment">/// # use schema::{users, posts};</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let data = users::table</span>
 <span class="doccomment">///     .left_join(posts::table.on(</span>
 <span class="doccomment">///         users::id.eq(posts::user_id).and(</span>
 <span class="doccomment">///             posts::title.eq(&quot;My first post&quot;))</span>
 <span class="doccomment">///     ))</span>
 <span class="doccomment">///     .select((users::name, posts::title.nullable()))</span>
-<span class="doccomment">///     .load(&amp;connection);</span>
+<span class="doccomment">///     .load(connection);</span>
 <span class="doccomment">/// let expected = vec![</span>
 <span class="doccomment">///     (&quot;Sean&quot;.to_string(), Some(&quot;My first post&quot;.to_string())),</span>
 <span class="doccomment">///     (&quot;Tess&quot;.to_string(), None),</span>

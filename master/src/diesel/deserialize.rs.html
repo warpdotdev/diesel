@@ -502,8 +502,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -554,8 +554,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -597,8 +597,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let first_user = users.first(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let first_user = users.first(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -647,9 +647,9 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let first_user = sql_query(&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;)</span>
-<span class="doccomment">///     .get_result(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;Sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>
@@ -698,9 +698,9 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let first_user = sql_query(&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;)</span>
-<span class="doccomment">///     .get_result(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result(connection)?;</span>
 <span class="doccomment">/// let expected = User { id: 1, name: &quot;sean&quot;.into() };</span>
 <span class="doccomment">/// assert_eq!(expected, first_user);</span>
 <span class="doccomment">/// #     Ok(())</span>

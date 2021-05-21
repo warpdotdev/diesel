@@ -30,7 +30,7 @@ when using this crate.</p>
 <span class="kw">let</span> <span class="ident">results</span> <span class="op">=</span> <span class="ident">users</span>
     .<span class="ident">select</span>((<span class="ident">id</span>, <span class="ident">name</span>))
     .<span class="ident">filter</span>(<span class="ident">name</span>.<span class="ident">eq</span>(<span class="string">&quot;Sean&quot;</span>))
-    .<span class="ident">load</span>::<span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">String</span>)<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">conn</span>)<span class="question-mark">?</span>;
+    .<span class="ident">load</span>::<span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">String</span>)<span class="op">&gt;</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>;
 
 <span class="kw">for</span> (<span class="ident">id</span>, <span class="ident">name</span>) <span class="kw">in</span> <span class="ident">results</span> {
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;id:{} name:{}&quot;</span>, <span class="ident">id</span>, <span class="ident">name</span>);

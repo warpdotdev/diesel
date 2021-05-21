@@ -1058,7 +1058,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method may use `lookup` to do dynamic runtime lookup. Implementors</span>
     <span class="doccomment">/// of this method should not do dynamic lookup unless absolutely necessary</span>
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">MetadataLookup</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">TypeMetadata</span>;
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">MetadataLookup</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">TypeMetadata</span>;
 }
 
 <span class="doccomment">/// Information about how a backend stores metadata about given SQL types</span>

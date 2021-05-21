@@ -133,13 +133,13 @@
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::dsl::array;</span>
 <span class="doccomment">/// #     use diesel::sql_types::Integer;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let ints = diesel::select(array::&lt;Integer, _&gt;((1, 2)))</span>
-<span class="doccomment">///     .get_result::&lt;Vec&lt;i32&gt;&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     .get_result::&lt;Vec&lt;i32&gt;&gt;(connection)?;</span>
 <span class="doccomment">/// assert_eq!(vec![1, 2], ints);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let ids = users.select(array((id, id * 2)))</span>
-<span class="doccomment">///     .get_results::&lt;Vec&lt;i32&gt;&gt;(&amp;connection)?;</span>
+<span class="doccomment">///     .get_results::&lt;Vec&lt;i32&gt;&gt;(connection)?;</span>
 <span class="doccomment">/// let expected = vec![</span>
 <span class="doccomment">///     vec![1, 2],</span>
 <span class="doccomment">///     vec![2, 4],</span>

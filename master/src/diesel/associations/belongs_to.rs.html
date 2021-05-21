@@ -252,10 +252,10 @@
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let users = users::table.load::&lt;User&gt;(&amp;connection)?;</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let users = users::table.load::&lt;User&gt;(connection)?;</span>
 <span class="doccomment">/// let posts = Post::belonging_to(&amp;users)</span>
-<span class="doccomment">///     .load::&lt;Post&gt;(&amp;connection)?</span>
+<span class="doccomment">///     .load::&lt;Post&gt;(connection)?</span>
 <span class="doccomment">///     .grouped_by(&amp;users);</span>
 <span class="doccomment">/// let data = users.into_iter().zip(posts).collect::&lt;Vec&lt;_&gt;&gt;();</span>
 <span class="doccomment">///</span>

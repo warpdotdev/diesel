@@ -445,11 +445,11 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">//! #     let connection = establish_connection();</span>
+<span class="doccomment">//! #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">//! #     use self::users::dsl::*;</span>
-<span class="doccomment">//! let user = users.find(2).get_result::&lt;User&gt;(&amp;connection)?;</span>
+<span class="doccomment">//! let user = users.find(2).get_result::&lt;User&gt;(connection)?;</span>
 <span class="doccomment">//! let users_post = Post::belonging_to(&amp;user)</span>
-<span class="doccomment">//!     .first(&amp;connection)?;</span>
+<span class="doccomment">//!     .first(connection)?;</span>
 <span class="doccomment">//! let expected = Post { id: 3, user_id: 2, title: &quot;My first post too&quot;.into() };</span>
 <span class="doccomment">//! assert_eq!(expected, users_post);</span>
 <span class="doccomment">//! #     Ok(())</span>
@@ -531,11 +531,11 @@
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn main() {</span>
 <span class="doccomment">//! #   use self::users::dsl::*;</span>
-<span class="doccomment">//! #   let connection = establish_connection();</span>
+<span class="doccomment">//! #   let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">//! #</span>
-<span class="doccomment">//! let user = users.find(1).first::&lt;User&gt;(&amp;connection).expect(&quot;Error loading user&quot;);</span>
+<span class="doccomment">//! let user = users.find(1).first::&lt;User&gt;(connection).expect(&quot;Error loading user&quot;);</span>
 <span class="doccomment">//! let post_list = Post::belonging_to(&amp;user)</span>
-<span class="doccomment">//!     .load::&lt;Post&gt;(&amp;connection)</span>
+<span class="doccomment">//!     .load::&lt;Post&gt;(connection)</span>
 <span class="doccomment">//!     .expect(&quot;Error loading posts&quot;);</span>
 <span class="doccomment">//! let expected = vec![</span>
 <span class="doccomment">//!     Post { id: 1, user_id: 1, title: &quot;My first post&quot;.to_string() },</span>
@@ -588,21 +588,21 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">//! #     let connection = establish_connection();</span>
+<span class="doccomment">//! #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">//! #     use self::users::dsl::*;</span>
 <span class="doccomment">//! #     use self::posts::dsl::{posts, title};</span>
-<span class="doccomment">//! let sean = users.filter(name.eq(&quot;Sean&quot;)).first::&lt;User&gt;(&amp;connection)?;</span>
-<span class="doccomment">//! let tess = users.filter(name.eq(&quot;Tess&quot;)).first::&lt;User&gt;(&amp;connection)?;</span>
+<span class="doccomment">//! let sean = users.filter(name.eq(&quot;Sean&quot;)).first::&lt;User&gt;(connection)?;</span>
+<span class="doccomment">//! let tess = users.filter(name.eq(&quot;Tess&quot;)).first::&lt;User&gt;(connection)?;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let seans_posts = Post::belonging_to(&amp;sean)</span>
 <span class="doccomment">//!     .select(title)</span>
-<span class="doccomment">//!     .load::&lt;String&gt;(&amp;connection)?;</span>
+<span class="doccomment">//!     .load::&lt;String&gt;(connection)?;</span>
 <span class="doccomment">//! assert_eq!(vec![&quot;My first post&quot;, &quot;About Rust&quot;], seans_posts);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! // A vec or slice can be passed as well</span>
 <span class="doccomment">//! let more_posts = Post::belonging_to(&amp;vec![sean, tess])</span>
 <span class="doccomment">//!     .select(title)</span>
-<span class="doccomment">//!     .load::&lt;String&gt;(&amp;connection)?;</span>
+<span class="doccomment">//!     .load::&lt;String&gt;(connection)?;</span>
 <span class="doccomment">//! assert_eq!(vec![&quot;My first post&quot;, &quot;About Rust&quot;, &quot;My first post too&quot;], more_posts);</span>
 <span class="doccomment">//! #     Ok(())</span>
 <span class="doccomment">//! # }</span>
@@ -642,10 +642,10 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-<span class="doccomment">//! #     let connection = establish_connection();</span>
-<span class="doccomment">//! let users = users::table.load::&lt;User&gt;(&amp;connection)?;</span>
+<span class="doccomment">//! #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">//! let users = users::table.load::&lt;User&gt;(connection)?;</span>
 <span class="doccomment">//! let posts = Post::belonging_to(&amp;users)</span>
-<span class="doccomment">//!     .load::&lt;Post&gt;(&amp;connection)?</span>
+<span class="doccomment">//!     .load::&lt;Post&gt;(connection)?</span>
 <span class="doccomment">//!     .grouped_by(&amp;users);</span>
 <span class="doccomment">//! let data = users.into_iter().zip(posts).collect::&lt;Vec&lt;_&gt;&gt;();</span>
 <span class="doccomment">//!</span>
@@ -706,15 +706,15 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # fn main() {</span>
-<span class="doccomment">//! #   let connection = establish_connection();</span>
+<span class="doccomment">//! #   let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">//! #</span>
-<span class="doccomment">//! let users: Vec&lt;User&gt; = users::table.load::&lt;User&gt;(&amp;connection)</span>
+<span class="doccomment">//! let users: Vec&lt;User&gt; = users::table.load::&lt;User&gt;(connection)</span>
 <span class="doccomment">//!     .expect(&quot;error loading users&quot;);</span>
 <span class="doccomment">//! let posts: Vec&lt;Post&gt; = Post::belonging_to(&amp;users)</span>
-<span class="doccomment">//!     .load::&lt;Post&gt;(&amp;connection)</span>
+<span class="doccomment">//!     .load::&lt;Post&gt;(connection)</span>
 <span class="doccomment">//!     .expect(&quot;error loading posts&quot;);</span>
 <span class="doccomment">//! let comments: Vec&lt;Comment&gt; = Comment::belonging_to(&amp;posts)</span>
-<span class="doccomment">//!     .load::&lt;Comment&gt;(&amp;connection)</span>
+<span class="doccomment">//!     .load::&lt;Comment&gt;(connection)</span>
 <span class="doccomment">//!     .expect(&quot;Error loading comments&quot;);</span>
 <span class="doccomment">//! let grouped_comments: Vec&lt;Vec&lt;Comment&gt;&gt; = comments.grouped_by(&amp;posts);</span>
 <span class="doccomment">//! let posts_and_comments: Vec&lt;Vec&lt;(Post, Vec&lt;Comment&gt;)&gt;&gt; = posts</span>

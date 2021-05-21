@@ -1523,6 +1523,7 @@
 <span id="1520">1520</span>
 <span id="1521">1521</span>
 <span id="1522">1522</span>
+<span id="1523">1523</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Traits that construct SELECT statements</span>
 <span class="doccomment">//!</span>
@@ -1622,13 +1623,13 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM users&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![name.eq(&quot;Sean&quot;); 3])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
-    <span class="doccomment">/// let names = users.select(name).load::&lt;String&gt;(&amp;connection)?;</span>
-    <span class="doccomment">/// let distinct_names = users.select(name).distinct().load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
+    <span class="doccomment">/// let names = users.select(name).load::&lt;String&gt;(connection)?;</span>
+    <span class="doccomment">/// let distinct_names = users.select(name).distinct().load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;; 3], names);</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;; 1], distinct_names);</span>
@@ -1669,7 +1670,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM animals&quot;).unwrap();</span>
     <span class="doccomment">/// diesel::insert_into(animals)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
@@ -1677,13 +1678,14 @@
     <span class="doccomment">///         (species.eq(&quot;dog&quot;), name.eq(None), legs.eq(4)),</span>
     <span class="doccomment">///         (species.eq(&quot;spider&quot;), name.eq(None), legs.eq(8)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)</span>
+    <span class="doccomment">///     .execute(connection)</span>
     <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let all_animals = animals.select((species, name, legs)).load(&amp;connection);</span>
+    <span class="doccomment">/// let all_animals = animals.select((species, name, legs)).load(connection);</span>
     <span class="doccomment">/// let distinct_animals = animals</span>
     <span class="doccomment">///     .select((species, name, legs))</span>
     <span class="doccomment">///     .order_by((species, legs))</span>
-    <span class="doccomment">///     .distinct_on(species).load(&amp;connection);</span>
+    <span class="doccomment">///     .distinct_on(species)</span>
+    <span class="doccomment">///     .load(connection);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Ok(vec![Animal::new(&quot;dog&quot;, Some(&quot;Jack&quot;), 4),</span>
     <span class="doccomment">///                    Animal::new(&quot;dog&quot;, None, 4),</span>
@@ -1730,12 +1732,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// // By default, all columns will be selected</span>
-    <span class="doccomment">/// let all_users = users.load::&lt;(i32, String)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// let all_users = users.load::&lt;(i32, String)&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![(1, String::from(&quot;Sean&quot;)), (2, String::from(&quot;Tess&quot;))], all_users);</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let all_names = users.select(name).load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// let all_names = users.select(name).load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;, &quot;Tess&quot;], all_names);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -1784,19 +1786,19 @@
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM posts&quot;)?;</span>
     <span class="doccomment">/// #     diesel::insert_into(posts::table)</span>
     <span class="doccomment">/// #         .values((posts::user_id.eq(1), posts::title.eq(&quot;Sean&#39;s Post&quot;)))</span>
-    <span class="doccomment">/// #         .execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #         .execute(connection)?;</span>
     <span class="doccomment">/// #     let post_id = posts::table.select(posts::id)</span>
-    <span class="doccomment">/// #         .first::&lt;i32&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// #         .first::&lt;i32&gt;(connection)?;</span>
     <span class="doccomment">/// let join = users::table.left_join(posts::table);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // By default, all columns from both tables are selected.</span>
     <span class="doccomment">/// // If no explicit select clause is used this means that the result</span>
     <span class="doccomment">/// // type of this query must contain all fields from the original schema in order.</span>
-    <span class="doccomment">/// let all_data = join.load::&lt;(User, Option&lt;Post&gt;)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// let all_data = join.load::&lt;(User, Option&lt;Post&gt;)&gt;(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (User::new(1, &quot;Sean&quot;), Some(Post::new(post_id, 1, &quot;Sean&#39;s Post&quot;))),</span>
     <span class="doccomment">///     (User::new(2, &quot;Tess&quot;), None),</span>
@@ -1806,7 +1808,7 @@
     <span class="doccomment">/// // Since `posts` is on the right side of a left join, `.nullable` is</span>
     <span class="doccomment">/// // needed.</span>
     <span class="doccomment">/// let names_and_titles = join.select((users::name, posts::title.nullable()))</span>
-    <span class="doccomment">///     .load::&lt;(String, Option&lt;String&gt;)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;(String, Option&lt;String&gt;)&gt;(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Sean&quot;), Some(String::from(&quot;Sean&#39;s Post&quot;))),</span>
     <span class="doccomment">///     (String::from(&quot;Tess&quot;), None),</span>
@@ -1832,8 +1834,8 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// let count = users.count().get_result(&amp;connection);</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// let count = users.count().get_result(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(2), count);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -1906,10 +1908,10 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::{users, name};</span>
     <span class="doccomment">/// #     use self::posts::dsl::{posts, user_id, title};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users.inner_join(posts)</span>
     <span class="doccomment">///     .select((name, title))</span>
-    <span class="doccomment">///     .load(&amp;connection);</span>
+    <span class="doccomment">///     .load(connection);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Sean&quot;), String::from(&quot;My first post&quot;)),</span>
@@ -1933,19 +1935,19 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::{users, name};</span>
     <span class="doccomment">/// #     use self::posts::dsl::{posts, user_id, title};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// diesel::insert_into(posts)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
     <span class="doccomment">///         (user_id.eq(1), title.eq(&quot;Sean&#39;s post&quot;)),</span>
     <span class="doccomment">///         (user_id.eq(2), title.eq(&quot;Sean is a jerk&quot;)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)</span>
+    <span class="doccomment">///     .execute(connection)</span>
     <span class="doccomment">///     .unwrap();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .inner_join(posts.on(title.like(name.concat(&quot;%&quot;))))</span>
     <span class="doccomment">///     .select((name, title))</span>
-    <span class="doccomment">///     .load(&amp;connection);</span>
+    <span class="doccomment">///     .load(connection);</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Sean&quot;), String::from(&quot;Sean&#39;s post&quot;)),</span>
     <span class="doccomment">///     (String::from(&quot;Sean&quot;), String::from(&quot;Sean is a jerk&quot;)),</span>
@@ -1967,7 +1969,7 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::{users, name};</span>
     <span class="doccomment">/// #     use self::posts::dsl::{posts, user_id, title};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #[derive(Debug, PartialEq, Queryable)]</span>
     <span class="doccomment">/// struct User {</span>
     <span class="doccomment">///     id: i32,</span>
@@ -1986,7 +1988,7 @@
     <span class="doccomment">///         (user_id.eq(1), title.eq(&quot;Sean&#39;s post&quot;)),</span>
     <span class="doccomment">///         (user_id.eq(2), title.eq(&quot;Sean is a jerk&quot;)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)</span>
+    <span class="doccomment">///     .execute(connection)</span>
     <span class="doccomment">///     .unwrap();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // By default, all columns from both tables are selected.</span>
@@ -1995,7 +1997,7 @@
     <span class="doccomment">/// // original schema in order.</span>
     <span class="doccomment">/// let data = users</span>
     <span class="doccomment">///     .inner_join(posts.on(title.like(name.concat(&quot;%&quot;))))</span>
-    <span class="doccomment">///     .load::&lt;(User, Post)&gt;(&amp;connection); // type could be elided</span>
+    <span class="doccomment">///     .load::&lt;(User, Post)&gt;(connection); // type could be elided</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (</span>
     <span class="doccomment">///         User { id: 1, name: String::from(&quot;Sean&quot;) },</span>
@@ -2070,19 +2072,19 @@
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM posts&quot;)?;</span>
     <span class="doccomment">/// #     diesel::insert_into(posts::table)</span>
     <span class="doccomment">/// #         .values((posts::user_id.eq(1), posts::title.eq(&quot;Sean&#39;s Post&quot;)))</span>
-    <span class="doccomment">/// #         .execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #         .execute(connection)?;</span>
     <span class="doccomment">/// #     let post_id = posts::table.select(posts::id)</span>
-    <span class="doccomment">/// #         .first::&lt;i32&gt;(&amp;connection)?;</span>
+    <span class="doccomment">/// #         .first::&lt;i32&gt;(connection)?;</span>
     <span class="doccomment">/// let join = users::table.left_join(posts::table);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Since `posts` is on the right side of a left join, `.nullable` is</span>
     <span class="doccomment">/// // needed.</span>
     <span class="doccomment">/// let names_and_titles = join.select((users::name, posts::title.nullable()))</span>
-    <span class="doccomment">///     .load::&lt;(String, Option&lt;String&gt;)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;(String, Option&lt;String&gt;)&gt;(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Sean&quot;), Some(String::from(&quot;Sean&#39;s Post&quot;))),</span>
     <span class="doccomment">///     (String::from(&quot;Tess&quot;), None),</span>
@@ -2119,12 +2121,12 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let seans_id = users.filter(name.eq(&quot;Sean&quot;)).select(id)</span>
-    <span class="doccomment">///     .first(&amp;connection);</span>
+    <span class="doccomment">///     .first(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(1), seans_id);</span>
     <span class="doccomment">/// let tess_id = users.filter(name.eq(&quot;Tess&quot;)).select(id)</span>
-    <span class="doccomment">///     .first(&amp;connection);</span>
+    <span class="doccomment">///     .first(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(2), tess_id);</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -2154,21 +2156,21 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::animals::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// #     diesel::delete(animals).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// #     diesel::delete(animals).execute(connection)?;</span>
     <span class="doccomment">/// diesel::insert_into(animals)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
     <span class="doccomment">///         (species.eq(&quot;cat&quot;), legs.eq(4), name.eq(&quot;Sinatra&quot;)),</span>
     <span class="doccomment">///         (species.eq(&quot;dog&quot;), legs.eq(3), name.eq(&quot;Fido&quot;)),</span>
     <span class="doccomment">///         (species.eq(&quot;spider&quot;), legs.eq(8), name.eq(&quot;Charlotte&quot;)),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let good_animals = animals</span>
     <span class="doccomment">///     .filter(name.eq(&quot;Fido&quot;))</span>
     <span class="doccomment">///     .or_filter(legs.eq(4))</span>
     <span class="doccomment">///     .select(name)</span>
-    <span class="doccomment">///     .get_results::&lt;Option&lt;String&gt;&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_results::&lt;Option&lt;String&gt;&gt;(connection)?;</span>
     <span class="doccomment">/// let expected = vec![</span>
     <span class="doccomment">///     Some(String::from(&quot;Sinatra&quot;)),</span>
     <span class="doccomment">///     Some(String::from(&quot;Fido&quot;)),</span>
@@ -2195,12 +2197,12 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
     <span class="doccomment">/// #     use diesel::result::Error::NotFound;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let sean = (1, &quot;Sean&quot;.to_string());</span>
     <span class="doccomment">/// let tess = (2, &quot;Tess&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(Ok(sean), users.find(1).first(&amp;connection));</span>
-    <span class="doccomment">/// assert_eq!(Ok(tess), users.find(2).first(&amp;connection));</span>
-    <span class="doccomment">/// assert_eq!(Err::&lt;(i32, String), _&gt;(NotFound), users.find(3).first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(sean), users.find(1).first(connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(tess), users.find(2).first(connection));</span>
+    <span class="doccomment">/// assert_eq!(Err::&lt;(i32, String), _&gt;(NotFound), users.find(3).first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="ident">PK</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">id</span>: <span class="ident">PK</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Find</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">PK</span><span class="op">&gt;</span>
@@ -2234,7 +2236,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM users&quot;)?;</span>
     <span class="doccomment">/// diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
@@ -2242,18 +2244,18 @@
     <span class="doccomment">///         name.eq(&quot;Steve&quot;),</span>
     <span class="doccomment">///         name.eq(&quot;Stan&quot;),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let ordered_names = users.select(name)</span>
     <span class="doccomment">///     .order(name.desc())</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Steve&quot;, &quot;Stan&quot;, &quot;Saul&quot;], ordered_names);</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// diesel::insert_into(users).values(name.eq(&quot;Stan&quot;)).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// diesel::insert_into(users).values(name.eq(&quot;Stan&quot;)).execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = users.select((name, id))</span>
     <span class="doccomment">///     .order((name.asc(), id.desc()))</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Saul&quot;), 3),</span>
     <span class="doccomment">///     (String::from(&quot;Stan&quot;), 6),</span>
@@ -2301,7 +2303,7 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     connection.execute(&quot;DELETE FROM users&quot;)?;</span>
     <span class="doccomment">/// diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![</span>
@@ -2310,12 +2312,12 @@
     <span class="doccomment">///         name.eq(&quot;Stan&quot;),</span>
     <span class="doccomment">///         name.eq(&quot;Stan&quot;),</span>
     <span class="doccomment">///     ])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = users.select((name, id))</span>
     <span class="doccomment">///     .order_by(name.asc())</span>
     <span class="doccomment">///     .then_order_by(id.desc())</span>
-    <span class="doccomment">///     .load(&amp;connection)?;</span>
+    <span class="doccomment">///     .load(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (String::from(&quot;Saul&quot;), 3),</span>
     <span class="doccomment">///     (String::from(&quot;Stan&quot;), 6),</span>
@@ -2349,26 +2351,26 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// #     diesel::delete(users).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// #     diesel::delete(users).execute(connection)?;</span>
     <span class="doccomment">/// #     diesel::insert_into(users)</span>
     <span class="doccomment">/// #        .values(&amp;vec![</span>
     <span class="doccomment">/// #            name.eq(&quot;Sean&quot;),</span>
     <span class="doccomment">/// #            name.eq(&quot;Bastien&quot;),</span>
     <span class="doccomment">/// #            name.eq(&quot;Pascal&quot;),</span>
     <span class="doccomment">/// #        ])</span>
-    <span class="doccomment">/// #        .execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #        .execute(connection)?;</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// // Using a limit</span>
     <span class="doccomment">/// let limited = users.select(name)</span>
     <span class="doccomment">///     .order(id)</span>
     <span class="doccomment">///     .limit(1)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Without a limit</span>
     <span class="doccomment">/// let no_limit = users.select(name)</span>
     <span class="doccomment">///     .order(id)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;], limited);</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;, &quot;Bastien&quot;, &quot;Pascal&quot;], no_limit);</span>
@@ -2398,28 +2400,28 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use self::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
-    <span class="doccomment">/// #     diesel::delete(users).execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">/// #     diesel::delete(users).execute(connection)?;</span>
     <span class="doccomment">/// #     diesel::insert_into(users)</span>
     <span class="doccomment">/// #        .values(&amp;vec![</span>
     <span class="doccomment">/// #            name.eq(&quot;Sean&quot;),</span>
     <span class="doccomment">/// #            name.eq(&quot;Bastien&quot;),</span>
     <span class="doccomment">/// #            name.eq(&quot;Pascal&quot;),</span>
     <span class="doccomment">/// #        ])</span>
-    <span class="doccomment">/// #        .execute(&amp;connection)?;</span>
+    <span class="doccomment">/// #        .execute(connection)?;</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// // Using an offset</span>
     <span class="doccomment">/// let offset = users.select(name)</span>
     <span class="doccomment">///     .order(id)</span>
     <span class="doccomment">///     .limit(2)</span>
     <span class="doccomment">///     .offset(1)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // No Offset</span>
     <span class="doccomment">/// let no_offset = users.select(name)</span>
     <span class="doccomment">///     .order(id)</span>
     <span class="doccomment">///     .limit(2)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Bastien&quot;, &quot;Pascal&quot;], offset);</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;, &quot;Bastien&quot;], no_offset);</span>
@@ -2463,12 +2465,12 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use crate::schema::{users, posts};</span>
     <span class="doccomment">/// #     use diesel::dsl::count;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users::table.inner_join(posts::table)</span>
     <span class="doccomment">///     .group_by(users::id)</span>
     <span class="doccomment">///     .select((users::name, count(posts::id)))</span>
     <span class="doccomment">/// #   .order_by(users::id.asc())</span>
-    <span class="doccomment">///     .load::&lt;(String, i64)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;(String, i64)&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(vec![(String::from(&quot;Sean&quot;), 2), (String::from(&quot;Tess&quot;), 1)], data);</span>
     <span class="doccomment">/// # Ok(())</span>
@@ -2494,12 +2496,12 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use crate::schema::{users, posts};</span>
     <span class="doccomment">/// #     use diesel::dsl::count;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users::table.inner_join(posts::table)</span>
     <span class="doccomment">///     .group_by(users::id)</span>
     <span class="doccomment">///     .having(count(posts::id).gt(1))</span>
     <span class="doccomment">///     .select((users::name, count(posts::id)))</span>
-    <span class="doccomment">///     .load::&lt;(String, i64)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;(String, i64)&gt;(connection)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(vec![(String::from(&quot;Sean&quot;), 2)], data);</span>
     <span class="doccomment">/// # Ok(())</span>
@@ -2525,7 +2527,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR UPDATE`</span>
-    <span class="doccomment">/// users.for_update().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_update().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">for_update</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForUpdate</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2548,7 +2550,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR NO KEY UPDATE`</span>
-    <span class="doccomment">/// users.for_no_key_update().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_no_key_update().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">for_no_key_update</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForNoKeyUpdate</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2570,7 +2572,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR SHARE`</span>
-    <span class="doccomment">/// users.for_share().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_share().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">for_share</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForShare</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2593,7 +2595,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR KEY SHARE`</span>
-    <span class="doccomment">/// users.for_key_share().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_key_share().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">for_key_share</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForKeyShare</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2610,7 +2612,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR UPDATE SKIP LOCKED`</span>
-    <span class="doccomment">/// users.for_update().skip_locked().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_update().skip_locked().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">skip_locked</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SkipLocked</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2627,7 +2629,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```ignore</span>
     <span class="doccomment">/// // Executes `SELECT * FROM users FOR UPDATE NOWAIT`</span>
-    <span class="doccomment">/// users.for_update().no_wait().load(&amp;connection)</span>
+    <span class="doccomment">/// users.for_update().no_wait().load(connection)</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">no_wait</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NoWait</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -2655,14 +2657,14 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use std::collections::HashMap;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// #     let mut params = HashMap::new();</span>
     <span class="doccomment">/// #     params.insert(&quot;name&quot;, &quot;Sean&quot;);</span>
     <span class="doccomment">/// let mut query = users::table.into_boxed();</span>
     <span class="doccomment">/// if let Some(name) = params.get(&quot;name&quot;) {</span>
     <span class="doccomment">///     query = query.filter(users::name.eq(name));</span>
     <span class="doccomment">/// }</span>
-    <span class="doccomment">/// let users = query.load(&amp;connection);</span>
+    <span class="doccomment">/// let users = query.load(connection);</span>
     <span class="doccomment">/// #     let expected = vec![(1, String::from(&quot;Sean&quot;))];</span>
     <span class="doccomment">/// #     assert_eq!(Ok(expected), users);</span>
     <span class="doccomment">/// # }</span>
@@ -2684,13 +2686,13 @@
     <span class="doccomment">/// # use schema::users;</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// fn users_by_name(name: &amp;str) -&gt; users::BoxedQuery&lt;DB&gt; {</span>
     <span class="doccomment">///     users::table.filter(users::name.eq(name)).into_boxed()</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(Ok(1), users_by_name(&quot;Sean&quot;).select(users::id).first(&amp;connection));</span>
-    <span class="doccomment">/// assert_eq!(Ok(2), users_by_name(&quot;Tess&quot;).select(users::id).first(&amp;connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(1), users_by_name(&quot;Sean&quot;).select(users::id).first(connection));</span>
+    <span class="doccomment">/// assert_eq!(Ok(2), users_by_name(&quot;Tess&quot;).select(users::id).first(connection));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">into_boxed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">DB</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IntoBoxed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span>, <span class="ident">DB</span><span class="op">&gt;</span>
@@ -2725,15 +2727,15 @@
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
     <span class="doccomment">/// #     use schema::posts;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// insert_into(posts::table)</span>
     <span class="doccomment">///     .values(posts::user_id.eq(1))</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">/// let last_post = posts::table</span>
     <span class="doccomment">///     .order(posts::id.desc());</span>
     <span class="doccomment">/// let most_recently_active_user = users.select(name)</span>
     <span class="doccomment">///     .filter(id.nullable().eq(last_post.select(posts::user_id).single_value()))</span>
-    <span class="doccomment">///     .first::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .first::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(&quot;Sean&quot;, most_recently_active_user);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -2757,7 +2759,7 @@
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// table! {</span>
     <span class="doccomment">///     users {</span>
     <span class="doccomment">///         id -&gt; Integer,</span>
@@ -2775,7 +2777,7 @@
     <span class="doccomment">/// # let _: Vec&lt;(i32, Option&lt;String&gt;)&gt; =</span>
     <span class="doccomment">/// posts::table.filter(</span>
     <span class="doccomment">///    posts::by_user.eq_any(users::table.select(users::name).nullable())</span>
-    <span class="doccomment">/// ).load(&amp;connection)?;</span>
+    <span class="doccomment">/// ).load(connection)?;</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="kw">fn</span> <span class="ident">nullable</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NullableSelect</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
@@ -2811,20 +2813,20 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let inserted_rows = insert_into(users)</span>
     <span class="doccomment">///     .values(name.eq(&quot;Ruby&quot;))</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">/// assert_eq!(1, inserted_rows);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let inserted_rows = insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![name.eq(&quot;Jim&quot;), name.eq(&quot;James&quot;)])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">/// assert_eq!(2, inserted_rows);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">execute</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">execute</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Conn</span>: <span class="ident">Connection</span>,
         <span class="self">Self</span>: <span class="ident">methods</span>::<span class="ident">ExecuteDsl</span><span class="op">&lt;</span><span class="ident">Conn</span><span class="op">&gt;</span>,
@@ -2864,9 +2866,9 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users.select(name)</span>
-    <span class="doccomment">///     .load::&lt;String&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;String&gt;(connection)?;</span>
     <span class="doccomment">/// assert_eq!(vec![&quot;Sean&quot;, &quot;Tess&quot;], data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -2884,9 +2886,9 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
-    <span class="doccomment">///     .load::&lt;(i32, String)&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;(i32, String)&gt;(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     (1, String::from(&quot;Sean&quot;)),</span>
     <span class="doccomment">///     (2, String::from(&quot;Tess&quot;)),</span>
@@ -2914,9 +2916,9 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use diesel::insert_into;</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users</span>
-    <span class="doccomment">///     .load::&lt;User&gt;(&amp;connection)?;</span>
+    <span class="doccomment">///     .load::&lt;User&gt;(connection)?;</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     User { id: 1, name: String::from(&quot;Sean&quot;) },</span>
     <span class="doccomment">///     User { id: 2, name: String::from(&quot;Tess&quot;) },</span>
@@ -2925,7 +2927,7 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">LoadQuery</span><span class="op">&lt;</span><span class="ident">Conn</span>, <span class="ident">U</span><span class="op">&gt;</span>,
     {
@@ -2958,16 +2960,16 @@
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use diesel::{insert_into, update};</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let inserted_row = insert_into(users)</span>
     <span class="doccomment">///     .values(name.eq(&quot;Ruby&quot;))</span>
-    <span class="doccomment">///     .get_result(&amp;connection)?;</span>
+    <span class="doccomment">///     .get_result(connection)?;</span>
     <span class="doccomment">/// assert_eq!((3, String::from(&quot;Ruby&quot;)), inserted_row);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // This will return `NotFound`, as there is no user with ID 4</span>
     <span class="doccomment">/// let update_result = update(users.find(4))</span>
     <span class="doccomment">///     .set(name.eq(&quot;Jim&quot;))</span>
-    <span class="doccomment">///     .get_result::&lt;(i32, String)&gt;(&amp;connection);</span>
+    <span class="doccomment">///     .get_result::&lt;(i32, String)&gt;(connection);</span>
     <span class="doccomment">/// assert_eq!(Err(diesel::NotFound), update_result);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
@@ -2977,7 +2979,7 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">get_result</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">get_result</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">LoadQuery</span><span class="op">&lt;</span><span class="ident">Conn</span>, <span class="ident">U</span><span class="op">&gt;</span>,
     {
@@ -2990,7 +2992,7 @@
     <span class="doccomment">/// sense for insert, update, and delete statements.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`load`]: crate::query_dsl::RunQueryDsl::load()</span>
-    <span class="kw">fn</span> <span class="ident">get_results</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">get_results</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">LoadQuery</span><span class="op">&lt;</span><span class="ident">Conn</span>, <span class="ident">U</span><span class="op">&gt;</span>,
     {
@@ -3015,22 +3017,22 @@
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn run_test() -&gt; QueryResult&lt;()&gt; {</span>
     <span class="doccomment">/// #     use schema::users::dsl::*;</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// diesel::insert_into(users)</span>
     <span class="doccomment">///     .values(&amp;vec![name.eq(&quot;Sean&quot;), name.eq(&quot;Pascal&quot;)])</span>
-    <span class="doccomment">///     .execute(&amp;connection)?;</span>
+    <span class="doccomment">///     .execute(connection)?;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let first_name = users.order(id).select(name).first(&amp;connection);</span>
+    <span class="doccomment">/// let first_name = users.order(id).select(name).first(connection);</span>
     <span class="doccomment">/// assert_eq!(Ok(String::from(&quot;Sean&quot;)), first_name);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let not_found = users</span>
     <span class="doccomment">///     .filter(name.eq(&quot;Foo&quot;))</span>
-    <span class="doccomment">///     .first::&lt;(i32, String)&gt;(&amp;connection);</span>
+    <span class="doccomment">///     .first::&lt;(i32, String)&gt;(connection);</span>
     <span class="doccomment">/// assert_eq!(Err(diesel::NotFound), not_found);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">first</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">first</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">conn</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Conn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">methods</span>::<span class="ident">LimitDsl</span>,
         <span class="ident">Limit</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>: <span class="ident">LoadQuery</span><span class="op">&lt;</span><span class="ident">Conn</span>, <span class="ident">U</span><span class="op">&gt;</span>,

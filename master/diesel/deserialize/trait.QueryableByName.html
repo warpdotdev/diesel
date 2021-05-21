@@ -17,7 +17,7 @@
 }
 
 <span class="kw">let</span> <span class="ident">first_user</span> <span class="op">=</span> <span class="ident">sql_query</span>(<span class="string">&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;</span>)
-    .<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">User</span> { <span class="ident">id</span>: <span class="number">1</span>, <span class="ident">name</span>: <span class="string">&quot;Sean&quot;</span>.<span class="ident">into</span>() };
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">first_user</span>);</pre></div>
 <p>If we want to do additional work during deserialization, we can use
@@ -52,7 +52,7 @@
 }
 
 <span class="kw">let</span> <span class="ident">first_user</span> <span class="op">=</span> <span class="ident">sql_query</span>(<span class="string">&quot;SELECT * FROM users ORDER BY id LIMIT 1&quot;</span>)
-    .<span class="ident">get_result</span>(<span class="kw-2">&amp;</span><span class="ident">connection</span>)<span class="question-mark">?</span>;
+    .<span class="ident">get_result</span>(<span class="ident">connection</span>)<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">User</span> { <span class="ident">id</span>: <span class="number">1</span>, <span class="ident">name</span>: <span class="string">&quot;sean&quot;</span>.<span class="ident">into</span>() };
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">first_user</span>);</pre></div>
 </div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.build" class="method"><code>fn <a href="#tymethod.build" class="fnname">build</a>&lt;'a&gt;(row: &amp;impl <a class="trait" href="../../diesel/row/trait.NamedRow.html" title="trait diesel::row::NamedRow">NamedRow</a>&lt;'a, DB&gt;) -&gt; <a class="type" href="../../diesel/deserialize/type.Result.html" title="type diesel::deserialize::Result">Result</a>&lt;Self&gt;</code><a class="srclink" href="../../src/diesel/deserialize.rs.html#256" title="goto source code">[src]</a></h3><div class="docblock"><p>Construct an instance of <code>Self</code> from the database row</p>

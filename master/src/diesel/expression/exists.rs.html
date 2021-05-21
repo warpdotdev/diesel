@@ -117,11 +117,11 @@
 <span class="doccomment">/// #     use schema::users::dsl::*;</span>
 <span class="doccomment">/// #     use diesel::select;</span>
 <span class="doccomment">/// #     use diesel::dsl::exists;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
 <span class="doccomment">/// let sean_exists = select(exists(users.filter(name.eq(&quot;Sean&quot;))))</span>
-<span class="doccomment">///     .get_result(&amp;connection);</span>
+<span class="doccomment">///     .get_result(connection);</span>
 <span class="doccomment">/// let jim_exists = select(exists(users.filter(name.eq(&quot;Jim&quot;))))</span>
-<span class="doccomment">///     .get_result(&amp;connection);</span>
+<span class="doccomment">///     .get_result(connection);</span>
 <span class="doccomment">/// assert_eq!(Ok(true), sean_exists);</span>
 <span class="doccomment">/// assert_eq!(Ok(false), jim_exists);</span>
 <span class="doccomment">/// # }</span>

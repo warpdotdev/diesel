@@ -141,11 +141,11 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #     use self::users::dsl::{users, name as user_name};</span>
     <span class="doccomment">/// #     use self::animals::dsl::{animals, name as animal_name};</span>
-    <span class="doccomment">/// #     let connection = establish_connection();</span>
+    <span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
     <span class="doccomment">/// let data = users.select(user_name.nullable())</span>
     <span class="doccomment">///     .union(animals.select(animal_name).filter(animal_name.is_not_null()))</span>
     <span class="doccomment">/// #   .positional_order_by(1)</span>
-    <span class="doccomment">///     .load(&amp;connection);</span>
+    <span class="doccomment">///     .load(connection);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let expected_data = vec![</span>
     <span class="doccomment">///     Some(String::from(&quot;Jack&quot;)),</span>
