@@ -253,8 +253,8 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">/// #     use schema::posts::dsl::*;</span>
-<span class="doccomment">/// #     let connection = establish_connection();</span>
-<span class="doccomment">/// let unique_user_count = posts.select(count_distinct(user_id)).first(&amp;connection);</span>
+<span class="doccomment">/// #     let connection = &amp;mut establish_connection();</span>
+<span class="doccomment">/// let unique_user_count = posts.select(count_distinct(user_id)).first(connection);</span>
 <span class="doccomment">/// assert_eq!(Ok(2), unique_user_count);</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
