@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel/src/mysql/value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>value.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -108,10 +108,10 @@
 <span id="105">105</span>
 <span id="106">106</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">MysqlType</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">deserialize</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">mysql</span>::<span class="ident">types</span>::<span class="ident">MYSQL_TIME</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::MysqlType</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::deserialize</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql::types::MYSQL_TIME</span>;
+<span class="kw">use</span> <span class="ident">std::error::Error</span>;
 
 <span class="doccomment">/// Raw mysql value as received from the database</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
@@ -140,10 +140,10 @@
     <span class="comment">// We use `ptr.read_unaligned()` to read the potential unaligned ptr,</span>
     <span class="comment">// so clippy is clearly wrong here</span>
     <span class="comment">// https://github.com/rust-lang/rust-clippy/issues/2881</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">clippy</span>::<span class="ident">cast_ptr_alignment</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">time_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MYSQL_TIME</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">clippy::cast_ptr_alignment</span>)]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">time_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="ident">MYSQL_TIME</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">tpe</span> {
-            <span class="ident">MysqlType</span>::<span class="ident">Time</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">Date</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">DateTime</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">Timestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">MysqlType::Time</span> <span class="op">|</span> <span class="ident">MysqlType::Date</span> <span class="op">|</span> <span class="ident">MysqlType::DateTime</span> <span class="op">|</span> <span class="ident">MysqlType::Timestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">MYSQL_TIME</span>;
                 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ptr</span>.<span class="ident">read_unaligned</span>() };
                 <span class="kw">if</span> <span class="ident">result</span>.<span class="ident">neg</span> {
@@ -158,36 +158,36 @@
 
     <span class="doccomment">/// Returns the numeric representation of this value, based on the type code.</span>
     <span class="doccomment">/// Returns an error if the type code is not numeric.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">numeric_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NumericRepresentation</span><span class="op">&gt;</span> {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span>;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">numeric_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="ident">NumericRepresentation</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="ident">std::convert::TryInto</span>;
 
         <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">tpe</span> {
-            <span class="ident">MysqlType</span>::<span class="ident">UnsignedTiny</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">Tiny</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Tiny</span>(<span class="self">self</span>.<span class="ident">raw</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">i8</span>)
+            <span class="ident">MysqlType::UnsignedTiny</span> <span class="op">|</span> <span class="ident">MysqlType::Tiny</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Tiny</span>(<span class="self">self</span>.<span class="ident">raw</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">i8</span>)
             }
-            <span class="ident">MysqlType</span>::<span class="ident">UnsignedShort</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">Short</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Small</span>(<span class="ident">i16</span>::<span class="ident">from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+            <span class="ident">MysqlType::UnsignedShort</span> <span class="op">|</span> <span class="ident">MysqlType::Short</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Small</span>(<span class="ident">i16::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
-            <span class="ident">MysqlType</span>::<span class="ident">UnsignedLong</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">Long</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Medium</span>(<span class="ident">i32</span>::<span class="ident">from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+            <span class="ident">MysqlType::UnsignedLong</span> <span class="op">|</span> <span class="ident">MysqlType::Long</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Medium</span>(<span class="ident">i32::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
-            <span class="ident">MysqlType</span>::<span class="ident">UnsignedLongLong</span> <span class="op">|</span> <span class="ident">MysqlType</span>::<span class="ident">LongLong</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Big</span>(<span class="ident">i64</span>::<span class="ident">from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+            <span class="ident">MysqlType::UnsignedLongLong</span> <span class="op">|</span> <span class="ident">MysqlType::LongLong</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Big</span>(<span class="ident">i64::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
-            <span class="ident">MysqlType</span>::<span class="ident">Float</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Float</span>(<span class="ident">f32</span>::<span class="ident">from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+            <span class="ident">MysqlType::Float</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Float</span>(<span class="ident">f32::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
-            <span class="ident">MysqlType</span>::<span class="ident">Double</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation</span>::<span class="ident">Double</span>(<span class="ident">f64</span>::<span class="ident">from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+            <span class="ident">MysqlType::Double</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NumericRepresentation::Double</span>(<span class="ident">f64::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
 
-            <span class="ident">MysqlType</span>::<span class="ident">Numeric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NumericRepresentation</span>::<span class="ident">Decimal</span>(<span class="self">self</span>.<span class="ident">raw</span>),
+            <span class="ident">MysqlType::Numeric</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NumericRepresentation::Decimal</span>(<span class="self">self</span>.<span class="ident">raw</span>),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="self">self</span>.<span class="ident">invalid_type_code</span>(<span class="string">&quot;number&quot;</span>)),
         })
     }
 
     <span class="kw">fn</span> <span class="ident">invalid_type_code</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span> {
-        <span class="macro">format</span><span class="macro">!</span>(
+        <span class="macro">format!</span>(
             <span class="string">&quot;Invalid representation received for {}: {:?}&quot;</span>,
             <span class="ident">expected</span>, <span class="self">self</span>.<span class="ident">tpe</span>
         )
@@ -215,5 +215,5 @@
     <span class="ident">Decimal</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]),
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
