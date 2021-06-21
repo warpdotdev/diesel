@@ -377,6 +377,13 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Errors, type aliases, and functions related to working with `Result`.</span>
 
@@ -441,6 +448,12 @@
     <span class="doccomment">/// serialize a `chrono::NaiveDate` earlier than the earliest date supported</span>
     <span class="doccomment">/// by PostgreSQL.</span>
     <span class="ident">SerializationError</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">StdError</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span>),
+
+    <span class="doccomment">/// An error occurred during the rollback of a transaction.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// An example of when this error would be returned is if a rollback has</span>
+    <span class="doccomment">/// already be called on the current transaction.</span>
+    <span class="ident">RollbackError</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>),
 
     <span class="doccomment">/// Roll back the current transaction.</span>
     <span class="doccomment">///</span>
@@ -663,6 +676,7 @@
             <span class="ident">Error::QueryBuilderError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
             <span class="ident">Error::DeserializationError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
             <span class="ident">Error::SerializationError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
+            <span class="ident">Error::RollbackError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
             <span class="ident">Error::RollbackTransaction</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;The current transaction was aborted&quot;</span>),
             <span class="ident">Error::AlreadyInTransaction</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(
                 <span class="ident">f</span>,
