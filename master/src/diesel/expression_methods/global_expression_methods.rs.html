@@ -488,12 +488,128 @@
 <span id="485">485</span>
 <span id="486">486</span>
 <span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::array_comparison</span>::{<span class="ident">AsInExpression</span>, <span class="ident">In</span>, <span class="ident">NotIn</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::grouped::Grouped</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::operators</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">nullable</span>, <span class="ident">AsExpression</span>, <span class="ident">Expression</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">assume_not_null</span>, <span class="ident">nullable</span>, <span class="ident">AsExpression</span>, <span class="ident">Expression</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::sql_types</span>::{<span class="ident">SingleValue</span>, <span class="ident">SqlType</span>};
 
 <span class="doccomment">/// Methods present on all expressions, except tuples</span>
@@ -924,6 +1040,122 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">asc</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::Asc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">Asc::new</span>(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Converts this potentially nullable expression into one which will be **assumed**</span>
+    <span class="doccomment">/// to be not-null. This method has no impact on the generated SQL, however it will</span>
+    <span class="doccomment">/// enable you to attempt deserialization of the returned value in a non-`Option`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is meant to cover for cases where you know that given the `WHERE` clause</span>
+    <span class="doccomment">/// the field returned by the database will never be `NULL`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This **will cause runtime errors** on `load()` if the &quot;assume&quot; turns out to be incorrect.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">/// ## Normal usage</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # #![allow(dead_code)]</span>
+    <span class="doccomment">/// # include!(&quot;../doctest_setup.rs&quot;);</span>
+    <span class="doccomment">/// # use diesel::sql_types::*;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// table! {</span>
+    <span class="doccomment">///     animals {</span>
+    <span class="doccomment">///         id -&gt; Integer,</span>
+    <span class="doccomment">///         species -&gt; VarChar,</span>
+    <span class="doccomment">///         legs -&gt; Integer,</span>
+    <span class="doccomment">///         name -&gt; Nullable&lt;VarChar&gt;,</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn main() {</span>
+    <span class="doccomment">///     use self::animals::dsl::*;</span>
+    <span class="doccomment">///     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     let result = animals</span>
+    <span class="doccomment">///         .filter(name.is_not_null())</span>
+    <span class="doccomment">///         .select(name.assume_not_null())</span>
+    <span class="doccomment">///         .load::&lt;String&gt;(connection);</span>
+    <span class="doccomment">///     assert!(result.is_ok());</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Incorrect usage</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # #![allow(dead_code)]</span>
+    <span class="doccomment">/// # include!(&quot;../doctest_setup.rs&quot;);</span>
+    <span class="doccomment">/// # use diesel::sql_types::*;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// table! {</span>
+    <span class="doccomment">///     animals {</span>
+    <span class="doccomment">///         id -&gt; Integer,</span>
+    <span class="doccomment">///         species -&gt; VarChar,</span>
+    <span class="doccomment">///         legs -&gt; Integer,</span>
+    <span class="doccomment">///         name -&gt; Nullable&lt;VarChar&gt;,</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn main() {</span>
+    <span class="doccomment">///     use diesel::result::{Error, UnexpectedNullError};</span>
+    <span class="doccomment">///     use self::animals::dsl::*;</span>
+    <span class="doccomment">///     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     let result = animals</span>
+    <span class="doccomment">///         .select(name.assume_not_null())</span>
+    <span class="doccomment">///         .load::&lt;String&gt;(connection);</span>
+    <span class="doccomment">///     assert!(matches!(</span>
+    <span class="doccomment">///         result,</span>
+    <span class="doccomment">///         Err(Error::DeserializationError(err)) if err.is::&lt;UnexpectedNullError&gt;()</span>
+    <span class="doccomment">///     ));</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Advanced usage - use only if you&#39;re sure you know what you&#39;re doing!</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This will cause the `Option` to be `None` where the `left_join` succeeded but the</span>
+    <span class="doccomment">/// `author_name` turned out to be `NULL`, due to how `Option` deserialization works.</span>
+    <span class="doccomment">/// (see [`Queryable` documentation](crate::deserialize::Queryable))</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # #![allow(dead_code)]</span>
+    <span class="doccomment">/// # include!(&quot;../doctest_setup.rs&quot;);</span>
+    <span class="doccomment">/// # use diesel::sql_types::*;</span>
+    <span class="doccomment">/// # use schema::users;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// table! {</span>
+    <span class="doccomment">///     posts {</span>
+    <span class="doccomment">///         id -&gt; Integer,</span>
+    <span class="doccomment">///         user_id -&gt; Integer,</span>
+    <span class="doccomment">///         author_name -&gt; Nullable&lt;Text&gt;,</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # joinable!(posts -&gt; users (user_id));</span>
+    <span class="doccomment">/// # allow_tables_to_appear_in_same_query!(posts, users);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn main() {</span>
+    <span class="doccomment">///     use self::posts;</span>
+    <span class="doccomment">///     use self::users;</span>
+    <span class="doccomment">///     let connection = &amp;mut establish_connection();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// #   connection.execute(&quot;ALTER TABLE posts ADD COLUMN author_name Text&quot;).unwrap();</span>
+    <span class="doccomment">/// #   diesel::update(posts::table.filter(posts::user_id.eq(1)))</span>
+    <span class="doccomment">/// #       .set(posts::author_name.eq(&quot;Sean&quot;))</span>
+    <span class="doccomment">/// #       .execute(connection);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     let result = posts::table.left_join(users::table)</span>
+    <span class="doccomment">///         .select((posts::id, (users::id, posts::author_name.assume_not_null()).nullable()))</span>
+    <span class="doccomment">///         .order_by(posts::id)</span>
+    <span class="doccomment">///         .load::&lt;(i32, Option&lt;(i32, String)&gt;)&gt;(connection);</span>
+    <span class="doccomment">///     let expected = Ok(vec![</span>
+    <span class="doccomment">///         (1, Some((1, &quot;Sean&quot;.to_owned()))),</span>
+    <span class="doccomment">///         (2, Some((1, &quot;Sean&quot;.to_owned()))),</span>
+    <span class="doccomment">///         (3, None),</span>
+    <span class="doccomment">///     ]);</span>
+    <span class="doccomment">///     assert_eq!(expected, result);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">assume_not_null</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::AssumeNotNull</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">assume_not_null::AssumeNotNull::new</span>(<span class="self">self</span>)
     }
 }
 

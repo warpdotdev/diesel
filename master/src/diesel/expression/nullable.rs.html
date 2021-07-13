@@ -72,8 +72,6 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::TypedExpressionType</span>;
@@ -111,8 +109,6 @@
     }
 }
 
-<span class="doccomment">/// Nullable can be used in where clauses everywhere, but can only be used in</span>
-<span class="doccomment">/// select clauses for outer joins.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">QS</span><span class="op">&gt;</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">QS</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Nullable</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">QS</span><span class="op">&gt;</span>,
