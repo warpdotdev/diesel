@@ -82,6 +82,7 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
+<span id="83">83</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Sqlite specific expression methods.</span>
 
@@ -155,6 +156,7 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::clippy::wrong_self_convention</span>)]</span> <span class="comment">// This is named after the sql operator</span>
     <span class="kw">fn</span> <span class="ident">is_not</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::IsNot</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span><span class="ident">::SqlType</span>: <span class="ident">SqlType</span>,

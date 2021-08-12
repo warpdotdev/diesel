@@ -844,6 +844,11 @@
 <span id="842">842</span>
 <span id="843">843</span>
 <span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
 </pre><pre class="rust">
 <span class="doccomment">//! AST types representing various typed SQL expressions.</span>
 <span class="doccomment">//!</span>
@@ -1052,6 +1057,8 @@
     <span class="kw">type</span> <span class="ident">Expression</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Perform the conversion</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="comment">// That&#39;s public API we cannot change it to appease clippy</span>
     <span class="kw">fn</span> <span class="ident">as_expression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Expression</span>;
 }
 
@@ -1687,6 +1694,9 @@
     <span class="kw">type</span> <span class="ident">Expression</span>;
 
     <span class="doccomment">/// Perform the conversion</span>
+    <span class="comment">// That&#39;s public API, we cannot change</span>
+    <span class="comment">// that to appease clippy</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
     <span class="kw">fn</span> <span class="ident">as_expression_list</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Expression</span>;
 }
 </pre></div>

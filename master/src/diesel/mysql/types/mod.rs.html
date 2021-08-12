@@ -202,6 +202,7 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
+<span id="203">203</span>
 </pre><pre class="rust">
 <span class="doccomment">//! MySQL specific types</span>
 
@@ -231,6 +232,7 @@
 <span class="comment">// version we just have our own copy here</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::upper_case_acronyms</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">MYSQL_TIME</span> {
     <span class="kw">pub</span> <span class="ident">year</span>: <span class="ident">libc::c_uint</span>,
     <span class="kw">pub</span> <span class="ident">month</span>: <span class="ident">libc::c_uint</span>,

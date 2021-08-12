@@ -603,6 +603,16 @@
 <span id="601">601</span>
 <span id="602">602</span>
 <span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::array_comparison</span>::{<span class="ident">AsInExpression</span>, <span class="ident">In</span>, <span class="ident">NotIn</span>};
@@ -765,6 +775,11 @@
     <span class="doccomment">/// assert_eq!(&quot;spider&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
+    <span class="comment">// This method is part of the public API,</span>
+    <span class="comment">// so we cannot just change the name to appease clippy</span>
+    <span class="comment">// (Otherwise it&#39;s also named after the `IS NULL` sql expression</span>
+    <span class="comment">// so that name is really fine)</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
     <span class="kw">fn</span> <span class="ident">is_null</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::IsNull</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">Grouped</span>(<span class="ident">IsNull::new</span>(<span class="self">self</span>))
     }
@@ -791,6 +806,11 @@
     <span class="doccomment">/// assert_eq!(&quot;dog&quot;, data);</span>
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
+    <span class="comment">// This method is part of the public API,</span>
+    <span class="comment">// so we cannot just change the name to appease clippy</span>
+    <span class="comment">// (Otherwise it&#39;s also named after the `IS NOT NULL` sql expression</span>
+    <span class="comment">// so that name is really fine)</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
     <span class="kw">fn</span> <span class="ident">is_not_null</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::IsNotNull</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">Grouped</span>(<span class="ident">IsNotNull::new</span>(<span class="self">self</span>))
     }

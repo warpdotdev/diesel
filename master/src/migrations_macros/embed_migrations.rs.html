@@ -103,13 +103,13 @@
 
     <span class="ident">migrations</span>.<span class="ident">sort_by_key</span>(<span class="ident">DirEntry::path</span>);
 
-    <span class="ident">migrations</span>
+    <span class="prelude-val">Ok</span>(<span class="ident">migrations</span>
         .<span class="ident">into_iter</span>()
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">migration_literal_from_path</span>(<span class="kw-2">&amp;</span><span class="ident">e</span>.<span class="ident">path</span>()))
-        .<span class="ident">collect</span>()
+        .<span class="ident">collect</span>())
 }
 
-<span class="kw">fn</span> <span class="ident">migration_literal_from_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">proc_macro2::TokenStream</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">migration_literal_from_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">path</span>
         .<span class="ident">file_name</span>()
         .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic!</span>(<span class="string">&quot;Can&#39;t get file name from path `{:?}`&quot;</span>, <span class="ident">path</span>))
@@ -128,12 +128,12 @@
     <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">TomlMetadata::read_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">join</span>(<span class="string">&quot;metadata.toml&quot;</span>)).<span class="ident">unwrap_or_default</span>();
     <span class="kw">let</span> <span class="ident">run_in_transaction</span> <span class="op">=</span> <span class="ident">metadata</span>.<span class="ident">run_in_transaction</span>;
 
-    <span class="prelude-val">Ok</span>(<span class="macro">quote!</span>(<span class="ident">diesel_migrations::EmbeddedMigration::new</span>(
+    <span class="macro">quote!</span>(<span class="ident">diesel_migrations::EmbeddedMigration::new</span>(
         <span class="macro">include_str!</span>(#<span class="ident">up_sql_path</span>),
         <span class="macro">include_str!</span>(#<span class="ident">down_sql_path</span>),
         <span class="ident">diesel_migrations::EmbeddedName::new</span>(#<span class="ident">name</span>),
         <span class="ident">diesel_migrations::TomlMetadataWrapper::new</span>(#<span class="ident">run_in_transaction</span>)
-    )))
+    ))
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="migrations_macros" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

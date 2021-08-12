@@ -1218,6 +1218,10 @@
 <span id="1216">1216</span>
 <span id="1217">1217</span>
 <span id="1218">1218</span>
+<span id="1219">1219</span>
+<span id="1220">1220</span>
+<span id="1221">1221</span>
+<span id="1222">1222</span>
 </pre><pre class="rust">
 <span class="attribute">#![<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;1024&quot;</span>]</span>
 <span class="comment">// Built-in Lints</span>
@@ -1468,6 +1472,10 @@
 <span class="doccomment">/// is insertable into. The path is relative to the current module.</span>
 <span class="doccomment">/// If this attribute is not used, the type name converted to</span>
 <span class="doccomment">/// `snake_case` with an added `s` is used as table name</span>
+<span class="doccomment">/// * `#[diesel(treat_none_as_default_value = &quot;true/false&quot;)], specifies if `None` values</span>
+<span class="doccomment">/// should be converted to `NULL` values on SQL side or treated as `DEFAULT` value primitive</span>
+<span class="doccomment">/// *Note: This option may control if your query is stored in the</span>
+<span class="doccomment">/// prepared statement cache or not*</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Optional field attributes</span>
 <span class="doccomment">///</span>

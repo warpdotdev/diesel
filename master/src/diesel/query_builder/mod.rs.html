@@ -336,6 +336,11 @@
 <span id="334">334</span>
 <span id="335">335</span>
 <span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Contains traits responsible for the actual construction of SQL statements</span>
 <span class="doccomment">//!</span>
@@ -400,7 +405,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::limit_offset_clause</span>::{<span class="ident">BoxedLimitOffsetClause</span>, <span class="ident">LimitOffsetClause</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::offset_clause</span>::{<span class="ident">NoOffsetClause</span>, <span class="ident">OffsetClause</span>};
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::insert_statement::ColumnList</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::insert_statement</span>::{<span class="ident">BatchInsert</span>, <span class="ident">ColumnList</span>};
 
 <span class="kw">use</span> <span class="ident">std::error::Error</span>;
 
@@ -610,6 +615,11 @@
 
     <span class="doccomment">/// Converts a type which semantically represents a SQL query into the</span>
     <span class="doccomment">/// actual query being executed. See the trait level docs for more.</span>
+    <span class="comment">// This method is part of our public API,</span>
+    <span class="comment">// so we won&#39;t change the name to just appease clippy</span>
+    <span class="comment">// (Also the trait is literally named `AsQuery` so</span>
+    <span class="comment">// naming the method similary is fine)</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
     <span class="kw">fn</span> <span class="ident">as_query</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Query</span>;
 }
 

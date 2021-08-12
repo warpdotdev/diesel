@@ -74,7 +74,7 @@
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source::Table</span>;
 
 <span class="doccomment">/// Represents `(Columns) SELECT FROM ...` for use in an `INSERT` statement</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">QueryId</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InsertFromSelect</span><span class="op">&lt;</span><span class="ident">Select</span>, <span class="ident">Columns</span><span class="op">&gt;</span> {
     <span class="kw">pub</span>(<span class="kw">in</span> <span class="kw">crate</span><span class="ident">::query_builder</span>) <span class="ident">query</span>: <span class="ident">Select</span>,
     <span class="kw">pub</span>(<span class="kw">in</span> <span class="kw">crate</span><span class="ident">::query_builder</span>) <span class="ident">columns</span>: <span class="ident">Columns</span>,

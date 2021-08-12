@@ -1597,9 +1597,17 @@
 <span id="1595">1595</span>
 <span id="1596">1596</span>
 <span id="1597">1597</span>
+<span id="1598">1598</span>
+<span id="1599">1599</span>
+<span id="1600">1600</span>
+<span id="1601">1601</span>
+<span id="1602">1602</span>
+<span id="1603">1603</span>
+<span id="1604">1604</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">mysqlclient_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">std::mem</span>;
+<span class="kw">use</span> <span class="ident">std::mem::MaybeUninit</span>;
 <span class="kw">use</span> <span class="ident">std::ops::Index</span>;
 <span class="kw">use</span> <span class="ident">std::os::raw</span> <span class="kw">as</span> <span class="ident">libc</span>;
 
@@ -1688,7 +1696,7 @@
 <span class="macro">bitflags::bitflags!</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">Flags</span>: <span class="ident">u32</span> {
         <span class="kw">const</span> <span class="ident">NOT_NULL_FLAG</span> <span class="op">=</span> <span class="number">1</span>;
-        <span class="kw">const</span> <span class="ident">PRI_KEY_FAG</span> <span class="op">=</span> <span class="number">2</span>;
+        <span class="kw">const</span> <span class="ident">PRI_KEY_FLAG</span> <span class="op">=</span> <span class="number">2</span>;
         <span class="kw">const</span> <span class="ident">UNIQUE_KEY_FLAG</span> <span class="op">=</span> <span class="number">4</span>;
         <span class="kw">const</span> <span class="ident">MULTIPLE_KEY_FLAG</span> <span class="op">=</span> <span class="number">8</span>;
         <span class="kw">const</span> <span class="ident">BLOB_FLAG</span> <span class="op">=</span> <span class="number">16</span>;
@@ -1941,19 +1949,25 @@
     }
 
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">mysql_bind</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ffi::MYSQL_BIND</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bind</span>: <span class="ident">ffi::MYSQL_BIND</span> <span class="op">=</span> <span class="ident">mem::zeroed</span>();
-        <span class="ident">bind</span>.<span class="ident">buffer_type</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">tpe</span>;
-        <span class="ident">bind</span>.<span class="ident">buffer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc::c_void</span>;
-        <span class="ident">bind</span>.<span class="ident">buffer_length</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">capacity</span>() <span class="kw">as</span> <span class="ident">libc::c_ulong</span>;
-        <span class="ident">bind</span>.<span class="ident">length</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">length</span>;
-        <span class="ident">bind</span>.<span class="ident">is_null</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">is_null</span>;
-        <span class="ident">bind</span>.<span class="ident">is_unsigned</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags::UNSIGNED_FLAG</span>) <span class="kw">as</span> <span class="ident">ffi::my_bool</span>;
+        <span class="kw">use</span> <span class="ident">std::ptr::addr_of_mut</span>;
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bind</span>: <span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">ffi::MYSQL_BIND</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::zeroed</span>();
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">bind</span>.<span class="ident">as_mut_ptr</span>();
+
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">buffer_type</span>).<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">tpe</span>);
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">buffer</span>).<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc::c_void</span>);
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">buffer_length</span>).<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">capacity</span>() <span class="kw">as</span> <span class="ident">libc::c_ulong</span>);
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">length</span>).<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">length</span>);
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">is_null</span>).<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">is_null</span>);
+        <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">is_unsigned</span>)
+            .<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">Flags::UNSIGNED_FLAG</span>) <span class="kw">as</span> <span class="ident">ffi::my_bool</span>);
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">is_truncated</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_truncated</span> {
-            <span class="ident">bind</span>.<span class="ident">error</span> <span class="op">=</span> <span class="ident">is_truncated</span>;
+            <span class="macro">addr_of_mut!</span>((<span class="kw-2">*</span><span class="ident">ptr</span>).<span class="ident">error</span>).<span class="ident">write</span>(<span class="ident">is_truncated</span>);
         }
 
-        <span class="ident">bind</span>
+        <span class="comment">// That&#39;s what the mysqlclient examples are doing</span>
+        <span class="ident">bind</span>.<span class="ident">assume_init</span>()
     }
 
     <span class="doccomment">/// Resizes the byte buffer to fit the value of `self.length`, and returns</span>

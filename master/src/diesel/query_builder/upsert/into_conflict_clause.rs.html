@@ -121,16 +121,8 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::insertable</span>::{<span class="ident">BatchInsert</span>, <span class="ident">OwnedBatchInsert</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::insert_statement::InsertFromSelect</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::insert_statement</span>::{<span class="ident">BatchInsert</span>, <span class="ident">InsertFromSelect</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::where_clause</span>::{<span class="ident">BoxedWhereClause</span>, <span class="ident">WhereClause</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>))]</span>
@@ -208,15 +200,9 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Inner</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">IntoConflictValueClause</span> <span class="kw">for</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Inner</span>, <span class="ident">Tab</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">ValueClause</span> <span class="op">=</span> <span class="self">Self</span>;
-
-    <span class="kw">fn</span> <span class="ident">into_value_clause</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::ValueClause</span> {
-        <span class="self">self</span>
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Inner</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">IntoConflictValueClause</span> <span class="kw">for</span> <span class="ident">OwnedBatchInsert</span><span class="op">&lt;</span><span class="ident">Inner</span>, <span class="ident">Tab</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Tab</span>, <span class="ident">QId</span>, <span class="kw">const</span> <span class="ident">STATIC_QUERY_ID</span>: <span class="ident">bool</span><span class="op">&gt;</span> <span class="ident">IntoConflictValueClause</span>
+    <span class="kw">for</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Tab</span>, <span class="ident">QId</span>, <span class="ident">STATIC_QUERY_ID</span><span class="op">&gt;</span>
+{
     <span class="kw">type</span> <span class="ident">ValueClause</span> <span class="op">=</span> <span class="self">Self</span>;
 
     <span class="kw">fn</span> <span class="ident">into_value_clause</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::ValueClause</span> {

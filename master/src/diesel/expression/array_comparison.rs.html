@@ -200,6 +200,9 @@
 <span id="198">198</span>
 <span id="199">199</span>
 <span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::subselect::Subselect</span>;
@@ -299,6 +302,9 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AsInExpression</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SqlType</span> <span class="op">+</span> <span class="ident">TypedExpressionType</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">InExpression</span>: <span class="ident">MaybeEmpty</span> <span class="op">+</span> <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>;
 
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="comment">// That&#39;s a public api, we cannot just change it to</span>
+    <span class="comment">// appease clippy</span>
     <span class="kw">fn</span> <span class="ident">as_in_expression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::InExpression</span>;
 }
 
