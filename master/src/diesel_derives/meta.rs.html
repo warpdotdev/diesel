@@ -297,6 +297,8 @@
 <span id="295">295</span>
 <span id="296">296</span>
 <span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Ident</span>, <span class="ident">Span</span>};
 <span class="kw">use</span> <span class="ident">syn</span>;
@@ -481,8 +483,10 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ty_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">syn::Type</span>, <span class="ident">Diagnostic</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">str</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lit_str_value</span>()<span class="question-mark">?</span>;
-        <span class="ident">str</span>.<span class="ident">parse</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">str</span>.<span class="ident">span</span>().<span class="ident">error</span>(<span class="string">&quot;Invalid Rust type&quot;</span>))
+        <span class="ident">str</span>.<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+            <span class="ident">str</span>.<span class="ident">span</span>()
+                .<span class="ident">error</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid Rust type: `{}`&quot;</span>, <span class="ident">str</span>.<span class="ident">value</span>()))
+        })
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expect_str_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
