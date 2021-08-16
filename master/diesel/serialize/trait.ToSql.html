@@ -9,7 +9,7 @@ expected format for the given backend.</p>
 implementation, rather than writing to <code>out</code> directly. (For example, if you
 are implementing this for an enum, which is represented as an integer in the
 database, you should use <code>i32::to_sql(x, out)</code> instead of writing to <code>out</code>
-yourself.</p>
+yourself.)</p>
 <p>Any types which implement this trait should also [<code>#[derive(AsExpression)]</code>].</p>
 <h3 id="backend-specific-details" class="section-header"><a href="#backend-specific-details">Backend specific details</a></h3>
 <ul>
