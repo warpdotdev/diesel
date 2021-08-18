@@ -383,6 +383,12 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Errors, type aliases, and functions related to working with `Result`.</span>
 
@@ -509,6 +515,12 @@
 
     <span class="doccomment">/// A check constraint was violated.</span>
     <span class="ident">CheckViolation</span>,
+
+    <span class="doccomment">/// The connection to the server was unexpectedly closed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This error is only detected for PostgreSQL and is emitted on a best-effort basis</span>
+    <span class="doccomment">/// and may be missed.</span>
+    <span class="ident">ClosedConnection</span>,
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">Unknown</span>, <span class="comment">// Match against _ instead, more variants may be added in the future</span>
