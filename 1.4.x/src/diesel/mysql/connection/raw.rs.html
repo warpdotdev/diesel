@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel/src/mysql/connection/raw.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>raw.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;mysql&#x2F;connection&#x2F;raw.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>raw.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -216,39 +213,39 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mysqlclient_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span> <span class="kw">as</span> <span class="ident">libc</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Once</span>;
+<span class="kw">use</span> <span class="ident">std::ffi::CStr</span>;
+<span class="kw">use</span> <span class="ident">std::os::raw</span> <span class="kw">as</span> <span class="ident">libc</span>;
+<span class="kw">use</span> <span class="ident">std::ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
+<span class="kw">use</span> <span class="ident">std::sync::Once</span>;
 
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">stmt</span>::<span class="ident">Statement</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">url</span>::<span class="ident">ConnectionOptions</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::stmt::Statement</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::url::ConnectionOptions</span>;
 <span class="kw">use</span> <span class="ident">result</span>::{<span class="ident">ConnectionError</span>, <span class="ident">ConnectionResult</span>, <span class="ident">QueryResult</span>};
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RawConnection</span>(<span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">MYSQL</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RawConnection</span>(<span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::MYSQL</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">RawConnection</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">perform_thread_unsafe_library_initialization</span>();
-        <span class="kw">let</span> <span class="ident">raw_connection</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_init</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>()) };
+        <span class="kw">let</span> <span class="ident">raw_connection</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_init</span>(<span class="ident">ptr::null_mut</span>()) };
         <span class="comment">// We&#39;re trusting https://dev.mysql.com/doc/refman/5.7/en/mysql-init.html</span>
         <span class="comment">// that null return always means OOM</span>
         <span class="kw">let</span> <span class="ident">raw_connection</span> <span class="op">=</span>
-            <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">raw_connection</span>).<span class="ident">expect</span>(<span class="string">&quot;Insufficient memory to allocate connection&quot;</span>);
+            <span class="ident">NonNull::new</span>(<span class="ident">raw_connection</span>).<span class="ident">expect</span>(<span class="string">&quot;Insufficient memory to allocate connection&quot;</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">RawConnection</span>(<span class="ident">raw_connection</span>);
 
         <span class="comment">// This is only non-zero for unrecognized options, which should never happen.</span>
         <span class="kw">let</span> <span class="ident">charset_result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">ffi</span>::<span class="ident">mysql_options</span>(
+            <span class="ident">ffi::mysql_options</span>(
                 <span class="ident">result</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>(),
-                <span class="ident">ffi</span>::<span class="ident">mysql_option</span>::<span class="ident">MYSQL_SET_CHARSET_NAME</span>,
-                <span class="string">b&quot;utf8mb4\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_void</span>,
+                <span class="ident">ffi::mysql_option::MYSQL_SET_CHARSET_NAME</span>,
+                <span class="string">b&quot;utf8mb4\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc::c_void</span>,
             )
         };
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(
             <span class="number">0</span>, <span class="ident">charset_result</span>,
             <span class="string">&quot;MYSQL_SET_CHARSET_NAME was not \
              recognized as an option by MySQL. This should never \
@@ -267,18 +264,18 @@
 
         <span class="kw">unsafe</span> {
             <span class="comment">// Make sure you don&#39;t use the fake one!</span>
-            <span class="ident">ffi</span>::<span class="ident">mysql_real_connect</span>(
+            <span class="ident">ffi::mysql_real_connect</span>(
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>(),
-                <span class="ident">host</span>.<span class="ident">map</span>(<span class="ident">CStr</span>::<span class="ident">as_ptr</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>()),
+                <span class="ident">host</span>.<span class="ident">map</span>(<span class="ident">CStr::as_ptr</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr::null_mut</span>()),
                 <span class="ident">user</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">password</span>
-                    .<span class="ident">map</span>(<span class="ident">CStr</span>::<span class="ident">as_ptr</span>)
-                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>()),
+                    .<span class="ident">map</span>(<span class="ident">CStr::as_ptr</span>)
+                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr::null_mut</span>()),
                 <span class="ident">database</span>
-                    .<span class="ident">map</span>(<span class="ident">CStr</span>::<span class="ident">as_ptr</span>)
-                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>()),
-                <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">port</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>)),
-                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                    .<span class="ident">map</span>(<span class="ident">CStr::as_ptr</span>)
+                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr::null_mut</span>()),
+                <span class="ident">u32::from</span>(<span class="ident">port</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>)),
+                <span class="ident">ptr::null_mut</span>(),
                 <span class="number">0</span>,
             )
         };
@@ -287,12 +284,12 @@
         <span class="kw">if</span> <span class="ident">last_error_message</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Ok</span>(())
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">ConnectionError</span>::<span class="ident">BadConnection</span>(<span class="ident">last_error_message</span>))
+            <span class="prelude-val">Err</span>(<span class="ident">ConnectionError::BadConnection</span>(<span class="ident">last_error_message</span>))
         }
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_error_message</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">unsafe</span> { <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">ffi</span>::<span class="ident">mysql_error</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>())) }
+        <span class="kw">unsafe</span> { <span class="ident">CStr::from_ptr</span>(<span class="ident">ffi::mysql_error</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>())) }
             .<span class="ident">to_string_lossy</span>()
             .<span class="ident">into_owned</span>()
     }
@@ -300,10 +297,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execute</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">query</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="comment">// Make sure you don&#39;t use the fake one!</span>
-            <span class="ident">ffi</span>::<span class="ident">mysql_real_query</span>(
+            <span class="ident">ffi::mysql_real_query</span>(
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>(),
-                <span class="ident">query</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc</span>::<span class="ident">c_char</span>,
-                <span class="ident">query</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">c_ulong</span>,
+                <span class="ident">query</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">libc::c_char</span>,
+                <span class="ident">query</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">libc::c_ulong</span>,
             );
         }
         <span class="self">self</span>.<span class="ident">did_an_error_occur</span>()<span class="question-mark">?</span>;
@@ -316,9 +313,9 @@
         <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     {
         <span class="kw">unsafe</span> {
-            <span class="ident">ffi</span>::<span class="ident">mysql_set_server_option</span>(
+            <span class="ident">ffi::mysql_set_server_option</span>(
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>(),
-                <span class="ident">ffi</span>::<span class="ident">enum_mysql_set_option</span>::<span class="ident">MYSQL_OPTION_MULTI_STATEMENTS_ON</span>,
+                <span class="ident">ffi::enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_ON</span>,
             );
         }
         <span class="self">self</span>.<span class="ident">did_an_error_occur</span>()<span class="question-mark">?</span>;
@@ -326,9 +323,9 @@
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">f</span>();
 
         <span class="kw">unsafe</span> {
-            <span class="ident">ffi</span>::<span class="ident">mysql_set_server_option</span>(
+            <span class="ident">ffi::mysql_set_server_option</span>(
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>(),
-                <span class="ident">ffi</span>::<span class="ident">enum_mysql_set_option</span>::<span class="ident">MYSQL_OPTION_MULTI_STATEMENTS_OFF</span>,
+                <span class="ident">ffi::enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_OFF</span>,
             );
         }
         <span class="self">self</span>.<span class="ident">did_an_error_occur</span>()<span class="question-mark">?</span>;
@@ -337,32 +334,32 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">affected_rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">let</span> <span class="ident">affected_rows</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_affected_rows</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
+        <span class="kw">let</span> <span class="ident">affected_rows</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_affected_rows</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
         <span class="ident">affected_rows</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prepare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">query</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Statement</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_stmt_init</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
+        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_stmt_init</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
         <span class="comment">// It is documented that the only reason `mysql_stmt_init` will fail</span>
         <span class="comment">// is because of OOM.</span>
         <span class="comment">// https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-init.html</span>
-        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="ident">NonNull</span>::<span class="ident">new</span>(<span class="ident">stmt</span>).<span class="ident">expect</span>(<span class="string">&quot;Out of memory creating prepared statement&quot;</span>);
-        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="ident">Statement</span>::<span class="ident">new</span>(<span class="ident">stmt</span>);
+        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="ident">NonNull::new</span>(<span class="ident">stmt</span>).<span class="ident">expect</span>(<span class="string">&quot;Out of memory creating prepared statement&quot;</span>);
+        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="ident">Statement::new</span>(<span class="ident">stmt</span>);
         <span class="ident">stmt</span>.<span class="ident">prepare</span>(<span class="ident">query</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">stmt</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">did_an_error_occur</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">use</span> <span class="ident">result</span>::<span class="ident">DatabaseErrorKind</span>;
-        <span class="kw">use</span> <span class="ident">result</span>::<span class="ident">Error</span>::<span class="ident">DatabaseError</span>;
+        <span class="kw">use</span> <span class="ident">result::DatabaseErrorKind</span>;
+        <span class="kw">use</span> <span class="ident">result::Error::DatabaseError</span>;
 
         <span class="kw">let</span> <span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">last_error_message</span>();
         <span class="kw">if</span> <span class="ident">error_message</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Ok</span>(())
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">DatabaseError</span>(
-                <span class="ident">DatabaseErrorKind</span>::<span class="ident">__Unknown</span>,
-                <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">error_message</span>),
+                <span class="ident">DatabaseErrorKind::__Unknown</span>,
+                <span class="ident">Box::new</span>(<span class="ident">error_message</span>),
             ))
         }
     }
@@ -379,20 +376,20 @@
 
     <span class="kw">fn</span> <span class="ident">consume_current_result</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">mysql_store_result</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>());
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">ffi::mysql_store_result</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>());
             <span class="kw">if</span> <span class="op">!</span><span class="ident">res</span>.<span class="ident">is_null</span>() {
-                <span class="ident">ffi</span>::<span class="ident">mysql_free_result</span>(<span class="ident">res</span>);
+                <span class="ident">ffi::mysql_free_result</span>(<span class="ident">res</span>);
             }
         }
         <span class="self">self</span>.<span class="ident">did_an_error_occur</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">more_results</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_more_results</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+        <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_more_results</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
     }
 
     <span class="kw">fn</span> <span class="ident">next_result</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_next_result</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
+        <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_next_result</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) };
         <span class="self">self</span>.<span class="ident">did_an_error_occur</span>()
     }
 }
@@ -400,7 +397,7 @@
 <span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">RawConnection</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
-            <span class="ident">ffi</span>::<span class="ident">mysql_close</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>());
+            <span class="ident">ffi::mysql_close</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>());
         }
     }
 }
@@ -414,13 +411,13 @@
 <span class="doccomment">/// &gt; any other client library call.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// &lt;https://dev.mysql.com/doc/refman/5.7/en/mysql-init.html&gt;</span>
-<span class="kw">static</span> <span class="ident">MYSQL_THREAD_UNSAFE_INIT</span>: <span class="ident">Once</span> <span class="op">=</span> <span class="ident">Once</span>::<span class="ident">new</span>();
+<span class="kw">static</span> <span class="ident">MYSQL_THREAD_UNSAFE_INIT</span>: <span class="ident">Once</span> <span class="op">=</span> <span class="ident">Once::new</span>();
 
 <span class="kw">fn</span> <span class="ident">perform_thread_unsafe_library_initialization</span>() {
     <span class="ident">MYSQL_THREAD_UNSAFE_INIT</span>.<span class="ident">call_once</span>(<span class="op">|</span><span class="op">|</span> {
         <span class="comment">// mysql_library_init is defined by `#define mysql_library_init mysql_server_init`</span>
         <span class="comment">// which isn&#39;t picked up by bindgen</span>
-        <span class="kw">let</span> <span class="ident">error_code</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">mysql_server_init</span>(<span class="number">0</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">ptr</span>::<span class="ident">null_mut</span>()) };
+        <span class="kw">let</span> <span class="ident">error_code</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::mysql_server_init</span>(<span class="number">0</span>, <span class="ident">ptr::null_mut</span>(), <span class="ident">ptr::null_mut</span>()) };
         <span class="kw">if</span> <span class="ident">error_code</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="comment">// FIXME: This is documented as Nonzero if an error occurred.</span>
             <span class="comment">// Presumably the value has some sort of meaning that we should</span>
@@ -428,10 +425,11 @@
             <span class="comment">// an error here, since the documentation does not indicate whether</span>
             <span class="comment">// it is safe to call this function twice if the first call failed,</span>
             <span class="comment">// so I will assume it is not.</span>
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unable to perform MySQL global initialization&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">&quot;Unable to perform MySQL global initialization&quot;</span>);
         }
     })
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="diesel" data-search-js="../../../../search-index.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="diesel" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
+    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script>
+</body></html>

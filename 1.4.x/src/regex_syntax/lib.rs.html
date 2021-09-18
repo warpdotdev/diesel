@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-syntax-0.3.9/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../regex_syntax/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;regex-syntax-0.3.9&#x2F;src&#x2F;lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../regex_syntax/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2044,7 +2041,7 @@
 <span id="2041">2041</span>
 <span id="2042">2042</span>
 <span id="2043">2043</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright 2014-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
@@ -2117,21 +2114,21 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 <span class="kw">mod</span> <span class="ident">parser</span>;
 <span class="kw">mod</span> <span class="ident">unicode</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::{<span class="ident">Ordering</span>, <span class="ident">max</span>, <span class="ident">min</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">IntoIterator</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">result</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">u8</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">vec</span>;
+<span class="kw">use</span> <span class="ident">std::ascii</span>;
+<span class="kw">use</span> <span class="ident">std::char</span>;
+<span class="kw">use</span> <span class="ident">std::cmp</span>::{<span class="ident">Ordering</span>, <span class="ident">max</span>, <span class="ident">min</span>};
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::iter::IntoIterator</span>;
+<span class="kw">use</span> <span class="ident">std::ops::Deref</span>;
+<span class="kw">use</span> <span class="ident">std::result</span>;
+<span class="kw">use</span> <span class="ident">std::slice</span>;
+<span class="kw">use</span> <span class="ident">std::u8</span>;
+<span class="kw">use</span> <span class="ident">std::vec</span>;
 
-<span class="kw">use</span> <span class="ident">unicode</span>::<span class="ident">case_folding</span>;
+<span class="kw">use</span> <span class="ident">unicode::case_folding</span>;
 
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">Expr</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">Repeater</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="self">self</span><span class="ident">::Expr</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="self">self</span><span class="ident">::Repeater</span>::<span class="kw-2">*</span>;
 
 <span class="kw">use</span> <span class="ident">parser</span>::{<span class="ident">Flags</span>, <span class="ident">Parser</span>};
 
@@ -2252,7 +2249,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 <span class="kw">impl</span> <span class="ident">Repeater</span> {
     <span class="doccomment">/// Returns true if and only if this repetition can match the empty string.</span>
     <span class="kw">fn</span> <span class="ident">matches_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Repeater</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="self">self</span><span class="ident">::Repeater</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">ZeroOrOne</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
             <span class="ident">ZeroOrMore</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
@@ -2365,7 +2362,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// Note that all flags are disabled by default.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ExprBuilder</span> {
         <span class="ident">ExprBuilder</span> {
-            <span class="ident">flags</span>: <span class="ident">Flags</span>::<span class="ident">default</span>(),
+            <span class="ident">flags</span>: <span class="ident">Flags::default</span>(),
             <span class="ident">nest_limit</span>: <span class="number">200</span>,
         }
     }
@@ -2440,7 +2437,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="doccomment">/// Parse a string as a regular expression using the current configuraiton.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> {
-        <span class="ident">Parser</span>::<span class="ident">parse</span>(<span class="ident">s</span>, <span class="self">self</span>.<span class="ident">flags</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">simplify</span>(<span class="self">self</span>.<span class="ident">nest_limit</span>))
+        <span class="ident">Parser::parse</span>(<span class="ident">s</span>, <span class="self">self</span>.<span class="ident">flags</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">simplify</span>(<span class="self">self</span>.<span class="ident">nest_limit</span>))
     }
 }
 
@@ -2451,7 +2448,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// default configuration. To tweak parsing options (such as which flags</span>
     <span class="doccomment">/// are enabled by default), use the `ExprBuilder` type.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> {
-        <span class="ident">ExprBuilder</span>::<span class="ident">new</span>().<span class="ident">parse</span>(<span class="ident">s</span>)
+        <span class="ident">ExprBuilder::new</span>().<span class="ident">parse</span>(<span class="ident">s</span>)
     }
 
     <span class="doccomment">/// Returns true iff the expression can be repeated by a quantifier.</span>
@@ -2504,28 +2501,28 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span> {
                     <span class="ident">pos</span>: <span class="number">0</span>,
                     <span class="ident">surround</span>: <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(),
-                    <span class="ident">kind</span>: <span class="ident">ErrorKind</span>::<span class="ident">StackExhausted</span>,
+                    <span class="ident">kind</span>: <span class="ident">ErrorKind::StackExhausted</span>,
                 });
             }
             <span class="kw">let</span> <span class="ident">simplify</span> <span class="op">=</span> <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">simp</span>(<span class="ident">e</span>, <span class="ident">recurse</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">limit</span>);
             <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">expr</span> {
                 <span class="ident">Repeat</span> { <span class="ident">e</span>, <span class="ident">r</span>, <span class="ident">greedy</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Repeat</span> {
-                    <span class="ident">e</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">simplify</span>(<span class="kw-2">*</span><span class="ident">e</span>))),
+                    <span class="ident">e</span>: <span class="ident">Box::new</span>(<span class="macro">try!</span>(<span class="ident">simplify</span>(<span class="kw-2">*</span><span class="ident">e</span>))),
                     <span class="ident">r</span>: <span class="ident">r</span>,
                     <span class="ident">greedy</span>: <span class="ident">greedy</span>,
                 },
                 <span class="ident">Group</span> { <span class="ident">e</span>, <span class="ident">i</span>, <span class="ident">name</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">simplify</span>(<span class="kw-2">*</span><span class="ident">e</span>));
+                    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="macro">try!</span>(<span class="ident">simplify</span>(<span class="kw-2">*</span><span class="ident">e</span>));
                     <span class="kw">if</span> <span class="ident">i</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="ident">name</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="ident">e</span>.<span class="ident">can_repeat</span>() {
                         <span class="ident">e</span>
                     } <span class="kw">else</span> {
-                        <span class="ident">Group</span> { <span class="ident">e</span>: <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">e</span>), <span class="ident">i</span>: <span class="ident">i</span>, <span class="ident">name</span>: <span class="ident">name</span> }
+                        <span class="ident">Group</span> { <span class="ident">e</span>: <span class="ident">Box::new</span>(<span class="ident">e</span>), <span class="ident">i</span>: <span class="ident">i</span>, <span class="ident">name</span>: <span class="ident">name</span> }
                     }
                 }
                 <span class="ident">Concat</span>(<span class="ident">es</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_es</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">es</span>.<span class="ident">len</span>());
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_es</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">es</span>.<span class="ident">len</span>());
                     <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">es</span> {
-                        <span class="ident">combine_literals</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">new_es</span>, <span class="macro">try</span><span class="macro">!</span>(<span class="ident">simplify</span>(<span class="ident">e</span>)));
+                        <span class="ident">combine_literals</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">new_es</span>, <span class="macro">try!</span>(<span class="ident">simplify</span>(<span class="ident">e</span>)));
                     }
                     <span class="kw">if</span> <span class="ident">new_es</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
                         <span class="ident">new_es</span>.<span class="ident">pop</span>().<span class="ident">unwrap</span>()
@@ -2534,9 +2531,9 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
                     }
                 }
                 <span class="ident">Alternate</span>(<span class="ident">es</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_es</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">es</span>.<span class="ident">len</span>());
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_es</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">es</span>.<span class="ident">len</span>());
                     <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">es</span> {
-                        <span class="ident">new_es</span>.<span class="ident">push</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">simplify</span>(<span class="ident">e</span>)));
+                        <span class="ident">new_es</span>.<span class="ident">push</span>(<span class="macro">try!</span>(<span class="ident">simplify</span>(<span class="ident">e</span>)));
                     }
                     <span class="ident">Alternate</span>(<span class="ident">new_es</span>)
                 }
@@ -2548,14 +2545,14 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="doccomment">/// Returns a set of literal prefixes extracted from this expression.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prefixes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Literals</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lits</span> <span class="op">=</span> <span class="ident">Literals</span>::<span class="ident">empty</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lits</span> <span class="op">=</span> <span class="ident">Literals::empty</span>();
         <span class="ident">lits</span>.<span class="ident">union_prefixes</span>(<span class="self">self</span>);
         <span class="ident">lits</span>
     }
 
     <span class="doccomment">/// Returns a set of literal suffixes extracted from this expression.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">suffixes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Literals</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lits</span> <span class="op">=</span> <span class="ident">Literals</span>::<span class="ident">empty</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lits</span> <span class="op">=</span> <span class="ident">Literals::empty</span>();
         <span class="ident">lits</span>.<span class="ident">union_suffixes</span>(<span class="self">self</span>);
         <span class="ident">lits</span>
     }
@@ -2644,14 +2641,14 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
 <span class="kw">impl</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="ident">CharClass</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">ClassRange</span>;
-    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">ClassRange</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">ClassRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">into_iter</span>() }
+    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">vec::IntoIter</span><span class="op">&lt;</span><span class="ident">ClassRange</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">vec::IntoIter</span><span class="op">&lt;</span><span class="ident">ClassRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">into_iter</span>() }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CharClass</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ClassRange</span>;
-    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ClassRange</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ClassRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">iter</span>() }
+    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ClassRange</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ClassRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">iter</span>() }
 }
 
 <span class="kw">impl</span> <span class="ident">CharClass</span> {
@@ -2662,7 +2659,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="doccomment">/// Create an empty class.</span>
     <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharClass</span> {
-        <span class="ident">CharClass</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())
+        <span class="ident">CharClass::new</span>(<span class="ident">Vec::new</span>())
     }
 
     <span class="doccomment">/// Returns true if `c` is matched by this character class.</span>
@@ -2681,7 +2678,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">remove</span>(<span class="ident">i</span>);
         <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">c</span> {
             <span class="ident">r</span>.<span class="ident">start</span> <span class="op">=</span> <span class="ident">inc_char</span>(<span class="ident">c</span>);
-            <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">r</span>.<span class="ident">end</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="ident">char</span>::<span class="ident">MAX</span> {
+            <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">r</span>.<span class="ident">end</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="ident">char::MAX</span> {
                 <span class="kw">return</span>;
             }
             <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">insert</span>(<span class="ident">i</span>, <span class="ident">r</span>);
@@ -2707,14 +2704,14 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="doccomment">/// Create a new empty class from this one.</span>
     <span class="kw">fn</span> <span class="ident">to_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharClass</span> {
-        <span class="ident">CharClass</span> { <span class="ident">ranges</span>: <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">len</span>()) }
+        <span class="ident">CharClass</span> { <span class="ident">ranges</span>: <span class="ident">Vec::with_capacity</span>(<span class="self">self</span>.<span class="ident">len</span>()) }
     }
 
     <span class="doccomment">/// Create a byte class from this character class.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Codepoints above 0xFF are removed.</span>
     <span class="kw">fn</span> <span class="ident">to_byte_class</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteClass</span> {
-        <span class="ident">ByteClass</span>::<span class="ident">new</span>(
+        <span class="ident">ByteClass::new</span>(
             <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">into_iter</span>()
                        .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">to_byte_range</span>())
                        .<span class="ident">collect</span>()).<span class="ident">canonicalize</span>()
@@ -2755,12 +2752,12 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// For all `c` where `c` is a Unicode scalar value, `c` matches `self`</span>
     <span class="doccomment">/// if and only if `c` does not match `self.negate()`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharClass</span> {
-        <span class="kw">fn</span> <span class="ident">range</span>(<span class="ident">s</span>: <span class="ident">char</span>, <span class="ident">e</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ClassRange</span> { <span class="ident">ClassRange</span>::<span class="ident">new</span>(<span class="ident">s</span>, <span class="ident">e</span>) }
+        <span class="kw">fn</span> <span class="ident">range</span>(<span class="ident">s</span>: <span class="ident">char</span>, <span class="ident">e</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ClassRange</span> { <span class="ident">ClassRange::new</span>(<span class="ident">s</span>, <span class="ident">e</span>) }
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() {
             <span class="comment">// Inverting an empty range yields all of Unicode.</span>
             <span class="kw">return</span> <span class="ident">CharClass</span> {
-                <span class="ident">ranges</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ClassRange</span> { <span class="ident">start</span>: <span class="string">&#39;\x00&#39;</span>, <span class="ident">end</span>: <span class="string">&#39;\u{10ffff}&#39;</span> }],
+                <span class="ident">ranges</span>: <span class="macro">vec!</span>[<span class="ident">ClassRange</span> { <span class="ident">start</span>: <span class="string">&#39;\x00&#39;</span>, <span class="ident">end</span>: <span class="string">&#39;\u{10ffff}&#39;</span> }],
             };
         }
         <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">canonicalize</span>();
@@ -2772,9 +2769,9 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="ident">inv</span>.<span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">range</span>(<span class="ident">inc_char</span>(<span class="ident">win</span>[<span class="number">0</span>].<span class="ident">end</span>),
                                   <span class="ident">dec_char</span>(<span class="ident">win</span>[<span class="number">1</span>].<span class="ident">start</span>)));
         }
-        <span class="kw">if</span> <span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span> <span class="op">&lt;</span> <span class="ident">char</span>::<span class="ident">MAX</span> {
+        <span class="kw">if</span> <span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span> <span class="op">&lt;</span> <span class="ident">char::MAX</span> {
             <span class="ident">inv</span>.<span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">range</span>(<span class="ident">inc_char</span>(<span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span>),
-                                  <span class="ident">char</span>::<span class="ident">MAX</span>));
+                                  <span class="ident">char::MAX</span>));
         }
         <span class="ident">inv</span>
     }
@@ -2833,7 +2830,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">start</span> <span class="kw">as</span> <span class="ident">u8</span>;
             <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">min</span>(<span class="string">&#39;\u{FF}&#39;</span>, <span class="self">self</span>.<span class="ident">end</span>) <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="prelude-val">Some</span>(<span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="ident">s</span>, <span class="ident">e</span>))
+            <span class="prelude-val">Some</span>(<span class="ident">ByteRange::new</span>(<span class="ident">s</span>, <span class="ident">e</span>))
         }
     }
 
@@ -2859,7 +2856,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// Returns true if and only if this range contains a character that is</span>
     <span class="doccomment">/// in the case folding table.</span>
     <span class="kw">fn</span> <span class="ident">needs_case_folding</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">case_folding</span>::<span class="ident">C_plus_S_both_table</span>
+        <span class="ident">case_folding::C_plus_S_both_table</span>
         .<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">c</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>).<span class="ident">unwrap</span>()).<span class="ident">is_ok</span>()
     }
 
@@ -2869,13 +2866,13 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// longer contiguous, this returns multiple class ranges. They are in</span>
     <span class="doccomment">/// canonical order.</span>
     <span class="kw">fn</span> <span class="ident">case_fold</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ClassRange</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">case_folding</span>::<span class="ident">C_plus_S_both_table</span>;
+        <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">case_folding::C_plus_S_both_table</span>;
         <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">e</span>) <span class="op">=</span> (<span class="self">self</span>.<span class="ident">start</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="self">self</span>.<span class="ident">end</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="number">1</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">start</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">start</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">next_case_fold</span> <span class="op">=</span> <span class="string">&#39;\x00&#39;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="number">10</span>);
-        <span class="kw">for</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="kw">in</span> (<span class="ident">s</span>..<span class="ident">e</span>).<span class="ident">filter_map</span>(<span class="ident">char</span>::<span class="ident">from_u32</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="number">10</span>);
+        <span class="kw">for</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="kw">in</span> (<span class="ident">s</span>..<span class="ident">e</span>).<span class="ident">filter_map</span>(<span class="ident">char::from_u32</span>) {
             <span class="kw">if</span> <span class="ident">c</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">next_case_fold</span> {
                 <span class="ident">c</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">simple_case_fold_both_result</span>(<span class="ident">c</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -2884,7 +2881,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
                                 <span class="kw">break</span>;
                             }
                             <span class="kw">if</span> <span class="ident">c2</span> <span class="op">!</span><span class="op">=</span> <span class="ident">inc_char</span>(<span class="ident">end</span>) {
-                                <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange</span>::<span class="ident">new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
+                                <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange::new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
                                 <span class="ident">start</span> <span class="op">=</span> <span class="ident">c2</span>;
                             }
                             <span class="ident">end</span> <span class="op">=</span> <span class="ident">c2</span>;
@@ -2904,12 +2901,12 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="comment">// The fast path. We know this character doesn&#39;t have an entry</span>
             <span class="comment">// in the case folding table.</span>
             <span class="kw">if</span> <span class="ident">c</span> <span class="op">!</span><span class="op">=</span> <span class="ident">inc_char</span>(<span class="ident">end</span>) {
-                <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange</span>::<span class="ident">new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
+                <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange::new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
                 <span class="ident">start</span> <span class="op">=</span> <span class="ident">c</span>;
             }
             <span class="ident">end</span> <span class="op">=</span> <span class="ident">c</span>;
         }
-        <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange</span>::<span class="ident">new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
+        <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ClassRange::new</span>(<span class="ident">start</span>, <span class="ident">end</span>));
         <span class="ident">ranges</span>
     }
 }
@@ -2932,11 +2929,11 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">other</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">end</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Greater</span>
+            <span class="ident">Ordering::Greater</span>
         } <span class="kw">else</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Less</span>
+            <span class="ident">Ordering::Less</span>
         })
     }
 }
@@ -2970,7 +2967,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">remove</span>(<span class="ident">i</span>);
         <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span> {
             <span class="ident">r</span>.<span class="ident">start</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>);
-            <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">r</span>.<span class="ident">end</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">u8</span>::<span class="ident">MAX</span> {
+            <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">r</span>.<span class="ident">end</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">u8::MAX</span> {
                 <span class="kw">return</span>;
             }
             <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">insert</span>(<span class="ident">i</span>, <span class="ident">r</span>);
@@ -2996,7 +2993,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="doccomment">/// Create a new empty class from this one.</span>
     <span class="kw">fn</span> <span class="ident">to_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteClass</span> {
-        <span class="ident">ByteClass</span> { <span class="ident">ranges</span>: <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">len</span>()) }
+        <span class="ident">ByteClass</span> { <span class="ident">ranges</span>: <span class="ident">Vec::with_capacity</span>(<span class="self">self</span>.<span class="ident">len</span>()) }
     }
 
     <span class="doccomment">/// Canonicalze any sequence of ranges.</span>
@@ -3027,12 +3024,12 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// For all `b` where `b` is a byte, `b` matches `self` if and only if `b`</span>
     <span class="doccomment">/// does not match `self.negate()`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negate</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteClass</span> {
-        <span class="kw">fn</span> <span class="ident">range</span>(<span class="ident">s</span>: <span class="ident">u8</span>, <span class="ident">e</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRange</span> { <span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="ident">s</span>, <span class="ident">e</span>) }
+        <span class="kw">fn</span> <span class="ident">range</span>(<span class="ident">s</span>: <span class="ident">u8</span>, <span class="ident">e</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteRange</span> { <span class="ident">ByteRange::new</span>(<span class="ident">s</span>, <span class="ident">e</span>) }
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() {
             <span class="comment">// Inverting an empty range yields all bytes.</span>
             <span class="kw">return</span> <span class="ident">ByteClass</span> {
-                <span class="ident">ranges</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ByteRange</span> { <span class="ident">start</span>: <span class="string">b&#39;\x00&#39;</span>, <span class="ident">end</span>: <span class="string">b&#39;\xff&#39;</span> }],
+                <span class="ident">ranges</span>: <span class="macro">vec!</span>[<span class="ident">ByteRange</span> { <span class="ident">start</span>: <span class="string">b&#39;\x00&#39;</span>, <span class="ident">end</span>: <span class="string">b&#39;\xff&#39;</span> }],
             };
         }
         <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">canonicalize</span>();
@@ -3044,9 +3041,9 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="ident">inv</span>.<span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">range</span>(<span class="ident">win</span>[<span class="number">0</span>].<span class="ident">end</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>),
                                   <span class="ident">win</span>[<span class="number">1</span>].<span class="ident">start</span>.<span class="ident">saturating_sub</span>(<span class="number">1</span>)));
         }
-        <span class="kw">if</span> <span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span> <span class="op">&lt;</span> <span class="ident">u8</span>::<span class="ident">MAX</span> {
+        <span class="kw">if</span> <span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span> <span class="op">&lt;</span> <span class="ident">u8::MAX</span> {
             <span class="ident">inv</span>.<span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">range</span>(<span class="self">self</span>[<span class="self">self</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>].<span class="ident">end</span>.<span class="ident">saturating_add</span>(<span class="number">1</span>),
-                                  <span class="ident">u8</span>::<span class="ident">MAX</span>));
+                                  <span class="ident">u8::MAX</span>));
         }
         <span class="ident">inv</span>
     }
@@ -3118,16 +3115,16 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="doccomment">/// This assumes that the bytes in this range are ASCII compatible.</span>
     <span class="kw">fn</span> <span class="ident">case_fold</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ByteRange</span><span class="op">&gt;</span> {
         <span class="comment">// So much easier than Unicode case folding!</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="self">self</span>];
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;z&#39;</span>).<span class="ident">is_intersect_empty</span>(<span class="self">self</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="self">self</span>];
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">ByteRange::new</span>(<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;z&#39;</span>).<span class="ident">is_intersect_empty</span>(<span class="self">self</span>) {
             <span class="kw">let</span> <span class="ident">lower</span> <span class="op">=</span> <span class="ident">max</span>(<span class="self">self</span>.<span class="ident">start</span>, <span class="string">b&#39;a&#39;</span>);
             <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="ident">min</span>(<span class="self">self</span>.<span class="ident">end</span>, <span class="string">b&#39;z&#39;</span>);
-            <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="ident">lower</span> <span class="op">-</span> <span class="number">32</span>, <span class="ident">upper</span> <span class="op">-</span> <span class="number">32</span>));
+            <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ByteRange::new</span>(<span class="ident">lower</span> <span class="op">-</span> <span class="number">32</span>, <span class="ident">upper</span> <span class="op">-</span> <span class="number">32</span>));
         }
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;Z&#39;</span>).<span class="ident">is_intersect_empty</span>(<span class="self">self</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">ByteRange::new</span>(<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;Z&#39;</span>).<span class="ident">is_intersect_empty</span>(<span class="self">self</span>) {
             <span class="kw">let</span> <span class="ident">lower</span> <span class="op">=</span> <span class="ident">max</span>(<span class="self">self</span>.<span class="ident">start</span>, <span class="string">b&#39;A&#39;</span>);
             <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="ident">min</span>(<span class="self">self</span>.<span class="ident">end</span>, <span class="string">b&#39;Z&#39;</span>);
-            <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="ident">lower</span> <span class="op">+</span> <span class="number">32</span>, <span class="ident">upper</span> <span class="op">+</span> <span class="number">32</span>));
+            <span class="ident">ranges</span>.<span class="ident">push</span>(<span class="ident">ByteRange::new</span>(<span class="ident">lower</span> <span class="op">+</span> <span class="number">32</span>, <span class="ident">upper</span> <span class="op">+</span> <span class="number">32</span>));
         }
         <span class="ident">ranges</span>
     }
@@ -3140,14 +3137,14 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
 <span class="kw">impl</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="ident">ByteClass</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">ByteRange</span>;
-    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">ByteRange</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">ByteRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">into_iter</span>() }
+    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">vec::IntoIter</span><span class="op">&lt;</span><span class="ident">ByteRange</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">vec::IntoIter</span><span class="op">&lt;</span><span class="ident">ByteRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">ranges</span>.<span class="ident">into_iter</span>() }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ByteClass</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ByteRange</span>;
-    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ByteRange</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ByteRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">iter</span>() }
+    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ByteRange</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ByteRange</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">iter</span>() }
 }
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ByteRange</span> {
@@ -3168,11 +3165,11 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="kw">if</span> <span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+            <span class="ident">Ordering::Equal</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">other</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">end</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Greater</span>
+            <span class="ident">Ordering::Greater</span>
         } <span class="kw">else</span> {
-            <span class="ident">Ordering</span>::<span class="ident">Less</span>
+            <span class="ident">Ordering::Less</span>
         })
     }
 }
@@ -3186,73 +3183,73 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
 <span class="doccomment">/// This implementation of `Display` will write a regular expression from the</span>
 <span class="doccomment">/// syntax tree. It does not write the original string parsed.</span>
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Expr</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Expr</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Empty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&quot;</span>),
+            <span class="ident">Empty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;&quot;</span>),
             <span class="ident">Literal</span> { <span class="kw-2">ref</span> <span class="ident">chars</span>, <span class="ident">casei</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="ident">casei</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?iu:&quot;</span>));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?iu:&quot;</span>));
                 } <span class="kw">else</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:&quot;</span>));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:&quot;</span>));
                 }
                 <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">c</span> <span class="kw">in</span> <span class="ident">chars</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">quote_char</span>(<span class="ident">c</span>)));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">quote_char</span>(<span class="ident">c</span>)));
                 }
-                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>));
+                <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>));
                 <span class="prelude-val">Ok</span>(())
             }
             <span class="ident">LiteralBytes</span> { <span class="kw-2">ref</span> <span class="ident">bytes</span>, <span class="ident">casei</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="ident">casei</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?i-u:&quot;</span>));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?i-u:&quot;</span>));
                 } <span class="kw">else</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:&quot;</span>));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:&quot;</span>));
                 }
                 <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">b</span> <span class="kw">in</span> <span class="ident">bytes</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">quote_byte</span>(<span class="ident">b</span>)));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">quote_byte</span>(<span class="ident">b</span>)));
                 }
-                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>));
+                <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>));
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="ident">AnyChar</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?su:.)&quot;</span>),
-            <span class="ident">AnyCharNoNL</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:.)&quot;</span>),
-            <span class="ident">AnyByte</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?s-u:.)&quot;</span>),
-            <span class="ident">AnyByteNoNL</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:.)&quot;</span>),
-            <span class="ident">Class</span>(<span class="kw-2">ref</span> <span class="ident">cls</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">cls</span>),
-            <span class="ident">ClassBytes</span>(<span class="kw-2">ref</span> <span class="ident">cls</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">cls</span>),
-            <span class="ident">StartLine</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?m:^)&quot;</span>),
-            <span class="ident">EndLine</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?m:$)&quot;</span>),
-            <span class="ident">StartText</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;^&quot;</span>),
-            <span class="ident">EndText</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;$&quot;</span>),
-            <span class="ident">WordBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?u:\b)&quot;</span>),
-            <span class="ident">NotWordBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?u:\B)&quot;</span>),
-            <span class="ident">WordBoundaryAscii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?-u:\b)&quot;</span>),
-            <span class="ident">NotWordBoundaryAscii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?-u:\B)&quot;</span>),
-            <span class="ident">Group</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">i</span>: <span class="prelude-val">None</span>, <span class="ident">name</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?:{})&quot;</span>, <span class="ident">e</span>),
-            <span class="ident">Group</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">name</span>: <span class="prelude-val">None</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;({})&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">AnyChar</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?su:.)&quot;</span>),
+            <span class="ident">AnyCharNoNL</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:.)&quot;</span>),
+            <span class="ident">AnyByte</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?s-u:.)&quot;</span>),
+            <span class="ident">AnyByteNoNL</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:.)&quot;</span>),
+            <span class="ident">Class</span>(<span class="kw-2">ref</span> <span class="ident">cls</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">cls</span>),
+            <span class="ident">ClassBytes</span>(<span class="kw-2">ref</span> <span class="ident">cls</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">cls</span>),
+            <span class="ident">StartLine</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?m:^)&quot;</span>),
+            <span class="ident">EndLine</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?m:$)&quot;</span>),
+            <span class="ident">StartText</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;^&quot;</span>),
+            <span class="ident">EndText</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;$&quot;</span>),
+            <span class="ident">WordBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?u:\b)&quot;</span>),
+            <span class="ident">NotWordBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?u:\B)&quot;</span>),
+            <span class="ident">WordBoundaryAscii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?-u:\b)&quot;</span>),
+            <span class="ident">NotWordBoundaryAscii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">r&quot;(?-u:\B)&quot;</span>),
+            <span class="ident">Group</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">i</span>: <span class="prelude-val">None</span>, <span class="ident">name</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?:{})&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">Group</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">name</span>: <span class="prelude-val">None</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;({})&quot;</span>, <span class="ident">e</span>),
             <span class="ident">Group</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">name</span>: <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">n</span>), .. } <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?P&lt;{}&gt;{})&quot;</span>, <span class="ident">n</span>, <span class="ident">e</span>)
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?P&lt;{}&gt;{})&quot;</span>, <span class="ident">n</span>, <span class="ident">e</span>)
             }
             <span class="ident">Repeat</span> { <span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">r</span>, <span class="ident">greedy</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">e</span> {
                     <span class="kw-2">&amp;</span><span class="ident">Literal</span> { <span class="kw-2">ref</span> <span class="ident">chars</span>, .. } <span class="kw">if</span> <span class="ident">chars</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?:{}){}&quot;</span>, <span class="ident">e</span>, <span class="ident">r</span>))
+                        <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?:{}){}&quot;</span>, <span class="ident">e</span>, <span class="ident">r</span>))
                     }
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{}&quot;</span>, <span class="ident">e</span>, <span class="ident">r</span>)),
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{}&quot;</span>, <span class="ident">e</span>, <span class="ident">r</span>)),
                 }
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">greedy</span> { <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;?&quot;</span>)); }
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">greedy</span> { <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;?&quot;</span>)); }
                 <span class="prelude-val">Ok</span>(())
             }
             <span class="ident">Concat</span>(<span class="kw-2">ref</span> <span class="ident">es</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">es</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>));
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>));
                 }
                 <span class="prelude-val">Ok</span>(())
             }
             <span class="ident">Alternate</span>(<span class="kw-2">ref</span> <span class="ident">es</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">e</span>) <span class="kw">in</span> <span class="ident">es</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
-                    <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;|&quot;</span>)); }
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>));
+                    <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;|&quot;</span>)); }
+                    <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>));
                 }
                 <span class="prelude-val">Ok</span>(())
             }
@@ -3260,25 +3257,25 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Repeater</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Repeater</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">ZeroOrOne</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;?&quot;</span>),
-            <span class="ident">ZeroOrMore</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;*&quot;</span>),
-            <span class="ident">OneOrMore</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;+&quot;</span>),
-            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{},}}&quot;</span>, <span class="ident">s</span>),
-            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">Some</span>(<span class="ident">e</span>) } <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="ident">e</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{}}}&quot;</span>, <span class="ident">s</span>),
-            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">Some</span>(<span class="ident">e</span>) } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{}, {}}}&quot;</span>, <span class="ident">s</span>, <span class="ident">e</span>),
+            <span class="ident">ZeroOrOne</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;?&quot;</span>),
+            <span class="ident">ZeroOrMore</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;*&quot;</span>),
+            <span class="ident">OneOrMore</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;+&quot;</span>),
+            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">None</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{},}}&quot;</span>, <span class="ident">s</span>),
+            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">Some</span>(<span class="ident">e</span>) } <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="ident">e</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{}}}&quot;</span>, <span class="ident">s</span>),
+            <span class="ident">Range</span> { <span class="ident">min</span>: <span class="ident">s</span>, <span class="ident">max</span>: <span class="prelude-val">Some</span>(<span class="ident">e</span>) } <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{{{}, {}}}&quot;</span>, <span class="ident">s</span>, <span class="ident">e</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">CharClass</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:[&quot;</span>));
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">CharClass</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?u:[&quot;</span>));
         <span class="kw">for</span> <span class="ident">range</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">iter</span>() {
             <span class="kw">if</span> <span class="ident">range</span>.<span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;-&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">range</span>.<span class="ident">end</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;-&#39;</span> {
-                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;-&quot;</span>));
+                <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;-&quot;</span>));
                 <span class="kw">break</span>;
             }
         }
@@ -3293,25 +3290,25 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="kw">if</span> <span class="ident">range</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">range</span>.<span class="ident">end</span> {
                 <span class="kw">continue</span>;
             }
-            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">range</span>));
+            <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">range</span>));
         }
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;])&quot;</span>));
+        <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;])&quot;</span>));
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ClassRange</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}-{}&quot;</span>, <span class="ident">quote_char</span>(<span class="self">self</span>.<span class="ident">start</span>), <span class="ident">quote_char</span>(<span class="self">self</span>.<span class="ident">end</span>))
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ClassRange</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}-{}&quot;</span>, <span class="ident">quote_char</span>(<span class="self">self</span>.<span class="ident">start</span>), <span class="ident">quote_char</span>(<span class="self">self</span>.<span class="ident">end</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ByteClass</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:[&quot;</span>));
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ByteClass</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;(?-u:[&quot;</span>));
         <span class="kw">for</span> <span class="ident">range</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">iter</span>() {
             <span class="kw">if</span> <span class="ident">range</span>.<span class="ident">start</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;-&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">range</span>.<span class="ident">end</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;-&#39;</span> {
-                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;-&quot;</span>));
+                <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;-&quot;</span>));
                 <span class="kw">break</span>;
             }
         }
@@ -3326,21 +3323,21 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="kw">if</span> <span class="ident">range</span>.<span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">range</span>.<span class="ident">end</span> {
                 <span class="kw">continue</span>;
             }
-            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">range</span>));
+            <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">range</span>));
         }
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;])&quot;</span>));
+        <span class="macro">try!</span>(<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;])&quot;</span>));
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ByteRange</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}-{}&quot;</span>, <span class="ident">quote_byte</span>(<span class="self">self</span>.<span class="ident">start</span>), <span class="ident">quote_byte</span>(<span class="self">self</span>.<span class="ident">end</span>))
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ByteRange</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}-{}&quot;</span>, <span class="ident">quote_byte</span>(<span class="self">self</span>.<span class="ident">start</span>), <span class="ident">quote_byte</span>(<span class="self">self</span>.<span class="ident">end</span>))
     }
 }
 
 <span class="doccomment">/// An alias for computations that can return a `Error`.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">::std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// A parse error.</span>
 <span class="doccomment">///</span>
@@ -3511,118 +3508,118 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             <span class="ident">UnicodeNotAllowed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Unicode features not allowed&quot;</span>,
             <span class="ident">InvalidUtf8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;matching arbitrary bytes is not allowed&quot;</span>,
             <span class="ident">EmptyClass</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;empty character class&quot;</span>,
-            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
         }
     }
 }
 
-<span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
+<span class="kw">impl</span> <span class="ident">::std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">kind</span>.<span class="ident">description</span>()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ErrorKind</span>::<span class="ident">StackExhausted</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span> {
-            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Error parsing regex: {}&quot;</span>, <span class="self">self</span>.<span class="ident">kind</span>)
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ErrorKind::StackExhausted</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span> {
+            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Error parsing regex: {}&quot;</span>, <span class="self">self</span>.<span class="ident">kind</span>)
         } <span class="kw">else</span> {
-            <span class="macro">write</span><span class="macro">!</span>(
+            <span class="macro">write!</span>(
                 <span class="ident">f</span>, <span class="string">&quot;Error parsing regex near &#39;{}&#39; at character offset {}: {}&quot;</span>,
                 <span class="self">self</span>.<span class="ident">surround</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">kind</span>)
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ErrorKind</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ErrorKind</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="kw">use</span> <span class="ident">ErrorKind</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">DoubleFlagNegation</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Only one negation symbol is allowed in flags.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Only one negation symbol is allowed in flags.&quot;</span>),
             <span class="ident">DuplicateCaptureName</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture name &#39;{}&#39; is used more than once.&quot;</span>, <span class="ident">s</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture name &#39;{}&#39; is used more than once.&quot;</span>, <span class="ident">s</span>),
             <span class="ident">EmptyAlternate</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Alternations cannot be empty.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Alternations cannot be empty.&quot;</span>),
             <span class="ident">EmptyCaptureName</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture names cannot be empty.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture names cannot be empty.&quot;</span>),
             <span class="ident">EmptyFlagNegation</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Flag negation requires setting at least one flag.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Flag negation requires setting at least one flag.&quot;</span>),
             <span class="ident">EmptyGroup</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Empty regex groups (e.g., &#39;()&#39;) are not allowed.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Empty regex groups (e.g., &#39;()&#39;) are not allowed.&quot;</span>),
             <span class="ident">InvalidBase10</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Not a valid base 10 number: &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Not a valid base 10 number: &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
             <span class="ident">InvalidBase16</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Not a valid base 16 number: &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Not a valid base 16 number: &#39;{}&#39;&quot;</span>, <span class="ident">s</span>),
             <span class="ident">InvalidCaptureName</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid capture name: &#39;{}&#39;. Capture names must \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid capture name: &#39;{}&#39;. Capture names must \
                            consist of [_a-zA-Z0-9] and are not allowed to \
                            start with with a number.&quot;</span>, <span class="ident">s</span>),
             <span class="ident">InvalidClassRange</span> { <span class="ident">start</span>, <span class="ident">end</span> } <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid character class range &#39;{}-{}&#39;. \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid character class range &#39;{}-{}&#39;. \
                            Character class ranges must start with the smaller \
                            character, but {} &gt; {}&quot;</span>, <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">start</span>, <span class="ident">end</span>),
             <span class="ident">InvalidClassEscape</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid escape sequence in character \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid escape sequence in character \
                            class: &#39;{}&#39;.&quot;</span>, <span class="ident">e</span>),
             <span class="ident">InvalidRepeatRange</span> { <span class="ident">min</span>, <span class="ident">max</span> } <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid counted repetition range: {{{}, {}}}. \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid counted repetition range: {{{}, {}}}. \
                            Counted repetition ranges must start with the \
                            minimum, but {} &gt; {}&quot;</span>, <span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">min</span>, <span class="ident">max</span>),
             <span class="ident">InvalidScalarValue</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Number does not correspond to a Unicode scalar \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Number does not correspond to a Unicode scalar \
                            value: &#39;{}&#39;.&quot;</span>, <span class="ident">c</span>),
             <span class="ident">MissingBase10</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Missing maximum in counted reptition operator.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Missing maximum in counted reptition operator.&quot;</span>),
             <span class="ident">RepeaterExpectsExpr</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Missing expression for reptition operator.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Missing expression for reptition operator.&quot;</span>),
             <span class="ident">RepeaterUnexpectedExpr</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid application of reptition operator to: \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid application of reptition operator to: \
                           &#39;{}&#39;.&quot;</span>, <span class="ident">e</span>),
             <span class="ident">UnclosedCaptureName</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture name group for &#39;{}&#39; is not closed. \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Capture name group for &#39;{}&#39; is not closed. \
                            (Missing a &#39;&gt;&#39;.)&quot;</span>, <span class="ident">s</span>),
             <span class="ident">UnclosedHex</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed hexadecimal literal (missing a &#39;}}&#39;).&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed hexadecimal literal (missing a &#39;}}&#39;).&quot;</span>),
             <span class="ident">UnclosedParen</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed parenthesis.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed parenthesis.&quot;</span>),
             <span class="ident">UnclosedRepeat</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed counted repetition (missing a &#39;}}&#39;).&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed counted repetition (missing a &#39;}}&#39;).&quot;</span>),
             <span class="ident">UnclosedUnicodeName</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed Unicode literal (missing a &#39;}}&#39;).&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unclosed Unicode literal (missing a &#39;}}&#39;).&quot;</span>),
             <span class="ident">UnexpectedClassEof</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Character class was not closed before the end of \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Character class was not closed before the end of \
                            the regex (missing a &#39;]&#39;).&quot;</span>),
             <span class="ident">UnexpectedEscapeEof</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Started an escape sequence that didn&#39;t finish \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Started an escape sequence that didn&#39;t finish \
                            before the end of the regex.&quot;</span>),
             <span class="ident">UnexpectedFlagEof</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Inline flag settings was not closed before the end \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Inline flag settings was not closed before the end \
                            of the regex (missing a &#39;)&#39; or &#39;:&#39;).&quot;</span>),
             <span class="ident">UnexpectedTwoDigitHexEof</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected end of two digit hexadecimal literal.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected end of two digit hexadecimal literal.&quot;</span>),
             <span class="ident">UnopenedParen</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unopened parenthesis.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unopened parenthesis.&quot;</span>),
             <span class="ident">UnrecognizedEscape</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized escape sequence: &#39;\\{}&#39;.&quot;</span>, <span class="ident">c</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized escape sequence: &#39;\\{}&#39;.&quot;</span>, <span class="ident">c</span>),
             <span class="ident">UnrecognizedFlag</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized flag: &#39;{}&#39;. \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized flag: &#39;{}&#39;. \
                            (Allowed flags: i, m, s, U, u, x.)&quot;</span>, <span class="ident">c</span>),
             <span class="ident">UnrecognizedUnicodeClass</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized Unicode class name: &#39;{}&#39;.&quot;</span>, <span class="ident">s</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unrecognized Unicode class name: &#39;{}&#39;.&quot;</span>, <span class="ident">s</span>),
             <span class="ident">StackExhausted</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Exhausted space required to parse regex with too \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Exhausted space required to parse regex with too \
                            much nesting.&quot;</span>),
             <span class="ident">FlagNotAllowed</span>(<span class="ident">flag</span>) <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Use of the flag &#39;{}&#39; is not allowed.&quot;</span>, <span class="ident">flag</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Use of the flag &#39;{}&#39; is not allowed.&quot;</span>, <span class="ident">flag</span>),
             <span class="ident">UnicodeNotAllowed</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unicode features are not allowed when the Unicode \
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unicode features are not allowed when the Unicode \
                            (u) flag is not set.&quot;</span>),
             <span class="ident">InvalidUtf8</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Matching arbitrary bytes is not allowed.&quot;</span>),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Matching arbitrary bytes is not allowed.&quot;</span>),
             <span class="ident">EmptyClass</span> <span class="op">=</span><span class="op">&gt;</span>
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Empty character classes are not allowed.&quot;</span>),
-            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Empty character classes are not allowed.&quot;</span>),
+            <span class="ident">__Nonexhaustive</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
         }
     }
 }
@@ -3633,8 +3630,8 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 <span class="doccomment">/// the index returned corresponds to the *first* location of `c1` in the</span>
 <span class="doccomment">/// table. The table can then be scanned linearly starting from the position</span>
 <span class="doccomment">/// returned to find other case mappings for `c1`.</span>
-<span class="kw">fn</span> <span class="ident">simple_case_fold_both_result</span>(<span class="ident">c1</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">usize</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">case_folding</span>::<span class="ident">C_plus_S_both_table</span>;
+<span class="kw">fn</span> <span class="ident">simple_case_fold_both_result</span>(<span class="ident">c1</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">result::Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">case_folding::C_plus_S_both_table</span>;
     <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">binary_search</span>(<span class="ident">table</span>, <span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">c2</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="ident">c1</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">c2</span>);
     <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">table</span>.<span class="ident">len</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">table</span>[<span class="ident">i</span>].<span class="number">0</span> <span class="op">!</span><span class="op">=</span> <span class="ident">c1</span> {
         <span class="prelude-val">Err</span>(<span class="ident">i</span>)
@@ -3667,9 +3664,9 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 <span class="doccomment">/// The string returned may be safely used as a literal in a regular</span>
 <span class="doccomment">/// expression.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quoted</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quoted</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
     <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">text</span>.<span class="ident">chars</span>() {
-        <span class="kw">if</span> <span class="ident">parser</span>::<span class="ident">is_punct</span>(<span class="ident">c</span>) {
+        <span class="kw">if</span> <span class="ident">parser::is_punct</span>(<span class="ident">c</span>) {
             <span class="ident">quoted</span>.<span class="ident">push</span>(<span class="string">&#39;\\&#39;</span>);
         }
         <span class="ident">quoted</span>.<span class="ident">push</span>(<span class="ident">c</span>);
@@ -3678,8 +3675,8 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 }
 
 <span class="kw">fn</span> <span class="ident">quote_char</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-    <span class="kw">if</span> <span class="ident">parser</span>::<span class="ident">is_punct</span>(<span class="ident">c</span>) {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String::new</span>();
+    <span class="kw">if</span> <span class="ident">parser::is_punct</span>(<span class="ident">c</span>) {
         <span class="ident">s</span>.<span class="ident">push</span>(<span class="string">&#39;\\&#39;</span>);
     }
     <span class="ident">s</span>.<span class="ident">push</span>(<span class="ident">c</span>);
@@ -3687,19 +3684,19 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 }
 
 <span class="kw">fn</span> <span class="ident">quote_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="kw">if</span> <span class="ident">parser</span>::<span class="ident">is_punct</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\&#39;&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;&quot;&#39;</span> {
+    <span class="kw">if</span> <span class="ident">parser::is_punct</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;\&#39;&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;&quot;&#39;</span> {
         <span class="ident">quote_char</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>)
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class="ident">escaped</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ascii</span>::<span class="ident">escape_default</span>(<span class="ident">b</span>).<span class="ident">collect</span>();
-        <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">escaped</span>).<span class="ident">unwrap</span>()
+        <span class="kw">let</span> <span class="ident">escaped</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ascii::escape_default</span>(<span class="ident">b</span>).<span class="ident">collect</span>();
+        <span class="ident">String::from_utf8</span>(<span class="ident">escaped</span>).<span class="ident">unwrap</span>()
     }
 }
 
 <span class="kw">fn</span> <span class="ident">inc_char</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">char</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
-        <span class="ident">char</span>::<span class="ident">MAX</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char</span>::<span class="ident">MAX</span>,
+        <span class="ident">char::MAX</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char::MAX</span>,
         <span class="string">&#39;\u{D7FF}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&#39;\u{E000}&#39;</span>,
-        <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">unwrap</span>(),
+        <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char::from_u32</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">unwrap</span>(),
     }
 }
 
@@ -3707,7 +3704,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="string">&#39;\x00&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&#39;\x00&#39;</span>,
         <span class="string">&#39;\u{E000}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&#39;\u{D7FF}&#39;</span>,
-        <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char</span>::<span class="ident">from_u32</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">-</span> <span class="number">1</span>).<span class="ident">unwrap</span>(),
+        <span class="ident">c</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">char::from_u32</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">-</span> <span class="number">1</span>).<span class="ident">unwrap</span>(),
     }
 }
 
@@ -3716,13 +3713,13 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_word_char</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="string">&#39;_&#39;</span> <span class="op">|</span> <span class="string">&#39;0&#39;</span> ... <span class="string">&#39;9&#39;</span> <span class="op">|</span> <span class="string">&#39;a&#39;</span> ... <span class="string">&#39;z&#39;</span> <span class="op">|</span> <span class="string">&#39;A&#39;</span> ... <span class="string">&#39;Z&#39;</span>  <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> ::<span class="ident">unicode</span>::<span class="ident">regex</span>::<span class="ident">PERLW</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">start</span>, <span class="ident">end</span>)<span class="op">|</span> {
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">::unicode::regex::PERLW</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">start</span>, <span class="ident">end</span>)<span class="op">|</span> {
             <span class="kw">if</span> <span class="ident">c</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">start</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">end</span> {
-                <span class="ident">Ordering</span>::<span class="ident">Equal</span>
+                <span class="ident">Ordering::Equal</span>
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">start</span> <span class="op">&gt;</span> <span class="ident">c</span> {
-                <span class="ident">Ordering</span>::<span class="ident">Greater</span>
+                <span class="ident">Ordering::Greater</span>
             } <span class="kw">else</span> {
-                <span class="ident">Ordering</span>::<span class="ident">Less</span>
+                <span class="ident">Ordering::Less</span>
             }
         }).<span class="ident">is_ok</span>(),
     }
@@ -3746,65 +3743,65 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
 
     <span class="kw">fn</span> <span class="ident">class</span>(<span class="ident">ranges</span>: <span class="kw-2">&amp;</span>[(<span class="ident">char</span>, <span class="ident">char</span>)]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CharClass</span> {
         <span class="kw">let</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">ranges</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>()
-                           .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)<span class="op">|</span> <span class="ident">ClassRange</span>::<span class="ident">new</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)).<span class="ident">collect</span>();
-        <span class="ident">CharClass</span>::<span class="ident">new</span>(<span class="ident">ranges</span>)
+                           .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)<span class="op">|</span> <span class="ident">ClassRange::new</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)).<span class="ident">collect</span>();
+        <span class="ident">CharClass::new</span>(<span class="ident">ranges</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">bclass</span>(<span class="ident">ranges</span>: <span class="kw-2">&amp;</span>[(<span class="ident">u8</span>, <span class="ident">u8</span>)]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ByteClass</span> {
         <span class="kw">let</span> <span class="ident">ranges</span> <span class="op">=</span> <span class="ident">ranges</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>()
-                           .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)<span class="op">|</span> <span class="ident">ByteRange</span>::<span class="ident">new</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)).<span class="ident">collect</span>();
-        <span class="ident">ByteClass</span>::<span class="ident">new</span>(<span class="ident">ranges</span>)
+                           .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)<span class="op">|</span> <span class="ident">ByteRange::new</span>(<span class="ident">c1</span>, <span class="ident">c2</span>)).<span class="ident">collect</span>();
+        <span class="ident">ByteClass::new</span>(<span class="ident">ranges</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">e</span>(<span class="ident">re</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Expr</span> { <span class="ident">Expr</span>::<span class="ident">parse</span>(<span class="ident">re</span>).<span class="ident">unwrap</span>() }
+    <span class="kw">fn</span> <span class="ident">e</span>(<span class="ident">re</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Expr</span> { <span class="ident">Expr::parse</span>(<span class="ident">re</span>).<span class="ident">unwrap</span>() }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">stack_exhaustion</span>() {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">repeat</span>;
+        <span class="kw">use</span> <span class="ident">std::iter::repeat</span>;
 
         <span class="kw">let</span> <span class="ident">open</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">repeat</span>(<span class="string">&#39;(&#39;</span>).<span class="ident">take</span>(<span class="number">200</span>).<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="ident">close</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">repeat</span>(<span class="string">&#39;)&#39;</span>).<span class="ident">take</span>(<span class="number">200</span>).<span class="ident">collect</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">Expr</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}a{}&quot;</span>, <span class="ident">open</span>, <span class="ident">close</span>)).<span class="ident">is_ok</span>());
+        <span class="macro">assert!</span>(<span class="ident">Expr::parse</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}a{}&quot;</span>, <span class="ident">open</span>, <span class="ident">close</span>)).<span class="ident">is_ok</span>());
 
         <span class="kw">let</span> <span class="ident">open</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">repeat</span>(<span class="string">&#39;(&#39;</span>).<span class="ident">take</span>(<span class="number">200</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="ident">close</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">repeat</span>(<span class="string">&#39;)&#39;</span>).<span class="ident">take</span>(<span class="number">200</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">collect</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">Expr</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}a{}&quot;</span>, <span class="ident">open</span>, <span class="ident">close</span>)).<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">Expr::parse</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}a{}&quot;</span>, <span class="ident">open</span>, <span class="ident">close</span>)).<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">anchored_start</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;^a&quot;</span>).<span class="ident">is_anchored_start</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;(^a)&quot;</span>).<span class="ident">is_anchored_start</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;^a|^b&quot;</span>).<span class="ident">is_anchored_start</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;(^a)|(^b)&quot;</span>).<span class="ident">is_anchored_start</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;(^(a|b))&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;^a&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;(^a)&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;^a|^b&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;(^a)|(^b)&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;(^(a|b))&quot;</span>).<span class="ident">is_anchored_start</span>());
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;^a|b&quot;</span>).<span class="ident">is_anchored_start</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a|^b&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;^a|b&quot;</span>).<span class="ident">is_anchored_start</span>());
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a|^b&quot;</span>).<span class="ident">is_anchored_start</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">anchored_end</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;a$&quot;</span>).<span class="ident">is_anchored_end</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;(a$)&quot;</span>).<span class="ident">is_anchored_end</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;a$|b$&quot;</span>).<span class="ident">is_anchored_end</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;(a$)|(b$)&quot;</span>).<span class="ident">is_anchored_end</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>(<span class="string">&quot;((a|b)$)&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;a$&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;(a$)&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;a$|b$&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;(a$)|(b$)&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="ident">e</span>(<span class="string">&quot;((a|b)$)&quot;</span>).<span class="ident">is_anchored_end</span>());
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a$|b&quot;</span>).<span class="ident">is_anchored_end</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a|b$&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a$|b&quot;</span>).<span class="ident">is_anchored_end</span>());
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">e</span>(<span class="string">&quot;a|b$&quot;</span>).<span class="ident">is_anchored_end</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_no_change</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;c&#39;</span>), (<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">cls</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">cls</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_unordered</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;c&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;c&#39;</span>), (<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>),
         ]));
     }
@@ -3812,7 +3809,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_overlap</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>), (<span class="string">&#39;w&#39;</span>, <span class="string">&#39;y&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;w&#39;</span>, <span class="string">&#39;z&#39;</span>),
         ]));
     }
@@ -3823,7 +3820,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             (<span class="string">&#39;c&#39;</span>, <span class="string">&#39;f&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;g&#39;</span>), (<span class="string">&#39;d&#39;</span>, <span class="string">&#39;j&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;c&#39;</span>),
             (<span class="string">&#39;m&#39;</span>, <span class="string">&#39;p&#39;</span>), (<span class="string">&#39;l&#39;</span>, <span class="string">&#39;s&#39;</span>),
         ]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;j&#39;</span>), (<span class="string">&#39;l&#39;</span>, <span class="string">&#39;s&#39;</span>),
         ]));
     }
@@ -3831,7 +3828,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_overlap_boundary</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>), (<span class="string">&#39;u&#39;</span>, <span class="string">&#39;w&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;u&#39;</span>, <span class="string">&#39;z&#39;</span>),
         ]));
     }
@@ -3839,7 +3836,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_extreme_edge_case</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>), (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3847,13 +3844,13 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_canon_singles</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;a&#39;</span>), (<span class="string">&#39;b&#39;</span>, <span class="string">&#39;b&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;b&#39;</span>)]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;b&#39;</span>)]));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_single</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;a&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x60&#39;</span>), (<span class="string">&#39;\x62&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3861,7 +3858,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_singles</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;a&#39;</span>), (<span class="string">&#39;b&#39;</span>, <span class="string">&#39;b&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x60&#39;</span>), (<span class="string">&#39;\x63&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3869,7 +3866,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_multiples</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;c&#39;</span>), (<span class="string">&#39;x&#39;</span>, <span class="string">&#39;z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x60&#39;</span>), (<span class="string">&#39;\x64&#39;</span>, <span class="string">&#39;\x77&#39;</span>), (<span class="string">&#39;\x7b&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3877,7 +3874,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_min_scalar</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;a&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x62&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3885,7 +3882,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_max_scalar</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x60&#39;</span>),
         ]));
     }
@@ -3893,7 +3890,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_everything</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[]));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -3901,7 +3898,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{10FFFD}&#39;</span>), (<span class="string">&#39;\u{10FFFF}&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)
         ]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\u{10FFFE}&#39;</span>, <span class="string">&#39;\u{10FFFE}&#39;</span>),
         ]));
     }
@@ -3909,7 +3906,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_surrogates_min</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{D7FF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\u{E000}&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3917,7 +3914,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_surrogates_min_edge</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{D7FE}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\u{D7FF}&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
     }
@@ -3925,7 +3922,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_surrogates_max</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\u{E000}&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{D7FF}&#39;</span>),
         ]));
     }
@@ -3933,7 +3930,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_negate_surrogates_max_edge</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\u{E001}&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\u{E000}&#39;</span>),
         ]));
     }
@@ -3944,7 +3941,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             (<span class="string">&#39;C&#39;</span>, <span class="string">&#39;F&#39;</span>), (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;G&#39;</span>), (<span class="string">&#39;D&#39;</span>, <span class="string">&#39;J&#39;</span>), (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;C&#39;</span>),
             (<span class="string">&#39;M&#39;</span>, <span class="string">&#39;P&#39;</span>), (<span class="string">&#39;L&#39;</span>, <span class="string">&#39;S&#39;</span>), (<span class="string">&#39;c&#39;</span>, <span class="string">&#39;f&#39;</span>),
         ]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;J&#39;</span>), (<span class="string">&#39;L&#39;</span>, <span class="string">&#39;S&#39;</span>),
             (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;j&#39;</span>), (<span class="string">&#39;l&#39;</span>, <span class="string">&#39;s&#39;</span>),
             (<span class="string">&#39;\u{17F}&#39;</span>, <span class="string">&#39;\u{17F}&#39;</span>),
@@ -3954,7 +3951,7 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
             (<span class="string">b&#39;C&#39;</span>, <span class="string">b&#39;F&#39;</span>), (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;G&#39;</span>), (<span class="string">b&#39;D&#39;</span>, <span class="string">b&#39;J&#39;</span>), (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;C&#39;</span>),
             (<span class="string">b&#39;M&#39;</span>, <span class="string">b&#39;P&#39;</span>), (<span class="string">b&#39;L&#39;</span>, <span class="string">b&#39;S&#39;</span>), (<span class="string">b&#39;c&#39;</span>, <span class="string">b&#39;f&#39;</span>),
         ]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;J&#39;</span>), (<span class="string">b&#39;L&#39;</span>, <span class="string">b&#39;S&#39;</span>),
             (<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;j&#39;</span>), (<span class="string">b&#39;l&#39;</span>, <span class="string">b&#39;s&#39;</span>),
         ]));
@@ -3963,24 +3960,24 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_az</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;A&#39;</span>, <span class="string">&#39;Z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;Z&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;z&#39;</span>),
             (<span class="string">&#39;\u{17F}&#39;</span>, <span class="string">&#39;\u{17F}&#39;</span>),
             (<span class="string">&#39;\u{212A}&#39;</span>, <span class="string">&#39;\u{212A}&#39;</span>),
         ]));
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;a&#39;</span>, <span class="string">&#39;z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;Z&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;z&#39;</span>),
             (<span class="string">&#39;\u{17F}&#39;</span>, <span class="string">&#39;\u{17F}&#39;</span>),
             (<span class="string">&#39;\u{212A}&#39;</span>, <span class="string">&#39;\u{212A}&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;Z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;Z&#39;</span>), (<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;z&#39;</span>),
         ]));
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;z&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;Z&#39;</span>), (<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;z&#39;</span>),
         ]));
     }
@@ -3988,18 +3985,18 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_a_underscore</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>), (<span class="string">&#39;_&#39;</span>, <span class="string">&#39;_&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>), (<span class="string">&#39;_&#39;</span>, <span class="string">&#39;_&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>), (<span class="string">&#39;_&#39;</span>, <span class="string">&#39;_&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;a&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>), (<span class="string">b&#39;_&#39;</span>, <span class="string">b&#39;_&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>), (<span class="string">b&#39;_&#39;</span>, <span class="string">b&#39;_&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>), (<span class="string">b&#39;_&#39;</span>, <span class="string">b&#39;_&#39;</span>), (<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;a&#39;</span>),
         ]));
     }
@@ -4007,18 +4004,18 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_a_equals</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>), (<span class="string">&#39;=&#39;</span>, <span class="string">&#39;=&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;=&#39;</span>, <span class="string">&#39;=&#39;</span>), (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;=&#39;</span>, <span class="string">&#39;=&#39;</span>), (<span class="string">&#39;A&#39;</span>, <span class="string">&#39;A&#39;</span>), (<span class="string">&#39;a&#39;</span>, <span class="string">&#39;a&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>), (<span class="string">b&#39;=&#39;</span>, <span class="string">b&#39;=&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;=&#39;</span>, <span class="string">b&#39;=&#39;</span>), (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;=&#39;</span>, <span class="string">b&#39;=&#39;</span>), (<span class="string">b&#39;A&#39;</span>, <span class="string">b&#39;A&#39;</span>), (<span class="string">b&#39;a&#39;</span>, <span class="string">b&#39;a&#39;</span>),
         ]));
     }
@@ -4026,12 +4023,12 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_no_folding_needed</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x10&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;\x10&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;\x00&#39;</span>, <span class="string">b&#39;\x10&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;\x00&#39;</span>, <span class="string">b&#39;\x10&#39;</span>),
         ]));
     }
@@ -4039,18 +4036,18 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_negated</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;x&#39;</span>, <span class="string">&#39;x&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;X&#39;</span>, <span class="string">&#39;X&#39;</span>), (<span class="string">&#39;x&#39;</span>, <span class="string">&#39;x&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>().<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>().<span class="ident">negate</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;\x00&#39;</span>, <span class="string">&#39;W&#39;</span>), (<span class="string">&#39;Y&#39;</span>, <span class="string">&#39;w&#39;</span>), (<span class="string">&#39;y&#39;</span>, <span class="string">&#39;\u{10FFFF}&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;x&#39;</span>, <span class="string">b&#39;x&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;X&#39;</span>, <span class="string">b&#39;X&#39;</span>), (<span class="string">b&#39;x&#39;</span>, <span class="string">b&#39;x&#39;</span>),
         ]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>().<span class="ident">negate</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>().<span class="ident">negate</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;\x00&#39;</span>, <span class="string">b&#39;W&#39;</span>), (<span class="string">b&#39;Y&#39;</span>, <span class="string">b&#39;w&#39;</span>), (<span class="string">b&#39;y&#39;</span>, <span class="string">b&#39;\xff&#39;</span>),
         ]));
     }
@@ -4058,12 +4055,12 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_single_to_multiple</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;k&#39;</span>, <span class="string">&#39;k&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">&#39;K&#39;</span>, <span class="string">&#39;K&#39;</span>), (<span class="string">&#39;k&#39;</span>, <span class="string">&#39;k&#39;</span>), (<span class="string">&#39;\u{212A}&#39;</span>, <span class="string">&#39;\u{212A}&#39;</span>),
         ]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;k&#39;</span>, <span class="string">b&#39;k&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[
             (<span class="string">b&#39;K&#39;</span>, <span class="string">b&#39;K&#39;</span>), (<span class="string">b&#39;k&#39;</span>, <span class="string">b&#39;k&#39;</span>),
         ]));
     }
@@ -4071,23 +4068,24 @@ assert_eq!(err.kind(), &amp;ErrorKind::UnclosedParen);
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">class_fold_at</span>() {
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;@&#39;</span>, <span class="string">&#39;@&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;@&#39;</span>, <span class="string">&#39;@&#39;</span>)]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;@&#39;</span>, <span class="string">&#39;@&#39;</span>)]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;@&#39;</span>, <span class="string">&#39;@&#39;</span>)]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">class</span>(<span class="kw-2">&amp;</span>[(<span class="string">&#39;@&#39;</span>, <span class="string">&#39;@&#39;</span>)]));
 
         <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;@&#39;</span>, <span class="string">b&#39;@&#39;</span>)]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;@&#39;</span>, <span class="string">b&#39;@&#39;</span>)]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;@&#39;</span>, <span class="string">b&#39;@&#39;</span>)]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">clone</span>().<span class="ident">canonicalize</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;@&#39;</span>, <span class="string">b&#39;@&#39;</span>)]));
+        <span class="macro">assert_eq!</span>(<span class="ident">cls</span>.<span class="ident">case_fold</span>(), <span class="ident">bclass</span>(<span class="kw-2">&amp;</span>[(<span class="string">b&#39;@&#39;</span>, <span class="string">b&#39;@&#39;</span>)]));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">roundtrip_class_hypen</span>() {
         <span class="kw">let</span> <span class="ident">expr</span> <span class="op">=</span> <span class="ident">e</span>(<span class="string">&quot;[-./]&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;(?u:[-\\.-/])&quot;</span>, <span class="ident">expr</span>.<span class="ident">to_string</span>());
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;(?u:[-\\.-/])&quot;</span>, <span class="ident">expr</span>.<span class="ident">to_string</span>());
 
         <span class="kw">let</span> <span class="ident">expr</span> <span class="op">=</span> <span class="ident">e</span>(<span class="string">&quot;(?-u)[-./]&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;(?-u:[-\\.-/])&quot;</span>, <span class="ident">expr</span>.<span class="ident">to_string</span>());
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;(?-u:[-\\.-/])&quot;</span>, <span class="ident">expr</span>.<span class="ident">to_string</span>());
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="regex_syntax" data-search-js="../../search-index.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="regex_syntax" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

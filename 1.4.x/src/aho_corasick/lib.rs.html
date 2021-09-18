@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/aho-corasick-0.5.3/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../aho_corasick/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;aho-corasick-0.5.3&#x2F;src&#x2F;lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../aho_corasick/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -926,7 +923,7 @@
 <span id="923">923</span>
 <span id="924">924</span>
 <span id="925">925</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="doccomment">/*!
 An implementation of the
 [Aho-Corasick string search algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_string_matching_algorithm).
@@ -1053,16 +1050,16 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quickcheck</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">VecDeque</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std::collections::VecDeque</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::iter::FromIterator</span>;
+<span class="kw">use</span> <span class="ident">std::mem</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">autiter</span>::{
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::autiter</span>::{
     <span class="ident">Automaton</span>, <span class="ident">Match</span>,
     <span class="ident">Matches</span>, <span class="ident">MatchesOverlapping</span>, <span class="ident">StreamMatches</span>, <span class="ident">StreamMatchesOverlapping</span>,
 };
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">full</span>::<span class="ident">FullAcAutomaton</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::full::FullAcAutomaton</span>;
 
 <span class="comment">// We&#39;re specifying paths explicitly so that we can use</span>
 <span class="comment">// these modules simultaneously from `main.rs`.</span>
@@ -1133,7 +1130,7 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
     <span class="doccomment">/// trait.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">pats</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">Dense</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">P</span><span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">with_transitions</span>(<span class="ident">pats</span>)
+        <span class="ident">AcAutomaton::with_transitions</span>(<span class="ident">pats</span>)
     }
 }
 
@@ -1147,9 +1144,9 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_transitions</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">pats</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">T</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">P</span><span class="op">&gt;</span> {
         <span class="ident">AcAutomaton</span> {
-            <span class="ident">pats</span>: <span class="macro">vec</span><span class="macro">!</span>[], <span class="comment">// filled in later, avoid wrath of borrow checker</span>
-            <span class="ident">states</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">State</span>::<span class="ident">new</span>(<span class="number">0</span>), <span class="ident">State</span>::<span class="ident">new</span>(<span class="number">0</span>)], <span class="comment">// empty and root</span>
-            <span class="ident">start_bytes</span>: <span class="macro">vec</span><span class="macro">!</span>[], <span class="comment">// also filled in later</span>
+            <span class="ident">pats</span>: <span class="macro">vec!</span>[], <span class="comment">// filled in later, avoid wrath of borrow checker</span>
+            <span class="ident">states</span>: <span class="macro">vec!</span>[<span class="ident">State::new</span>(<span class="number">0</span>), <span class="ident">State::new</span>(<span class="number">0</span>)], <span class="comment">// empty and root</span>
+            <span class="ident">start_bytes</span>: <span class="macro">vec!</span>[], <span class="comment">// also filled in later</span>
         }.<span class="ident">build</span>(<span class="ident">pats</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>())
     }
 
@@ -1158,7 +1155,7 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
     <span class="doccomment">/// This will make searching as fast as possible at the expense of using</span>
     <span class="doccomment">/// at least `4 * 256 * #states` bytes of memory.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_full</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FullAcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
-        <span class="ident">FullAcAutomaton</span>::<span class="ident">new</span>(<span class="self">self</span>)
+        <span class="ident">FullAcAutomaton::new</span>(<span class="self">self</span>)
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
@@ -1169,10 +1166,10 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">heap_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">pats</span>.<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="ident">p</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>())
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">mem::size_of</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="ident">p</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>())
             .<span class="ident">fold</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>)
         <span class="op">+</span> <span class="self">self</span>.<span class="ident">states</span>.<span class="ident">iter</span>()
-              .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="ident">s</span>.<span class="ident">heap_bytes</span>())
+              .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">mem::size_of</span>::<span class="op">&lt;</span><span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="ident">s</span>.<span class="ident">heap_bytes</span>())
               .<span class="ident">fold</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span> <span class="op">+</span> <span class="ident">b</span>)
         <span class="op">+</span> <span class="self">self</span>.<span class="ident">start_bytes</span>.<span class="ident">len</span>()
     }
@@ -1243,7 +1240,7 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
                     <span class="ident">previ</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">states</span>[<span class="ident">previ</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">goto</span>(<span class="ident">b</span>);
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="ident">depth</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">states</span>[<span class="ident">previ</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">depth</span> <span class="op">+</span> <span class="number">1</span>;
-                    <span class="kw">let</span> <span class="ident">nexti</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">add_state</span>(<span class="ident">State</span>::<span class="ident">new</span>(<span class="ident">depth</span>));
+                    <span class="kw">let</span> <span class="ident">nexti</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">add_state</span>(<span class="ident">State::new</span>(<span class="ident">depth</span>));
                     <span class="self">self</span>.<span class="ident">states</span>[<span class="ident">previ</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">set_goto</span>(<span class="ident">b</span>, <span class="ident">nexti</span>);
                     <span class="ident">previ</span> <span class="op">=</span> <span class="ident">nexti</span>;
                 }
@@ -1272,7 +1269,7 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
     <span class="kw">fn</span> <span class="ident">fill</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="comment">// Fill up the queue with all non-root transitions out of the root</span>
         <span class="comment">// node. Then proceed by breadth first traversal.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">VecDeque</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">VecDeque::new</span>();
         <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span>) {
             <span class="kw">let</span> <span class="ident">si</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">states</span>[<span class="ident">ROOT_STATE</span> <span class="kw">as</span> <span class="ident">usize</span>].<span class="ident">goto</span>(<span class="ident">c</span>);
             <span class="kw">if</span> <span class="ident">si</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ROOT_STATE</span> {
@@ -1308,9 +1305,9 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">depth</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">State</span> {
-            <span class="ident">out</span>: <span class="macro">vec</span><span class="macro">!</span>[],
+            <span class="ident">out</span>: <span class="macro">vec!</span>[],
             <span class="ident">fail</span>: <span class="number">1</span>,
-            <span class="ident">goto</span>: <span class="ident">Transitions</span>::<span class="ident">new</span>(<span class="ident">depth</span>),
+            <span class="ident">goto</span>: <span class="ident">Transitions::new</span>(<span class="ident">depth</span>),
             <span class="ident">depth</span>: <span class="ident">depth</span>,
         }
     }
@@ -1362,16 +1359,16 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 <span class="kw">impl</span> <span class="ident">Transitions</span> <span class="kw">for</span> <span class="ident">Dense</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">depth</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Dense</span> {
         <span class="kw">if</span> <span class="ident">depth</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">DENSE_DEPTH_THRESHOLD</span> {
-            <span class="ident">Dense</span>(<span class="ident">DenseChoice</span>::<span class="ident">Sparse</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="number">256</span>]))
+            <span class="ident">Dense</span>(<span class="ident">DenseChoice::Sparse</span>(<span class="macro">vec!</span>[<span class="number">0</span>; <span class="number">256</span>]))
         } <span class="kw">else</span> {
-            <span class="ident">Dense</span>(<span class="ident">DenseChoice</span>::<span class="ident">Dense</span>(<span class="macro">vec</span><span class="macro">!</span>[]))
+            <span class="ident">Dense</span>(<span class="ident">DenseChoice::Dense</span>(<span class="macro">vec!</span>[]))
         }
     }
 
     <span class="kw">fn</span> <span class="ident">goto</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">b1</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StateIdx</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">DenseChoice</span>::<span class="ident">Sparse</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>[<span class="ident">b1</span> <span class="kw">as</span> <span class="ident">usize</span>],
-            <span class="ident">DenseChoice</span>::<span class="ident">Dense</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">DenseChoice::Sparse</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>[<span class="ident">b1</span> <span class="kw">as</span> <span class="ident">usize</span>],
+            <span class="ident">DenseChoice::Dense</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">b2</span>, <span class="ident">si</span>) <span class="kw">in</span> <span class="ident">m</span> {
                     <span class="kw">if</span> <span class="ident">b1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b2</span> {
                         <span class="kw">return</span> <span class="ident">si</span>;
@@ -1384,15 +1381,15 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 
     <span class="kw">fn</span> <span class="ident">set_goto</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">b</span>: <span class="ident">u8</span>, <span class="ident">si</span>: <span class="ident">StateIdx</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">DenseChoice</span>::<span class="ident">Sparse</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">si</span>,
-            <span class="ident">DenseChoice</span>::<span class="ident">Dense</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">push</span>((<span class="ident">b</span>, <span class="ident">si</span>)),
+            <span class="ident">DenseChoice::Sparse</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>[<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">si</span>,
+            <span class="ident">DenseChoice::Dense</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">push</span>((<span class="ident">b</span>, <span class="ident">si</span>)),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">heap_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">DenseChoice</span>::<span class="ident">Sparse</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="number">4</span>,
-            <span class="ident">DenseChoice</span>::<span class="ident">Dense</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">len</span>() <span class="op">*</span> (<span class="number">1</span> <span class="op">+</span> <span class="number">4</span>),
+            <span class="ident">DenseChoice::Sparse</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="number">4</span>,
+            <span class="ident">DenseChoice::Dense</span>(<span class="kw-2">ref</span> <span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>.<span class="ident">len</span>() <span class="op">*</span> (<span class="number">1</span> <span class="op">+</span> <span class="number">4</span>),
         }
     }
 }
@@ -1406,7 +1403,7 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 
 <span class="kw">impl</span> <span class="ident">Transitions</span> <span class="kw">for</span> <span class="ident">Sparse</span> {
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw">_</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Sparse</span> {
-        <span class="ident">Sparse</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="number">256</span>])
+        <span class="ident">Sparse</span>(<span class="macro">vec!</span>[<span class="number">0</span>; <span class="number">256</span>])
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1426,64 +1423,64 @@ assert_eq!(matches, vec![Match { pati: 1, start: 0, end: 1}]);
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create an automaton from an iterator of strings.</span>
     <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">it</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">it</span>)
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">it</span>)
     }
 }
 
 <span class="comment">// Provide some question debug impls for viewing automatons.</span>
 <span class="comment">// The custom impls mostly exist for special showing of sparse maps.</span>
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span>, <span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span>
-        <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">repeat</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">fmt::Debug</span>, <span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span>
+        <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="kw">use</span> <span class="ident">std::iter::repeat</span>;
 
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">repeat</span>(<span class="string">&#39;-&#39;</span>).<span class="ident">take</span>(<span class="number">79</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>()));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Patterns: {:?}&quot;</span>, <span class="self">self</span>.<span class="ident">pats</span>));
+        <span class="macro">try!</span>(<span class="macro">writeln!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">repeat</span>(<span class="string">&#39;-&#39;</span>).<span class="ident">take</span>(<span class="number">79</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>()));
+        <span class="macro">try!</span>(<span class="macro">writeln!</span>(<span class="ident">f</span>, <span class="string">&quot;Patterns: {:?}&quot;</span>, <span class="self">self</span>.<span class="ident">pats</span>));
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">state</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">states</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{:3}: {}&quot;</span>, <span class="ident">i</span>, <span class="ident">state</span>.<span class="ident">debug</span>(<span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>)));
+            <span class="macro">try!</span>(<span class="macro">writeln!</span>(<span class="ident">f</span>, <span class="string">&quot;{:3}: {}&quot;</span>, <span class="ident">i</span>, <span class="ident">state</span>.<span class="ident">debug</span>(<span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>)));
         }
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">repeat</span>(<span class="string">&#39;-&#39;</span>).<span class="ident">take</span>(<span class="number">79</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>())
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">repeat</span>(<span class="string">&#39;-&#39;</span>).<span class="ident">take</span>(<span class="number">79</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">debug</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">root</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;State {{ depth: {:?}, out: {:?}, fail: {:?}, goto: {{{}}} }}&quot;</span>,
+        <span class="macro">format!</span>(<span class="string">&quot;State {{ depth: {:?}, out: {:?}, fail: {:?}, goto: {{{}}} }}&quot;</span>,
                 <span class="self">self</span>.<span class="ident">depth</span>, <span class="self">self</span>.<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">fail</span>, <span class="self">self</span>.<span class="ident">goto_string</span>(<span class="ident">root</span>))
     }
 
     <span class="kw">fn</span> <span class="ident">goto_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">root</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>::<span class="ident">from_u32</span>;
+        <span class="kw">use</span> <span class="ident">std::char::from_u32</span>;
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">goto</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">goto</span> <span class="op">=</span> <span class="macro">vec!</span>[];
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u8</span>) {
             <span class="kw">let</span> <span class="ident">si</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">goto</span>(<span class="ident">b</span>);
             <span class="kw">if</span> (<span class="op">!</span><span class="ident">root</span> <span class="op">&amp;&amp;</span> <span class="ident">si</span> <span class="op">=</span><span class="op">=</span> <span class="ident">FAIL_STATE</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">root</span> <span class="op">&amp;&amp;</span> <span class="ident">si</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ROOT_STATE</span>) {
                 <span class="kw">continue</span>;
             }
-            <span class="ident">goto</span>.<span class="ident">push</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} =&gt; {}&quot;</span>, <span class="ident">from_u32</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">unwrap</span>(), <span class="ident">si</span>));
+            <span class="ident">goto</span>.<span class="ident">push</span>(<span class="macro">format!</span>(<span class="string">&quot;{} =&gt; {}&quot;</span>, <span class="ident">from_u32</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">unwrap</span>(), <span class="ident">si</span>));
         }
         <span class="ident">goto</span>.<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">debug</span>(<span class="bool-val">false</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">State</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">debug</span>(<span class="bool-val">false</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Transitions</span><span class="op">&gt;</span> <span class="ident">AcAutomaton</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Write</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
-        <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">w</span> {
-            (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">w</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> { {<span class="macro">write</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">w</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>)<span class="kw-2">*</span>)}.<span class="ident">unwrap</span>() }
+        <span class="kw">use</span> <span class="ident">std::fmt::Write</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String::new</span>();
+        <span class="macro">macro_rules!</span> <span class="ident">w</span> {
+            (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">w</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> { {<span class="macro">write!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">w</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>)<span class="kw-2">*</span>)}.<span class="ident">unwrap</span>() }
         }
 
-        <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">r#&quot;
+        <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">r#&quot;
 digraph automaton {{
     label=&lt;&lt;FONT POINT-SIZE=&quot;20&quot;&gt;{}&lt;/FONT&gt;&gt;;
     labelloc=&quot;l&quot;;
@@ -1493,20 +1490,20 @@ digraph automaton {{
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">s</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">states</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
             <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u32</span>;
             <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">out</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;    {};\n&quot;</span>, <span class="ident">i</span>);
+                <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">&quot;    {};\n&quot;</span>, <span class="ident">i</span>);
             } <span class="kw">else</span> {
-                <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} [peripheries=2];\n&quot;</span>, <span class="ident">i</span>);
+                <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} [peripheries=2];\n&quot;</span>, <span class="ident">i</span>);
             }
-            <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} -&gt; {} [style=dashed];\n&quot;</span>, <span class="ident">i</span>, <span class="ident">s</span>.<span class="ident">fail</span>);
+            <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} -&gt; {} [style=dashed];\n&quot;</span>, <span class="ident">i</span>, <span class="ident">s</span>.<span class="ident">fail</span>);
             <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="number">256</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u8</span>) {
                 <span class="kw">let</span> <span class="ident">si</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">goto</span>(<span class="ident">b</span>);
                 <span class="kw">if</span> <span class="ident">si</span> <span class="op">=</span><span class="op">=</span> <span class="ident">FAIL_STATE</span> <span class="op">|</span><span class="op">|</span> (<span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ROOT_STATE</span> <span class="op">&amp;&amp;</span> <span class="ident">si</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ROOT_STATE</span>) {
                     <span class="kw">continue</span>;
                 }
-                <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} -&gt; {} [label={}];\n&quot;</span>, <span class="ident">i</span>, <span class="ident">si</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>);
+                <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">&quot;    {} -&gt; {} [label={}];\n&quot;</span>, <span class="ident">i</span>, <span class="ident">si</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>);
             }
         }
-        <span class="macro">w</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;}}&quot;</span>);
+        <span class="macro">w!</span>(<span class="ident">out</span>, <span class="string">&quot;}}&quot;</span>);
         <span class="ident">out</span>
     }
 }
@@ -1516,14 +1513,14 @@ digraph automaton {{
 }
 
 <span class="kw">fn</span> <span class="ident">usize_bytes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-    <span class="kw">let</span> <span class="ident">bits</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">max_value</span>().<span class="ident">count_ones</span>() <span class="kw">as</span> <span class="ident">usize</span>;
+    <span class="kw">let</span> <span class="ident">bits</span> <span class="op">=</span> <span class="ident">usize::max_value</span>().<span class="ident">count_ones</span>() <span class="kw">as</span> <span class="ident">usize</span>;
     <span class="ident">bits</span> <span class="op">/</span> <span class="number">8</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+    <span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
+    <span class="kw">use</span> <span class="ident">std::io</span>;
 
     <span class="kw">use</span> <span class="ident">quickcheck</span>::{<span class="ident">Arbitrary</span>, <span class="ident">Gen</span>, <span class="ident">quickcheck</span>};
 
@@ -1531,190 +1528,190 @@ digraph automaton {{
 
     <span class="kw">fn</span> <span class="ident">aut_find</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="ident">haystack</span>).<span class="ident">collect</span>()
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="ident">haystack</span>).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_finds</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
+        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io::Cursor::new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
             .<span class="ident">stream_find</span>(<span class="ident">cur</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findf</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">into_full</span>().<span class="ident">find</span>(<span class="ident">haystack</span>).<span class="ident">collect</span>()
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">into_full</span>().<span class="ident">find</span>(<span class="ident">haystack</span>).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findfs</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
+        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io::Cursor::new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
             .<span class="ident">into_full</span>()
             .<span class="ident">stream_find</span>(<span class="ident">cur</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findo</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">find_overlapping</span>(<span class="ident">haystack</span>).<span class="ident">collect</span>()
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>()).<span class="ident">find_overlapping</span>(<span class="ident">haystack</span>).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findos</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
+        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io::Cursor::new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
             .<span class="ident">stream_find_overlapping</span>(<span class="ident">cur</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findfo</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
             .<span class="ident">into_full</span>().<span class="ident">find_overlapping</span>(<span class="ident">haystack</span>).<span class="ident">collect</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">aut_findfos</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
+        <span class="kw">let</span> <span class="ident">cur</span> <span class="op">=</span> <span class="ident">io::Cursor::new</span>(<span class="ident">haystack</span>.<span class="ident">as_bytes</span>());
+        <span class="ident">AcAutomaton::new</span>(<span class="ident">xs</span>.<span class="ident">to_vec</span>())
             .<span class="ident">into_full</span>()
             .<span class="ident">stream_find_overlapping</span>(<span class="ident">cur</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">unwrap</span>()).<span class="ident">collect</span>()
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">one_pattern_one_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;a&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;za&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">2</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">one_pattern_many_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;a&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazazzzza&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">2</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">4</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">8</span>, <span class="ident">end</span>: <span class="number">9</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">one_longer_pattern_one_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazabcz&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> } ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> } ];
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">one_longer_pattern_many_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazabczzzzazzzabc&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">14</span>, <span class="ident">end</span>: <span class="number">17</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_pattern_one_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zb&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">2</span> } ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">2</span> } ];
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_pattern_many_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zbzazzzzb&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">2</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">4</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">8</span>, <span class="ident">end</span>: <span class="number">9</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_one_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;xyz&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;xyz&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazxyzz&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> } ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> } ];
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_many_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;xyz&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;xyz&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazxyzzzzzazzzabcxyz&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">14</span>, <span class="ident">end</span>: <span class="number">17</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">17</span>, <span class="ident">end</span>: <span class="number">20</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_find</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_finds</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findf</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfs</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_overlap_one_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zazabcz&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">4</span>, <span class="ident">end</span>: <span class="number">6</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_overlap_one_match_reverse</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;xbc&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">3</span> } ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[ <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">1</span>, <span class="ident">end</span>: <span class="number">3</span> } ];
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_overlap_many_match</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>, <span class="string">&quot;c&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>, <span class="string">&quot;c&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zzzabczzzbczzzc&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">0</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">6</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">4</span>, <span class="ident">end</span>: <span class="number">6</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">5</span>, <span class="ident">end</span>: <span class="number">6</span> },
@@ -1722,17 +1719,17 @@ digraph automaton {{
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">10</span>, <span class="ident">end</span>: <span class="number">11</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">14</span>, <span class="ident">end</span>: <span class="number">15</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">many_longer_pattern_overlap_many_match_reverse</span>() {
-        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>, <span class="string">&quot;c&quot;</span>];
+        <span class="kw">let</span> <span class="ident">ns</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;bc&quot;</span>, <span class="string">&quot;c&quot;</span>];
         <span class="kw">let</span> <span class="ident">hay</span> <span class="op">=</span> <span class="string">&quot;zzzczzzbczzzabc&quot;</span>;
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">3</span>, <span class="ident">end</span>: <span class="number">4</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">7</span>, <span class="ident">end</span>: <span class="number">9</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">8</span>, <span class="ident">end</span>: <span class="number">9</span> },
@@ -1740,24 +1737,24 @@ digraph automaton {{
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">1</span>, <span class="ident">start</span>: <span class="number">13</span>, <span class="ident">end</span>: <span class="number">15</span> },
             <span class="ident">Match</span> { <span class="ident">pati</span>: <span class="number">2</span>, <span class="ident">start</span>: <span class="number">14</span>, <span class="ident">end</span>: <span class="number">15</span> },
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfo</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">aut_findfos</span>(<span class="kw-2">&amp;</span><span class="ident">ns</span>, <span class="ident">hay</span>), <span class="kw-2">&amp;</span><span class="ident">matches</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">pattern_returns_original_type</span>() {
-        <span class="kw">let</span> <span class="ident">aut</span> <span class="op">=</span> <span class="ident">AcAutomaton</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;maple&quot;</span>]);
+        <span class="kw">let</span> <span class="ident">aut</span> <span class="op">=</span> <span class="ident">AcAutomaton::new</span>(<span class="macro">vec!</span>[<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;maple&quot;</span>]);
 
         <span class="comment">// Explicitly given this type to assert that the thing returned</span>
         <span class="comment">// from the function is our original type.</span>
         <span class="kw">let</span> <span class="ident">pat</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="ident">aut</span>.<span class="ident">pattern</span>(<span class="number">0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pat</span>, <span class="string">&quot;apple&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">pat</span>, <span class="string">&quot;apple&quot;</span>);
 
         <span class="comment">// Also check the return type of the `patterns` function.</span>
         <span class="kw">let</span> <span class="ident">pats</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>] <span class="op">=</span> <span class="ident">aut</span>.<span class="ident">patterns</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pats</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;maple&quot;</span>]);
+        <span class="macro">assert_eq!</span>(<span class="ident">pats</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;maple&quot;</span>]);
     }
 
     <span class="comment">// Quickcheck time.</span>
@@ -1769,14 +1766,14 @@ digraph automaton {{
 
     <span class="kw">impl</span> <span class="ident">Arbitrary</span> <span class="kw">for</span> <span class="ident">SmallAscii</span> {
         <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SmallAscii</span> {
-            <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>::<span class="ident">from_u32</span>;
+            <span class="kw">use</span> <span class="ident">std::char::from_u32</span>;
             <span class="ident">SmallAscii</span>((<span class="number">0</span>..<span class="number">2</span>)
                        .<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">from_u32</span>(<span class="ident">g</span>.<span class="ident">gen_range</span>(<span class="number">97</span>, <span class="number">123</span>)).<span class="ident">unwrap</span>())
                        .<span class="ident">collect</span>())
         }
 
         <span class="kw">fn</span> <span class="ident">shrink</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">SmallAscii</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">shrink</span>().<span class="ident">map</span>(<span class="ident">SmallAscii</span>))
+            <span class="ident">Box::new</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">shrink</span>().<span class="ident">map</span>(<span class="ident">SmallAscii</span>))
         }
     }
 
@@ -1795,12 +1792,12 @@ digraph automaton {{
 
     <span class="kw">impl</span> <span class="ident">Arbitrary</span> <span class="kw">for</span> <span class="ident">BiasAscii</span> {
         <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BiasAscii</span> {
-            <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>::<span class="ident">from_u32</span>;
+            <span class="kw">use</span> <span class="ident">std::char::from_u32</span>;
             <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> { <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">size</span>(); <span class="ident">g</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">s</span>) };
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">size</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">size</span>);
             <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">size</span> {
                 <span class="kw">if</span> <span class="ident">g</span>.<span class="ident">gen_weighted_bool</span>(<span class="number">3</span>) {
-                    <span class="ident">s</span>.<span class="ident">push</span>(<span class="ident">char</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>));
+                    <span class="ident">s</span>.<span class="ident">push</span>(<span class="ident">char::arbitrary</span>(<span class="ident">g</span>));
                 } <span class="kw">else</span> {
                     <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">5</span> {
                         <span class="ident">s</span>.<span class="ident">push</span>(<span class="ident">from_u32</span>(<span class="ident">g</span>.<span class="ident">gen_range</span>(<span class="number">97</span>, <span class="number">123</span>)).<span class="ident">unwrap</span>());
@@ -1811,15 +1808,15 @@ digraph automaton {{
         }
 
         <span class="kw">fn</span> <span class="ident">shrink</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">BiasAscii</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">shrink</span>().<span class="ident">map</span>(<span class="ident">BiasAscii</span>))
+            <span class="ident">Box::new</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">shrink</span>().<span class="ident">map</span>(<span class="ident">BiasAscii</span>))
         }
     }
 
     <span class="kw">fn</span> <span class="ident">naive_find</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span>[<span class="ident">S</span>], <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Match</span><span class="op">&gt;</span>
             <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">needles</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span>
-            <span class="ident">xs</span>.<span class="ident">to_vec</span>().<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Into</span>::<span class="ident">into</span>).<span class="ident">collect</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+            <span class="ident">xs</span>.<span class="ident">to_vec</span>().<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Into::into</span>).<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">vec!</span>[];
         <span class="kw">for</span> <span class="ident">hi</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">haystack</span>.<span class="ident">len</span>() {
             <span class="kw">for</span> (<span class="ident">pati</span>, <span class="ident">needle</span>) <span class="kw">in</span> <span class="ident">needles</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
                 <span class="kw">let</span> <span class="ident">needle</span> <span class="op">=</span> <span class="ident">needle</span>.<span class="ident">as_bytes</span>();
@@ -1853,5 +1850,6 @@ digraph automaton {{
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="aho_corasick" data-search-js="../../search-index.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="aho_corasick" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

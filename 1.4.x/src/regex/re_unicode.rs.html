@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/regex-0.1.80/src/re_unicode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>re_unicode.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../regex/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;regex-0.1.80&#x2F;src&#x2F;re_unicode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>re_unicode.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https:&#x2F;&#x2F;www.rust-lang.org&#x2F;favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../regex/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;www.rust-lang.org&#x2F;logos&#x2F;rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1205,7 +1204,7 @@
 <span id="1204">1204</span>
 <span id="1205">1205</span>
 <span id="1206">1206</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright 2014-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
@@ -1216,19 +1215,19 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Index</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+<span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::ops::Index</span>;
+<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+<span class="kw">use</span> <span class="ident">std::sync::Arc</span>;
 
 <span class="kw">use</span> <span class="ident">syntax</span>;
 
-<span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">error::Error</span>;
 <span class="kw">use</span> <span class="ident">exec</span>::{<span class="ident">Exec</span>, <span class="ident">ExecNoSyncStr</span>};
-<span class="kw">use</span> <span class="ident">re_builder</span>::<span class="ident">unicode</span>::<span class="ident">RegexBuilder</span>;
-<span class="kw">use</span> <span class="ident">re_plugin</span>::<span class="ident">Plugin</span>;
+<span class="kw">use</span> <span class="ident">re_builder::unicode::RegexBuilder</span>;
+<span class="kw">use</span> <span class="ident">re_plugin::Plugin</span>;
 <span class="kw">use</span> <span class="ident">re_trait</span>::{<span class="self">self</span>, <span class="ident">RegularExpression</span>, <span class="ident">Slot</span>};
 
 <span class="doccomment">/// Escapes all regular expression meta characters in `text`.</span>
@@ -1236,7 +1235,7 @@
 <span class="doccomment">/// The string returned may be safely used as a literal in a regular</span>
 <span class="doccomment">/// expression.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="ident">syntax</span>::<span class="ident">quote</span>(<span class="ident">text</span>)
+    <span class="ident">syntax::quote</span>(<span class="ident">text</span>)
 }
 
 <span class="doccomment">/// Tests if the given regular expression matches somewhere in the text given.</span>
@@ -1247,7 +1246,7 @@
 <span class="doccomment">/// To find submatches, split or replace text, you&#39;ll need to compile an</span>
 <span class="doccomment">/// expression first.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_match</span>(<span class="ident">regex</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="ident">regex</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">is_match</span>(<span class="ident">text</span>))
+    <span class="ident">Regex::new</span>(<span class="ident">regex</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">is_match</span>(<span class="ident">text</span>))
 }
 
 <span class="doccomment">/// A compiled regular expression for matching Unicode strings.</span>
@@ -1321,24 +1320,24 @@
     <span class="ident">Plugin</span>(<span class="ident">Plugin</span>),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Regex</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Regex</span> {
     <span class="doccomment">/// Shows the original regular expression.</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">as_str</span>())
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">as_str</span>())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Regex</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Regex</span> {
     <span class="doccomment">/// Shows the original regular expression.</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="self">self</span>, <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="ident">fmt::Display::fmt</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Exec</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Regex</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">exec</span>: <span class="ident">Exec</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Regex</span> {
-        <span class="ident">Regex</span>(<span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="ident">exec</span>))
+        <span class="ident">Regex</span>(<span class="ident">_Regex::Dynamic</span>(<span class="ident">exec</span>))
     }
 }
 
@@ -1359,7 +1358,7 @@
 
     <span class="doccomment">/// Attempts to parse a string into a regular expression</span>
     <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Regex</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="ident">s</span>)
+        <span class="ident">Regex::new</span>(<span class="ident">s</span>)
     }
 }
 
@@ -1369,7 +1368,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// If an invalid expression is given, then an error is returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">re</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Regex</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">Regex</span>::<span class="ident">with_size_limit</span>(<span class="number">10</span> <span class="op">*</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">20</span>), <span class="ident">re</span>)
+        <span class="ident">Regex::with_size_limit</span>(<span class="number">10</span> <span class="op">*</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">20</span>), <span class="ident">re</span>)
     }
 
     <span class="doccomment">/// Compiles a regular expression with the given size limit.</span>
@@ -1378,7 +1377,7 @@
     <span class="doccomment">/// If the data structure exceeds the size given, then an error is</span>
     <span class="doccomment">/// returned.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_size_limit</span>(<span class="ident">size</span>: <span class="ident">usize</span>, <span class="ident">re</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Regex</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="ident">RegexBuilder</span>::<span class="ident">new</span>(<span class="ident">re</span>).<span class="ident">size_limit</span>(<span class="ident">size</span>).<span class="ident">compile</span>()
+        <span class="ident">RegexBuilder::new</span>(<span class="ident">re</span>).<span class="ident">size_limit</span>(<span class="ident">size</span>).<span class="ident">compile</span>()
     }
 
     <span class="doccomment">/// Returns true if and only if the regex matches the string given.</span>
@@ -1447,10 +1446,10 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">start</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">exec</span>.<span class="ident">searcher_str</span>().<span class="ident">find_at</span>(<span class="ident">text</span>, <span class="ident">start</span>)
             }
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">plug</span>.<span class="ident">find_at</span>(<span class="ident">text</span>, <span class="ident">start</span>),
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">plug</span>.<span class="ident">find_at</span>(<span class="ident">text</span>, <span class="ident">start</span>),
         }
     }
 
@@ -1479,13 +1478,13 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_iter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">exec</span>.<span class="ident">searcher_str</span>().<span class="ident">find_iter</span>(<span class="ident">text</span>);
-                <span class="ident">FindMatches</span>(<span class="ident">FindMatchesInner</span>::<span class="ident">Dynamic</span>(<span class="ident">it</span>))
+                <span class="ident">FindMatches</span>(<span class="ident">FindMatchesInner::Dynamic</span>(<span class="ident">it</span>))
             }
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">plug</span>.<span class="ident">find_iter</span>(<span class="ident">text</span>);
-                <span class="ident">FindMatches</span>(<span class="ident">FindMatchesInner</span>::<span class="ident">Plugin</span>(<span class="ident">it</span>))
+                <span class="ident">FindMatches</span>(<span class="ident">FindMatchesInner::Plugin</span>(<span class="ident">it</span>))
             }
         }
     }
@@ -1554,11 +1553,11 @@
     <span class="doccomment">/// The `0`th capture group is always unnamed, so it must always be</span>
     <span class="doccomment">/// accessed with `at(0)` or `[0]`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">slots</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="prelude-val">None</span>; <span class="number">2</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">captures_len</span>()];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">slots</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="prelude-val">None</span>; <span class="number">2</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">captures_len</span>()];
         <span class="self">self</span>.<span class="ident">read_captures_at</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">slots</span>, <span class="ident">text</span>, <span class="number">0</span>).<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Captures</span> {
             <span class="ident">text</span>: <span class="ident">text</span>,
             <span class="ident">slots</span>: <span class="ident">slots</span>,
-            <span class="ident">named_groups</span>: <span class="ident">NamedGroups</span>::<span class="ident">from_regex</span>(<span class="self">self</span>)
+            <span class="ident">named_groups</span>: <span class="ident">NamedGroups::from_regex</span>(<span class="self">self</span>)
         })
     }
 
@@ -1576,10 +1575,10 @@
         <span class="ident">start</span>: <span class="ident">usize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">exec</span>.<span class="ident">searcher_str</span>().<span class="ident">read_captures_at</span>(<span class="ident">slots</span>, <span class="ident">text</span>, <span class="ident">start</span>)
             }
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">plug</span>.<span class="ident">read_captures_at</span>(<span class="ident">slots</span>, <span class="ident">text</span>, <span class="ident">start</span>)
             }
         }
@@ -1615,13 +1614,13 @@
         <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t</span> <span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">exec</span>.<span class="ident">searcher_str</span>().<span class="ident">captures_iter</span>(<span class="ident">text</span>);
-                <span class="ident">FindCaptures</span>(<span class="ident">FindCapturesInner</span>::<span class="ident">Dynamic</span>(<span class="ident">it</span>))
+                <span class="ident">FindCaptures</span>(<span class="ident">FindCapturesInner::Dynamic</span>(<span class="ident">it</span>))
             }
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">it</span> <span class="op">=</span> <span class="ident">plug</span>.<span class="ident">captures_iter</span>(<span class="ident">text</span>);
-                <span class="ident">FindCaptures</span>(<span class="ident">FindCapturesInner</span>::<span class="ident">Plugin</span>(<span class="ident">it</span>))
+                <span class="ident">FindCaptures</span>(<span class="ident">FindCapturesInner::Plugin</span>(<span class="ident">it</span>))
             }
         }
     }
@@ -1783,7 +1782,7 @@
         <span class="comment">//      replacements inside the replacement string. We just push it</span>
         <span class="comment">//      at each match and be done with it.</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rep</span>) <span class="op">=</span> <span class="ident">rep</span>.<span class="ident">no_expand</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_match</span> <span class="op">=</span> <span class="number">0</span>;
             <span class="kw">for</span> (<span class="ident">i</span>, (<span class="ident">s</span>, <span class="ident">e</span>)) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">find_iter</span>(<span class="ident">text</span>).<span class="ident">enumerate</span>() {
                 <span class="kw">if</span> <span class="ident">limit</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">limit</span> {
@@ -1799,7 +1798,7 @@
 
         <span class="comment">// The slower path, which we use if the replacement needs access to</span>
         <span class="comment">// capture groups.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">text</span>.<span class="ident">len</span>());
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_match</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">cap</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">captures_iter</span>(<span class="ident">text</span>).<span class="ident">enumerate</span>() {
             <span class="kw">if</span> <span class="ident">limit</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">limit</span> {
@@ -1853,27 +1852,27 @@
         <span class="ident">start</span>: <span class="ident">usize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">exec</span>.<span class="ident">searcher_str</span>().<span class="ident">shortest_match_at</span>(<span class="ident">text</span>, <span class="ident">start</span>)
             }
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">plug</span>.<span class="ident">shortest_match_at</span>(<span class="ident">text</span>, <span class="ident">start</span>),
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">plug</span>.<span class="ident">shortest_match_at</span>(<span class="ident">text</span>, <span class="ident">start</span>),
         }
     }
 
     <span class="doccomment">/// Returns the original string of this regex.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">exec</span>.<span class="ident">regex_strings</span>()[<span class="number">0</span>],
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">plug</span>.<span class="ident">original</span>,
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">exec</span>.<span class="ident">regex_strings</span>()[<span class="number">0</span>],
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">plug</span>.<span class="ident">original</span>,
         }
     }
 
     <span class="doccomment">/// Returns an iterator over the capture names.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">capture_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CaptureNames</span> {
         <span class="ident">CaptureNames</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">_CaptureNames</span>::<span class="ident">Plugin</span>(<span class="ident">n</span>.<span class="ident">names</span>.<span class="ident">iter</span>()),
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">_CaptureNames</span>::<span class="ident">Dynamic</span>(<span class="ident">d</span>.<span class="ident">capture_names</span>().<span class="ident">iter</span>())
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">_CaptureNames::Plugin</span>(<span class="ident">n</span>.<span class="ident">names</span>.<span class="ident">iter</span>()),
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">_CaptureNames::Dynamic</span>(<span class="ident">d</span>.<span class="ident">capture_names</span>().<span class="ident">iter</span>())
             }
         })
     }
@@ -1881,8 +1880,8 @@
     <span class="doccomment">/// Returns the number of captures.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">captures_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>.<span class="ident">names</span>.<span class="ident">len</span>(),
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">d</span>.<span class="ident">capture_names</span>().<span class="ident">len</span>()
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>.<span class="ident">names</span>.<span class="ident">len</span>(),
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">d</span>.<span class="ident">capture_names</span>().<span class="ident">len</span>()
         }
     }
 }
@@ -1897,9 +1896,9 @@
 
 <span class="kw">enum</span> <span class="ident">_CaptureNames</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">Plugin</span>(::<span class="ident">std</span>::<span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>),
+    <span class="ident">Plugin</span>(<span class="ident">::std::slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>),
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">Dynamic</span>(::<span class="ident">std</span>::<span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>)
+    <span class="ident">Dynamic</span>(<span class="ident">::std::slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>)
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">CaptureNames</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> {
@@ -1907,8 +1906,8 @@
 
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_CaptureNames</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">next</span>().<span class="ident">cloned</span>(),
-            <span class="ident">_CaptureNames</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">_CaptureNames::Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">next</span>().<span class="ident">cloned</span>(),
+            <span class="ident">_CaptureNames::Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">i</span>.<span class="ident">next</span>().<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">o</span><span class="op">|</span> <span class="ident">o</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">as_ref</span>()))
             }
         }
@@ -1916,8 +1915,8 @@
 
     <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">_CaptureNames</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">i</span>)  <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">size_hint</span>(),
-            <span class="ident">_CaptureNames</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">size_hint</span>(),
+            <span class="ident">_CaptureNames::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">i</span>)  <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">size_hint</span>(),
+            <span class="ident">_CaptureNames::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i</span>.<span class="ident">size_hint</span>(),
         }
     }
 }
@@ -2043,20 +2042,20 @@
 <span class="kw">impl</span> <span class="ident">NamedGroups</span> {
     <span class="kw">fn</span> <span class="ident">from_regex</span>(<span class="ident">regex</span>: <span class="kw-2">&amp;</span><span class="ident">Regex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NamedGroups</span> {
         <span class="kw">match</span> <span class="ident">regex</span>.<span class="number">0</span> {
-            <span class="ident">_Regex</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroups</span>::<span class="ident">Plugin</span>(<span class="kw-2">&amp;</span><span class="ident">plug</span>.<span class="ident">groups</span>),
-            <span class="ident">_Regex</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NamedGroups</span>::<span class="ident">Dynamic</span>(<span class="ident">exec</span>.<span class="ident">capture_name_idx</span>().<span class="ident">clone</span>())
+            <span class="ident">_Regex::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">plug</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroups::Plugin</span>(<span class="kw-2">&amp;</span><span class="ident">plug</span>.<span class="ident">groups</span>),
+            <span class="ident">_Regex::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">NamedGroups::Dynamic</span>(<span class="ident">exec</span>.<span class="ident">capture_name_idx</span>().<span class="ident">clone</span>())
             }
         }
     }
 
     <span class="kw">fn</span> <span class="ident">pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">NamedGroups</span>::<span class="ident">Plugin</span>(<span class="ident">groups</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">NamedGroups::Plugin</span>(<span class="ident">groups</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">groups</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">n</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="ident">n</span>.<span class="ident">cmp</span>(<span class="ident">name</span>))
                       .<span class="ident">ok</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">groups</span>[<span class="ident">i</span>].<span class="number">1</span>)
             },
-            <span class="ident">NamedGroups</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">groups</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">NamedGroups::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">groups</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">groups</span>.<span class="ident">get</span>(<span class="ident">name</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">i</span>)
             },
         }
@@ -2064,24 +2063,24 @@
 
     <span class="kw">fn</span> <span class="ident">iter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;n</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NamedGroupsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">NamedGroups</span>::<span class="ident">Plugin</span>(<span class="ident">g</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroupsIter</span>::<span class="ident">Plugin</span>(<span class="ident">g</span>.<span class="ident">iter</span>()),
-            <span class="ident">NamedGroups</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">g</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroupsIter</span>::<span class="ident">Dynamic</span>(<span class="ident">g</span>.<span class="ident">iter</span>()),
+            <span class="ident">NamedGroups::Plugin</span>(<span class="ident">g</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroupsIter::Plugin</span>(<span class="ident">g</span>.<span class="ident">iter</span>()),
+            <span class="ident">NamedGroups::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">g</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NamedGroupsIter::Dynamic</span>(<span class="ident">g</span>.<span class="ident">iter</span>()),
         }
     }
 }
 
 <span class="kw">enum</span> <span class="ident">NamedGroupsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span> {
-    <span class="ident">Plugin</span>(::<span class="ident">std</span>::<span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, (<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">usize</span>)<span class="op">&gt;</span>),
-    <span class="ident">Dynamic</span>(::<span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">hash_map</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">String</span>, <span class="ident">usize</span><span class="op">&gt;</span>),
+    <span class="ident">Plugin</span>(<span class="ident">::std::slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, (<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">usize</span>)<span class="op">&gt;</span>),
+    <span class="ident">Dynamic</span>(<span class="ident">::std::collections::hash_map::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">String</span>, <span class="ident">usize</span><span class="op">&gt;</span>),
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">NamedGroupsIter</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="lifetime">&#39;n</span> <span class="ident">str</span>, <span class="ident">usize</span>);
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Item</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">NamedGroupsIter</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>),
-            <span class="ident">NamedGroupsIter</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">NamedGroupsIter::Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>),
+            <span class="ident">NamedGroupsIter::Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">s</span>, <span class="ident">i</span>)<span class="op">|</span> (<span class="ident">s</span>.<span class="ident">as_ref</span>(), <span class="kw-2">*</span><span class="ident">i</span>))
             }
         }
@@ -2181,16 +2180,16 @@
           )
         &quot;</span>;
         <span class="comment">// How evil can you get?</span>
-        <span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="ident">REPLACE_EXPAND</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="ident">REPLACE_EXPAND</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">replace_all</span>(<span class="ident">text</span>, <span class="op">|</span><span class="ident">refs</span>: <span class="kw-2">&amp;</span><span class="ident">Captures</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
             <span class="kw">let</span> <span class="ident">before</span> <span class="op">=</span> <span class="ident">refs</span>.<span class="ident">name</span>(<span class="string">&quot;before&quot;</span>).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
             <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">refs</span>.<span class="ident">name</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="ident">before</span>, <span class="kw">match</span> <span class="ident">name</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() {
+            <span class="macro">format!</span>(<span class="string">&quot;{}{}&quot;</span>, <span class="ident">before</span>, <span class="kw">match</span> <span class="ident">name</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>() {
                 <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">name</span>(<span class="ident">name</span>).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>).<span class="ident">to_owned</span>(),
                 <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">at</span>(<span class="ident">i</span>).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>).<span class="ident">to_owned</span>(),
             })
         });
-        <span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex</span>::<span class="ident">new</span>(<span class="string">r&quot;\$\$&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;\$\$&quot;</span>).<span class="ident">unwrap</span>();
         <span class="ident">re</span>.<span class="ident">replace_all</span>(<span class="kw-2">&amp;</span><span class="ident">text</span>, <span class="ident">NoExpand</span>(<span class="string">&quot;$&quot;</span>))
     }
 
@@ -2207,16 +2206,16 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;Captures&quot;</span>).<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="ident">CapturesDebug</span>(<span class="self">self</span>)).<span class="ident">finish</span>()
     }
 }
 
 <span class="kw">struct</span> <span class="ident">CapturesDebug</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;t</span>: <span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">Captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">CapturesDebug</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">CapturesDebug</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="comment">// We&#39;d like to show something nice here, even if it means an</span>
         <span class="comment">// allocation to build a reverse index.</span>
         <span class="kw">let</span> <span class="ident">slot_to_name</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span>
@@ -2249,7 +2248,7 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">str</span>;
 
     <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">at</span>(<span class="ident">i</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;no group at index &#39;{}&#39;&quot;</span>, <span class="ident">i</span>))
+        <span class="self">self</span>.<span class="ident">at</span>(<span class="ident">i</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic!</span>(<span class="string">&quot;no group at index &#39;{}&#39;&quot;</span>, <span class="ident">i</span>))
     }
 }
 
@@ -2269,7 +2268,7 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">str</span>;
 
     <span class="kw">fn</span> <span class="ident">index</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">name</span>(<span class="ident">name</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;no group named &#39;{}&#39;&quot;</span>, <span class="ident">name</span>))
+        <span class="self">self</span>.<span class="ident">name</span>(<span class="ident">name</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic!</span>(<span class="string">&quot;no group named &#39;{}&#39;&quot;</span>, <span class="ident">name</span>))
     }
 }
 
@@ -2316,7 +2315,7 @@
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">slots</span>[<span class="self">self</span>.<span class="ident">idx</span>], <span class="self">self</span>.<span class="ident">slots</span>[<span class="self">self</span>.<span class="ident">idx</span> <span class="op">+</span> <span class="number">1</span>]) {
             (<span class="prelude-val">Some</span>(<span class="ident">s</span>), <span class="prelude-val">Some</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">s</span>, <span class="ident">e</span>)),
             (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>()
         };
         <span class="self">self</span>.<span class="ident">idx</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
         <span class="prelude-val">Some</span>(<span class="ident">r</span>)
@@ -2350,8 +2349,8 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span>(<span class="ident">FindCapturesInner</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span>);
 
 <span class="kw">enum</span> <span class="ident">FindCapturesInner</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
-    <span class="ident">Dynamic</span>(<span class="ident">re_trait</span>::<span class="ident">FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">ExecNoSyncStr</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span><span class="op">&gt;</span>),
-    <span class="ident">Plugin</span>(<span class="ident">re_trait</span>::<span class="ident">FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">Plugin</span><span class="op">&gt;</span>),
+    <span class="ident">Dynamic</span>(<span class="ident">re_trait::FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">ExecNoSyncStr</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span><span class="op">&gt;</span>),
+    <span class="ident">Plugin</span>(<span class="ident">re_trait::FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">Plugin</span><span class="op">&gt;</span>),
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">FindCaptures</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
@@ -2359,19 +2358,19 @@
 
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Captures</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">FindCapturesInner</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">FindCapturesInner::Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">named</span> <span class="op">=</span> <span class="ident">it</span>.<span class="ident">regex</span>().<span class="ident">capture_name_idx</span>().<span class="ident">clone</span>();
                 <span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">slots</span><span class="op">|</span> <span class="ident">Captures</span> {
                     <span class="ident">text</span>: <span class="ident">it</span>.<span class="ident">text</span>(),
                     <span class="ident">slots</span>: <span class="ident">slots</span>,
-                    <span class="ident">named_groups</span>: <span class="ident">NamedGroups</span>::<span class="ident">Dynamic</span>(<span class="ident">named</span>),
+                    <span class="ident">named_groups</span>: <span class="ident">NamedGroups::Dynamic</span>(<span class="ident">named</span>),
                 })
             }
-            <span class="ident">FindCapturesInner</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">FindCapturesInner::Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">slots</span><span class="op">|</span> <span class="ident">Captures</span> {
                     <span class="ident">text</span>: <span class="ident">it</span>.<span class="ident">text</span>(),
                     <span class="ident">slots</span>: <span class="ident">slots</span>,
-                    <span class="ident">named_groups</span>: <span class="ident">NamedGroups</span>::<span class="ident">Plugin</span>(<span class="ident">it</span>.<span class="ident">regex</span>().<span class="ident">groups</span>),
+                    <span class="ident">named_groups</span>: <span class="ident">NamedGroups::Plugin</span>(<span class="ident">it</span>.<span class="ident">regex</span>().<span class="ident">groups</span>),
                 })
             }
         }
@@ -2389,15 +2388,15 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span>(<span class="ident">FindMatchesInner</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span>);
 
 <span class="kw">enum</span> <span class="ident">FindMatchesInner</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
-    <span class="ident">Dynamic</span>(<span class="ident">re_trait</span>::<span class="ident">FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">ExecNoSyncStr</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span><span class="op">&gt;</span>),
-    <span class="ident">Plugin</span>(<span class="ident">re_trait</span>::<span class="ident">FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">Plugin</span><span class="op">&gt;</span>),
+    <span class="ident">Dynamic</span>(<span class="ident">re_trait::FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">ExecNoSyncStr</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span><span class="op">&gt;</span>),
+    <span class="ident">Plugin</span>(<span class="ident">re_trait::FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;t</span>, <span class="ident">Plugin</span><span class="op">&gt;</span>),
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> <span class="ident">FindMatches</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;t</span> <span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">FindMatchesInner</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">text</span>(),
-            <span class="ident">FindMatchesInner</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">text</span>(),
+            <span class="ident">FindMatchesInner::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">text</span>(),
+            <span class="ident">FindMatchesInner::Plugin</span>(<span class="kw-2">ref</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">text</span>(),
         }
     }
 }
@@ -2407,11 +2406,12 @@
 
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">FindMatchesInner</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>(),
-            <span class="ident">FindMatchesInner</span>::<span class="ident">Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>(),
+            <span class="ident">FindMatchesInner::Dynamic</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>(),
+            <span class="ident">FindMatchesInner::Plugin</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">it</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">it</span>.<span class="ident">next</span>(),
         }
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="regex" data-search-js="../../search-index.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="regex" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>
