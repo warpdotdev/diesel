@@ -217,6 +217,23 @@
 <span id="217">217</span>
 <span id="218">218</span>
 <span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
 </pre><pre class="rust">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">pq_sys</span>;
 
@@ -278,9 +295,22 @@ This probably means the server terminated abnormally\n\tbefore or while processi
                             <span class="ident">DatabaseErrorKind::NotNullViolation</span>
                         }
                         <span class="prelude-val">Some</span>(<span class="ident">error_codes::CHECK_VIOLATION</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DatabaseErrorKind::CheckViolation</span>,
+                        <span class="prelude-val">Some</span>(<span class="ident">error_codes::CONNECTION_EXCEPTION</span>)
+                        <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">error_codes::CONNECTION_FAILURE</span>)
+                        <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">error_codes::SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION</span>)
+                        <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">error_codes::SQLSERVER_REJECTED_ESTABLISHMENT_OF_SQLCONNECTION</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">DatabaseErrorKind::ClosedConnection</span>
+                        }
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DatabaseErrorKind::Unknown</span>,
                     };
                 <span class="kw">let</span> <span class="ident">error_information</span> <span class="op">=</span> <span class="ident">Box::new</span>(<span class="ident">PgErrorInformation</span>(<span class="ident">internal_result</span>));
+                <span class="comment">// NOTE: Ideally, we&#39;d remove this check, in favor of matching</span>
+                <span class="comment">// on an error code (instead of the more brittle description</span>
+                <span class="comment">// string).</span>
+                <span class="comment">//</span>
+                <span class="comment">// Unfortunately, this particular error is often propagated in</span>
+                <span class="comment">// cases - such as network disconnect - without any accompanying</span>
+                <span class="comment">// &quot;SqlState&quot;, and therefore without an error code..</span>
                 <span class="kw">if</span> <span class="ident">error_information</span>.<span class="ident">message</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">CLOSED_CONNECTION_MSG</span> {
                     <span class="ident">error_kind</span> <span class="op">=</span> <span class="ident">DatabaseErrorKind::ClosedConnection</span>;
                 }
@@ -427,15 +457,19 @@ This probably means the server terminated abnormally\n\tbefore or while processi
 
 <span class="kw">mod</span> <span class="ident">error_codes</span> {
     <span class="doccomment">//! These error codes are documented at</span>
-    <span class="doccomment">//! &lt;https://www.postgresql.org/docs/9.5/static/errcodes-appendix.html&gt;</span>
+    <span class="doccomment">//! &lt;https://www.postgresql.org/docs/current/errcodes-appendix.html&gt;</span>
     <span class="doccomment">//!</span>
     <span class="doccomment">//! They are not exposed programmatically through libpq.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNIQUE_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23505&quot;</span>;
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FOREIGN_KEY_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23503&quot;</span>;
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SERIALIZATION_FAILURE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;40001&quot;</span>;
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">READ_ONLY_TRANSACTION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;25006&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CONNECTION_EXCEPTION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;08000&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CONNECTION_FAILURE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;08006&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;08001&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SQLSERVER_REJECTED_ESTABLISHMENT_OF_SQLCONNECTION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;08004&quot;</span>;
     <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NOT_NULL_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23502&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FOREIGN_KEY_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23503&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNIQUE_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23505&quot;</span>;
     <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHECK_VIOLATION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;23514&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">READ_ONLY_TRANSACTION</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;25006&quot;</span>;
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SERIALIZATION_FAILURE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;40001&quot;</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="diesel" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
