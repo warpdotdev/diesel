@@ -170,6 +170,9 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::subselect::Subselect</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">AsExpression</span>, <span class="ident">Expression</span>, <span class="ident">TypedExpressionType</span>, <span class="ident">ValidGrouping</span>};
@@ -301,7 +304,7 @@
 
 <span class="macro">impl_selectable_expression!</span>(<span class="ident">All</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>);
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Expression</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="comment">// This method is part of the public API</span>
@@ -312,6 +315,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
+    <span class="ident">ST</span>: <span class="lifetime">&#39;static</span>,
     <span class="ident">T</span>: <span class="ident">AsExpression</span><span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="kw">type</span> <span class="ident">Expression</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">AsExpression</span><span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Expression</span>;
@@ -324,6 +328,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">F</span>, <span class="ident">S</span>, <span class="ident">D</span>, <span class="ident">W</span>, <span class="ident">O</span>, <span class="ident">LOf</span>, <span class="ident">G</span>, <span class="ident">H</span>, <span class="ident">LC</span><span class="op">&gt;</span> <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>
     <span class="kw">for</span> <span class="ident">SelectStatement</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">S</span>, <span class="ident">D</span>, <span class="ident">W</span>, <span class="ident">O</span>, <span class="ident">LOf</span>, <span class="ident">G</span>, <span class="ident">H</span>, <span class="ident">LC</span><span class="op">&gt;</span>
 <span class="kw">where</span>
+    <span class="ident">ST</span>: <span class="lifetime">&#39;static</span>,
     <span class="self">Self</span>: <span class="ident">SelectQuery</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">ST</span><span class="op">&gt;</span>,
 {
     <span class="kw">type</span> <span class="ident">Expression</span> <span class="op">=</span> <span class="ident">Subselect</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>;
@@ -335,6 +340,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ST</span>, <span class="ident">QS</span>, <span class="ident">DB</span>, <span class="ident">GB</span><span class="op">&gt;</span> <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BoxedSelectStatement</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">ST</span>, <span class="ident">QS</span>, <span class="ident">DB</span>, <span class="ident">GB</span><span class="op">&gt;</span>
 <span class="kw">where</span>
+    <span class="ident">ST</span>: <span class="lifetime">&#39;static</span>,
     <span class="self">Self</span>: <span class="ident">SelectQuery</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">ST</span><span class="op">&gt;</span>,
 {
     <span class="kw">type</span> <span class="ident">Expression</span> <span class="op">=</span> <span class="ident">Subselect</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>;

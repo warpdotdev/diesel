@@ -96,6 +96,7 @@
 <span id="96">96</span>
 <span id="97">97</span>
 <span id="98">98</span>
+<span id="99">99</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{
@@ -157,6 +158,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ST</span><span class="op">&gt;</span> <span class="ident">Expression</span> <span class="kw">for</span> <span class="ident">ArrayLiteral</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ST</span><span class="op">&gt;</span>
 <span class="kw">where</span>
+    <span class="ident">ST</span>: <span class="lifetime">&#39;static</span>,
     <span class="ident">T</span>: <span class="ident">Expression</span>,
 {
     <span class="kw">type</span> <span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">sql_types::Array</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>;

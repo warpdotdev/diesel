@@ -366,7 +366,6 @@
 <span id="366">366</span>
 <span id="367">367</span>
 <span id="368">368</span>
-<span id="369">369</span>
 </pre><pre class="rust">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">chrono</span>;
 
@@ -383,9 +382,9 @@
 
 <span class="kw">impl</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Date</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NaiveDate</span> {
     <span class="kw">fn</span> <span class="ident">from_sql</span>(<span class="ident">value</span>: <span class="ident">backend::RawValue</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">text_ptr</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">str</span> <span class="kw">as</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Date</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::from_sql</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">text_ptr</span> };
-        <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">text</span>, <span class="ident">SQLITE_DATE_FORMAT</span>).<span class="ident">map_err</span>(<span class="ident">Into::into</span>)
+        <span class="ident">value</span>
+            .<span class="ident">parse_string</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">s</span>, <span class="ident">SQLITE_DATE_FORMAT</span>))
+            .<span class="ident">map_err</span>(<span class="ident">Into::into</span>)
     }
 }
 
@@ -398,21 +397,21 @@
 
 <span class="kw">impl</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Time</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NaiveTime</span> {
     <span class="kw">fn</span> <span class="ident">from_sql</span>(<span class="ident">value</span>: <span class="ident">backend::RawValue</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">text_ptr</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">str</span> <span class="kw">as</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Date</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::from_sql</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">text_ptr</span> };
-        <span class="kw">let</span> <span class="ident">valid_time_formats</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[
-            <span class="comment">// Most likely</span>
-            <span class="string">&quot;%T%.f&quot;</span>, <span class="comment">// All other valid formats in order of documentation</span>
-            <span class="string">&quot;%R&quot;</span>, <span class="string">&quot;%RZ&quot;</span>, <span class="string">&quot;%T%.fZ&quot;</span>, <span class="string">&quot;%R%:z&quot;</span>, <span class="string">&quot;%T%.f%:z&quot;</span>,
-        ];
+        <span class="ident">value</span>.<span class="ident">parse_string</span>(<span class="op">|</span><span class="ident">text</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">valid_time_formats</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[
+                <span class="comment">// Most likely</span>
+                <span class="string">&quot;%T%.f&quot;</span>, <span class="comment">// All other valid formats in order of documentation</span>
+                <span class="string">&quot;%R&quot;</span>, <span class="string">&quot;%RZ&quot;</span>, <span class="string">&quot;%T%.fZ&quot;</span>, <span class="string">&quot;%R%:z&quot;</span>, <span class="string">&quot;%T%.f%:z&quot;</span>,
+            ];
 
-        <span class="kw">for</span> <span class="ident">format</span> <span class="kw">in</span> <span class="ident">valid_time_formats</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">time</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">text</span>, <span class="ident">format</span>) {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">time</span>);
+            <span class="kw">for</span> <span class="ident">format</span> <span class="kw">in</span> <span class="ident">valid_time_formats</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">time</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">text</span>, <span class="ident">format</span>) {
+                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">time</span>);
+                }
             }
-        }
 
-        <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid time {}&quot;</span>, <span class="ident">text</span>).<span class="ident">into</span>())
+            <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid time {}&quot;</span>, <span class="ident">text</span>).<span class="ident">into</span>())
+        })
     }
 }
 
@@ -425,44 +424,43 @@
 
 <span class="kw">impl</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Timestamp</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NaiveDateTime</span> {
     <span class="kw">fn</span> <span class="ident">from_sql</span>(<span class="ident">value</span>: <span class="ident">backend::RawValue</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">text_ptr</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">str</span> <span class="kw">as</span> <span class="ident">FromSql</span><span class="op">&lt;</span><span class="ident">Date</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::from_sql</span>(<span class="ident">value</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">text_ptr</span> };
+        <span class="ident">value</span>.<span class="ident">parse_string</span>(<span class="op">|</span><span class="ident">text</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">sqlite_datetime_formats</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[
+                <span class="comment">// Most likely format</span>
+                <span class="string">&quot;%F %T%.f&quot;</span>,
+                <span class="comment">// Other formats in order of appearance in docs</span>
+                <span class="string">&quot;%F %R&quot;</span>,
+                <span class="string">&quot;%F %RZ&quot;</span>,
+                <span class="string">&quot;%F %R%:z&quot;</span>,
+                <span class="string">&quot;%F %T%.fZ&quot;</span>,
+                <span class="string">&quot;%F %T%.f%:z&quot;</span>,
+                <span class="string">&quot;%FT%R&quot;</span>,
+                <span class="string">&quot;%FT%RZ&quot;</span>,
+                <span class="string">&quot;%FT%R%:z&quot;</span>,
+                <span class="string">&quot;%FT%T%.f&quot;</span>,
+                <span class="string">&quot;%FT%T%.fZ&quot;</span>,
+                <span class="string">&quot;%FT%T%.f%:z&quot;</span>,
+            ];
 
-        <span class="kw">let</span> <span class="ident">sqlite_datetime_formats</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[
-            <span class="comment">// Most likely format</span>
-            <span class="string">&quot;%F %T%.f&quot;</span>,
-            <span class="comment">// Other formats in order of appearance in docs</span>
-            <span class="string">&quot;%F %R&quot;</span>,
-            <span class="string">&quot;%F %RZ&quot;</span>,
-            <span class="string">&quot;%F %R%:z&quot;</span>,
-            <span class="string">&quot;%F %T%.fZ&quot;</span>,
-            <span class="string">&quot;%F %T%.f%:z&quot;</span>,
-            <span class="string">&quot;%FT%R&quot;</span>,
-            <span class="string">&quot;%FT%RZ&quot;</span>,
-            <span class="string">&quot;%FT%R%:z&quot;</span>,
-            <span class="string">&quot;%FT%T%.f&quot;</span>,
-            <span class="string">&quot;%FT%T%.fZ&quot;</span>,
-            <span class="string">&quot;%FT%T%.f%:z&quot;</span>,
-        ];
-
-        <span class="kw">for</span> <span class="ident">format</span> <span class="kw">in</span> <span class="ident">sqlite_datetime_formats</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">dt</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">text</span>, <span class="ident">format</span>) {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">dt</span>);
+            <span class="kw">for</span> <span class="ident">format</span> <span class="kw">in</span> <span class="ident">sqlite_datetime_formats</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">dt</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::parse_from_str</span>(<span class="ident">text</span>, <span class="ident">format</span>) {
+                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">dt</span>);
+                }
             }
-        }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">julian_days</span>) <span class="op">=</span> <span class="ident">text</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>() {
-            <span class="kw">let</span> <span class="ident">epoch_in_julian_days</span> <span class="op">=</span> <span class="number">2_440_587.5</span>;
-            <span class="kw">let</span> <span class="ident">seconds_in_day</span> <span class="op">=</span> <span class="number">86400.0</span>;
-            <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> (<span class="ident">julian_days</span> <span class="op">-</span> <span class="ident">epoch_in_julian_days</span>) <span class="op">*</span> <span class="ident">seconds_in_day</span>;
-            <span class="kw">let</span> <span class="ident">seconds</span> <span class="op">=</span> <span class="ident">timestamp</span> <span class="kw">as</span> <span class="ident">i64</span>;
-            <span class="kw">let</span> <span class="ident">nanos</span> <span class="op">=</span> (<span class="ident">timestamp</span>.<span class="ident">fract</span>() <span class="op">*</span> <span class="number">1E9</span>) <span class="kw">as</span> <span class="ident">u32</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timestamp</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::from_timestamp_opt</span>(<span class="ident">seconds</span>, <span class="ident">nanos</span>) {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">timestamp</span>);
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">julian_days</span>) <span class="op">=</span> <span class="ident">text</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>() {
+                <span class="kw">let</span> <span class="ident">epoch_in_julian_days</span> <span class="op">=</span> <span class="number">2_440_587.5</span>;
+                <span class="kw">let</span> <span class="ident">seconds_in_day</span> <span class="op">=</span> <span class="number">86400.0</span>;
+                <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> (<span class="ident">julian_days</span> <span class="op">-</span> <span class="ident">epoch_in_julian_days</span>) <span class="op">*</span> <span class="ident">seconds_in_day</span>;
+                <span class="kw">let</span> <span class="ident">seconds</span> <span class="op">=</span> <span class="ident">timestamp</span> <span class="kw">as</span> <span class="ident">i64</span>;
+                <span class="kw">let</span> <span class="ident">nanos</span> <span class="op">=</span> (<span class="ident">timestamp</span>.<span class="ident">fract</span>() <span class="op">*</span> <span class="number">1E9</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timestamp</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::from_timestamp_opt</span>(<span class="ident">seconds</span>, <span class="ident">nanos</span>) {
+                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">timestamp</span>);
+                }
             }
-        }
 
-        <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid datetime {}&quot;</span>, <span class="ident">text</span>).<span class="ident">into</span>())
+            <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Invalid datetime {}&quot;</span>, <span class="ident">text</span>).<span class="ident">into</span>())
+        })
     }
 }
 

@@ -1146,7 +1146,7 @@
 <span class="doccomment">/// This trait is automatically implemented by [`#[derive(SqlType)]`](derive@SqlType)</span>
 <span class="doccomment">/// which sets `IsNull` to [`is_nullable::NotNull`]</span>
 <span class="doccomment">///</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SqlType</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SqlType</span>: <span class="lifetime">&#39;static</span> {
     <span class="doccomment">/// Is this type nullable?</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This type should always be one of the structs in the [&#39;is_nullable`]</span>

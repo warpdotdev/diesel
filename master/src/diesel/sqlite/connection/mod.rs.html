@@ -676,12 +676,18 @@
 <span id="676">676</span>
 <span id="677">677</span>
 <span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
 </pre><pre class="rust">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libsqlite3_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
 <span class="kw">mod</span> <span class="ident">functions</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">raw</span>;
+<span class="kw">mod</span> <span class="ident">row</span>;
 <span class="kw">mod</span> <span class="ident">serialized_value</span>;
 <span class="kw">mod</span> <span class="ident">sqlite_value</span>;
 <span class="kw">mod</span> <span class="ident">statement_iterator</span>;
@@ -713,6 +719,9 @@
 <span class="doccomment">/// - Special identifiers (`:memory:`)</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SqliteConnection</span> {
+    <span class="comment">// statement_cache needs to be before raw_connection</span>
+    <span class="comment">// otherwise we will get errors about open statements before closing the</span>
+    <span class="comment">// connection itself</span>
     <span class="ident">statement_cache</span>: <span class="ident">StatementCache</span><span class="op">&lt;</span><span class="ident">Sqlite</span>, <span class="ident">Statement</span><span class="op">&gt;</span>,
     <span class="ident">raw_connection</span>: <span class="ident">RawConnection</span>,
     <span class="ident">transaction_state</span>: <span class="ident">AnsiTransactionManager</span>,
@@ -727,6 +736,11 @@
     <span class="kw">fn</span> <span class="ident">batch_execute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">query</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">raw_connection</span>.<span class="ident">exec</span>(<span class="ident">query</span>)
     }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ConnectionGatWorkaround</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SqliteConnection</span> {
+    <span class="kw">type</span> <span class="ident">Cursor</span> <span class="op">=</span> <span class="ident">StatementIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Row</span> <span class="op">=</span> <span class="self">self</span><span class="ident">::row::SqliteRow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">Connection</span> <span class="kw">for</span> <span class="ident">SqliteConnection</span> {
@@ -760,18 +774,19 @@
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span>, <span class="ident">ST</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="ident">T</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">ConnectionGatWorkaround</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Backend</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Cursor</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">AsQuery</span>,
         <span class="ident">T::Query</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Backend</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">QueryId</span>,
-        <span class="ident">T::SqlType</span>: <span class="kw">crate</span><span class="ident">::query_dsl::load_dsl::CompatibleType</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">Sqlite</span>, <span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">ST</span><span class="op">&gt;</span>,
-        <span class="ident">U</span>: <span class="ident">FromSqlRow</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">Sqlite</span><span class="op">&gt;</span>,
         <span class="self">Self</span><span class="ident">::Backend</span>: <span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">T::SqlType</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">statement</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prepare_query</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">as_query</span>())<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">statement_use</span> <span class="op">=</span> <span class="ident">StatementUse::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">statement</span>, <span class="bool-val">true</span>);
-        <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">StatementIterator</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="ident">statement_use</span>);
-        <span class="ident">iter</span>.<span class="ident">collect</span>()
+        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prepared_query</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">as_query</span>())<span class="question-mark">?</span>;
+
+        <span class="kw">let</span> <span class="ident">statement_use</span> <span class="op">=</span> <span class="ident">StatementUse::new</span>(<span class="ident">stmt</span>);
+        <span class="prelude-val">Ok</span>(<span class="ident">StatementIterator::new</span>(<span class="ident">statement_use</span>))
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
@@ -779,11 +794,11 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Backend</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">QueryId</span>,
     {
-        {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">statement</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prepare_query</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">statement_use</span> <span class="op">=</span> <span class="ident">StatementUse::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">statement</span>, <span class="bool-val">false</span>);
-            <span class="ident">statement_use</span>.<span class="ident">run</span>()<span class="question-mark">?</span>;
-        }
+        <span class="kw">let</span> <span class="ident">stmt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prepared_query</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
+
+        <span class="kw">let</span> <span class="ident">statement_use</span> <span class="op">=</span> <span class="ident">StatementUse::new</span>(<span class="ident">stmt</span>);
+        <span class="ident">statement_use</span>.<span class="ident">run</span>()<span class="question-mark">?</span>;
+
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">raw_connection</span>.<span class="ident">rows_affected_by_last_query</span>())
     }
 
@@ -872,11 +887,15 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">prepare_query</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">QueryId</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">MaybeCached</span><span class="op">&lt;</span><span class="ident">Statement</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">statement</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cached_prepared_statement</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn</span> <span class="ident">prepared_query</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">QueryId</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_</span> <span class="ident">T</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">MaybeCached</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Statement</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw_connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw_connection</span>;
+        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">statement_cache</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">statement</span> <span class="op">=</span> <span class="ident">cache</span>.<span class="ident">cached_statement</span>(<span class="ident">source</span>, <span class="kw-2">&amp;</span>[], <span class="op">|</span><span class="ident">sql</span>, <span class="ident">is_cached</span><span class="op">|</span> {
+            <span class="ident">Statement::prepare</span>(<span class="ident">raw_connection</span>, <span class="ident">sql</span>, <span class="ident">is_cached</span>)
+        })<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bind_collector</span> <span class="op">=</span> <span class="ident">RawBytesBindCollector</span>::<span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span><span class="ident">::new</span>();
         <span class="ident">source</span>.<span class="ident">collect_binds</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bind_collector</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ())<span class="question-mark">?</span>;
@@ -887,15 +906,6 @@
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">statement</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">cached_prepared_statement</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">Sqlite</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">QueryId</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">MaybeCached</span><span class="op">&lt;</span><span class="ident">Statement</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">raw_connection</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw_connection</span>;
-        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">statement_cache</span>;
-        <span class="ident">cache</span>.<span class="ident">cached_statement</span>(<span class="ident">source</span>, <span class="kw-2">&amp;</span>[], <span class="op">|</span><span class="ident">sql</span><span class="op">|</span> <span class="ident">Statement::prepare</span>(<span class="ident">raw_connection</span>, <span class="ident">sql</span>))
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>

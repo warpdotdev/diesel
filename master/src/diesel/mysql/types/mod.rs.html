@@ -259,7 +259,7 @@
 
 <span class="doccomment">/// Represents the MySQL unsigned type.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>, <span class="ident">SqlType</span>, <span class="ident">QueryId</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>(<span class="ident">ST</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">ST</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">ST</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span> <span class="kw">for</span> <span class="ident">Unsigned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
