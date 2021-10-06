@@ -270,7 +270,7 @@
         .<span class="ident">inner_join</span>(<span class="ident">pg_namespace::table</span>)
         .<span class="ident">filter</span>(<span class="ident">pg_type::typname</span>.<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="ident">cache_key</span>.<span class="ident">type_name</span>))
         .<span class="ident">select</span>((<span class="ident">pg_type::oid</span>, <span class="ident">pg_type::typarray</span>));
-    <span class="kw">let</span> <span class="ident">nspname_filter</span> <span class="op">=</span> <span class="ident">pg_namespace::nspname</span>.<span class="ident">eq</span>(<span class="kw">crate</span><span class="ident">::dsl::any</span>(<span class="ident">search_schema</span>));
+    <span class="kw">let</span> <span class="ident">nspname_filter</span> <span class="op">=</span> <span class="ident">pg_namespace::nspname</span>.<span class="ident">eq_any</span>(<span class="ident">search_schema</span>);
 
     <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">search_path_has_temp_schema</span> {
         <span class="ident">metadata_query</span>

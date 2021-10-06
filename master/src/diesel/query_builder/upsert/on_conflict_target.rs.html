@@ -104,8 +104,23 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">Backend</span>, <span class="ident">SupportsOnConflictClause</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">sql_dialect</span>, <span class="ident">Backend</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::SqlLiteral</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source::Column</span>;
@@ -120,7 +135,8 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NoConflictTarget</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span>,
+    <span class="ident">DB::OnConflictClause</span>: <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span>,
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(())
@@ -135,7 +151,18 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span>,
+    <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::OnConflictClause</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pass</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::OnConflictClause</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::walk_ast</span>(<span class="self">self</span>, <span class="ident">pass</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">T</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">DB</span>: <span class="ident">Backend</span><span class="op">&lt;</span><span class="ident">OnConflictClause</span> <span class="op">=</span> <span class="ident">SP</span><span class="op">&gt;</span>,
+    <span class="ident">SP</span>: <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span>,
     <span class="ident">T</span>: <span class="ident">Column</span>,
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -148,9 +175,10 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">OnConflictTarget</span><span class="op">&lt;</span><span class="ident">T::Table</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Column</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">ST</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">SqlLiteral</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">ST</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">SqlLiteral</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span><span class="op">&lt;</span><span class="ident">OnConflictClause</span> <span class="op">=</span> <span class="ident">SP</span><span class="op">&gt;</span>,
+    <span class="ident">SP</span>: <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span>,
     <span class="ident">SqlLiteral</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -162,9 +190,10 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tab</span>, <span class="ident">ST</span><span class="op">&gt;</span> <span class="ident">OnConflictTarget</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span><span class="ident">SqlLiteral</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span><span class="op">&gt;</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span>(<span class="ident">T</span>,)<span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">T</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">SP</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span>(<span class="ident">T</span>,)<span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span><span class="op">&lt;</span><span class="ident">OnConflictClause</span> <span class="op">=</span> <span class="ident">SP</span><span class="op">&gt;</span>,
+    <span class="ident">SP</span>: <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span>,
     <span class="ident">T</span>: <span class="ident">Column</span>,
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -184,8 +213,9 @@
         }
     )<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
-            <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">_DB</span>, <span class="ident">_T</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>),<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">_DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span>(<span class="ident">_T</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>),<span class="kw-2">*</span>)<span class="op">&gt;</span> <span class="kw">where</span>
-                <span class="ident">_DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span>,
+            <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">_DB</span>, <span class="ident">_T</span>, <span class="ident">_SP</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>),<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">_DB</span>, <span class="ident">_SP</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConflictTarget</span><span class="op">&lt;</span>(<span class="ident">_T</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>),<span class="kw-2">*</span>)<span class="op">&gt;</span> <span class="kw">where</span>
+                <span class="ident">_DB</span>: <span class="ident">Backend</span><span class="op">&lt;</span><span class="ident">OnConflictClause</span> <span class="op">=</span> <span class="ident">_SP</span><span class="op">&gt;</span>,
+                <span class="ident">_SP</span>: <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span>,
                 <span class="ident">_T</span>: <span class="ident">Column</span>,
                 $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>: <span class="ident">Column</span><span class="op">&lt;</span><span class="ident">Table</span><span class="op">=</span><span class="ident">_T::Table</span><span class="op">&gt;</span>,)<span class="op">*</span>
             {

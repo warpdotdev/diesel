@@ -1141,7 +1141,7 @@
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">T::Table</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
-        <span class="ident">ValuesClause::new</span>(<span class="ident">ColumnInsertValue::new</span>(<span class="self">self</span>.<span class="ident">left</span>, <span class="self">self</span>.<span class="ident">right</span>))
+        <span class="ident">ValuesClause::new</span>(<span class="ident">ColumnInsertValue::new</span>(<span class="self">self</span>.<span class="ident">right</span>))
     }
 }
 

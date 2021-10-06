@@ -102,6 +102,22 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
 </pre><pre class="rust">
 <span class="doccomment">//! The PostgreSQL backend</span>
 
@@ -202,11 +218,27 @@
     <span class="kw">type</span> <span class="ident">MetadataLookup</span> <span class="op">=</span> <span class="kw">dyn</span> <span class="ident">PgMetadataLookup</span>;
 }
 
-<span class="kw">impl</span> <span class="ident">SupportsReturningClause</span> <span class="kw">for</span> <span class="ident">Pg</span> {}
-<span class="kw">impl</span> <span class="ident">SupportsOnConflictClause</span> <span class="kw">for</span> <span class="ident">Pg</span> {}
-<span class="kw">impl</span> <span class="ident">SupportsOnConflictTargetDecorations</span> <span class="kw">for</span> <span class="ident">Pg</span> {}
-<span class="kw">impl</span> <span class="ident">SupportsDefaultKeyword</span> <span class="kw">for</span> <span class="ident">Pg</span> {}
-<span class="kw">impl</span> <span class="ident">UsesAnsiSavepointSyntax</span> <span class="kw">for</span> <span class="ident">Pg</span> {}
+<span class="kw">impl</span> <span class="ident">SqlDialect</span> <span class="kw">for</span> <span class="ident">Pg</span> {
+    <span class="kw">type</span> <span class="ident">ReturningClause</span> <span class="op">=</span> <span class="ident">sql_dialect::returning_clause::PgLikeReturningClause</span>;
+
+    <span class="kw">type</span> <span class="ident">OnConflictClause</span> <span class="op">=</span> <span class="ident">PgOnConflictClaues</span>;
+
+    <span class="kw">type</span> <span class="ident">InsertWithDefaultKeyword</span> <span class="op">=</span> <span class="ident">sql_dialect::default_keyword_for_insert::IsoSqlDefaultKeyword</span>;
+    <span class="kw">type</span> <span class="ident">BatchInsertSupport</span> <span class="op">=</span> <span class="ident">sql_dialect::batch_insert_support::PostgresLikeBatchInsertSupport</span>;
+    <span class="kw">type</span> <span class="ident">DefaultValueClauseForInsert</span> <span class="op">=</span> <span class="ident">sql_dialect::default_value_clause::AnsiDefaultValueClause</span>;
+
+    <span class="kw">type</span> <span class="ident">EmptyFromClauseSyntax</span> <span class="op">=</span> <span class="ident">sql_dialect::from_clause_syntax::AnsiSqlFromClauseSyntax</span>;
+    <span class="kw">type</span> <span class="ident">ExistsSyntax</span> <span class="op">=</span> <span class="ident">sql_dialect::exists_syntax::AnsiSqlExistsSyntax</span>;
+    <span class="kw">type</span> <span class="ident">ArrayComparision</span> <span class="op">=</span> <span class="ident">PgStyleArrayComparision</span>;
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PgOnConflictClaues</span>;
+
+<span class="kw">impl</span> <span class="ident">sql_dialect::on_conflict_clause::SupportsOnConflictClause</span> <span class="kw">for</span> <span class="ident">PgOnConflictClaues</span> {}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PgStyleArrayComparision</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>

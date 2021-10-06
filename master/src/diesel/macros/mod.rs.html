@@ -2257,7 +2257,7 @@
                 <span class="kw">type</span> <span class="ident">Count</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::query_source::Once</span>;
             }
 
-            <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::query_source::AppearsInFromClause</span><span class="op">&lt;</span><span class="ident">table</span><span class="op">&gt;</span> <span class="kw">for</span> () {
+            <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::query_source::AppearsInFromClause</span><span class="op">&lt;</span><span class="ident">table</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::query_builder::NoFromClause</span> {
                 <span class="kw">type</span> <span class="ident">Count</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::query_source::Never</span>;
             }
 

@@ -56,10 +56,15 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::TypedExpressionType</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::select_statement::NoFromClause</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source::joins::ToInnerJoin</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::result::QueryResult</span>;
@@ -114,7 +119,10 @@
 {
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SelectableExpression</span><span class="op">&lt;</span>()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AssumeNotNull</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">AppearsOnTable</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SelectableExpression</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AssumeNotNull</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="self">Self</span>: <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span>
+{
+}
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>

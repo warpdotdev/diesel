@@ -609,8 +609,6 @@
 <span id="609">609</span>
 <span id="610">610</span>
 <span id="611">611</span>
-<span id="612">612</span>
-<span id="613">613</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::array_comparison</span>::{<span class="ident">AsInExpression</span>, <span class="ident">In</span>, <span class="ident">NotIn</span>};
@@ -674,9 +672,8 @@
     <span class="doccomment">/// in cases when a subquery is passed to the method, that</span>
     <span class="doccomment">/// query will use the cache (assuming the subquery</span>
     <span class="doccomment">/// itself is safe to cache).</span>
-    <span class="doccomment">/// On PostgreSQL, you should use</span>
-    <span class="doccomment">/// `eq(any())` instead. This method may change in the future to</span>
-    <span class="doccomment">/// automatically perform `= ANY` on PostgreSQL.</span>
+    <span class="doccomment">/// On PostgreSQL, this method automatically performs a `= ANY()`</span>
+    <span class="doccomment">/// query.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>
@@ -717,9 +714,8 @@
     <span class="doccomment">/// Creates a SQL `NOT IN` statement.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Queries using this method will not be</span>
-    <span class="doccomment">/// placed in the prepared statement cache. On PostgreSQL, you should use</span>
-    <span class="doccomment">/// `ne(all())` instead. This method may change in the future to</span>
-    <span class="doccomment">/// automatically perform `!= ALL` on PostgreSQL.</span>
+    <span class="doccomment">/// placed in the prepared statement cache. On PostgreSQL, this</span>
+    <span class="doccomment">/// method automatically performs a `!= ALL()` query.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>

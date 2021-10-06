@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AnsiSqlExistsSyntax","Indicates that this backend treats `EXIST()` as function like expression"]]});

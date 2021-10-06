@@ -343,7 +343,6 @@
 <span id="343">343</span>
 <span id="344">344</span>
 <span id="345">345</span>
-<span id="346">346</span>
 </pre><pre class="rust">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bigdecimal&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">bigdecimal</span> {
@@ -669,7 +668,6 @@
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>)]</span>
         <span class="kw">fn</span> <span class="ident">pg_numeric_to_bigdecimal_works</span>() {
             <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">BigDecimal::from_str</span>(<span class="string">&quot;123.456&quot;</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> <span class="ident">pg_numeric</span> <span class="op">=</span> <span class="ident">PgNumeric::Positive</span> {

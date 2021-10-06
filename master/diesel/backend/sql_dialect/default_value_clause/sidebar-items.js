@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AnsiDefaultValueClause","Indicates that this backend uses the `DEFAULT VALUES` syntax to specify that a row consisting only of default values should be inserted"]]});

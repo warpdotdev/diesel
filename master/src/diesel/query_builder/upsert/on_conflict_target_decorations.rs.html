@@ -66,11 +66,8 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">Backend</span>, <span class="ident">SupportsOnConflictClause</span>, <span class="ident">SupportsOnConflictTargetDecorations</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::Expression</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::upsert::on_conflict_target</span>::{<span class="ident">ConflictTarget</span>, <span class="ident">NoConflictTarget</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::where_clause</span>::{<span class="ident">NoWhereClause</span>, <span class="ident">WhereAnd</span>, <span class="ident">WhereClause</span>};
@@ -93,8 +90,8 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DecoratedConflictTarget</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
-    <span class="ident">target</span>: <span class="ident">T</span>,
-    <span class="ident">where_clause</span>: <span class="ident">U</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">target</span>: <span class="ident">T</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">where_clause</span>: <span class="ident">U</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span> <span class="ident">DecoratableTarget</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
@@ -131,14 +128,11 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DecoratedConflictTarget</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
-    <span class="ident">U</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsOnConflictClause</span> <span class="op">+</span> <span class="ident">SupportsOnConflictTargetDecorations</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span>,
+    <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::OnConflictClause</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">target</span>.<span class="ident">walk_ast</span>(<span class="ident">out</span>.<span class="ident">reborrow</span>())<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="ident">where_clause</span>.<span class="ident">walk_ast</span>(<span class="ident">out</span>.<span class="ident">reborrow</span>())<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
+    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pass</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::OnConflictClause</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::walk_ast</span>(<span class="self">self</span>, <span class="ident">pass</span>)
     }
 }
 </pre></div>

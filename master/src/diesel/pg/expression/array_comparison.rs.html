@@ -173,6 +173,8 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::subselect::Subselect</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">AsExpression</span>, <span class="ident">Expression</span>, <span class="ident">TypedExpressionType</span>, <span class="ident">ValidGrouping</span>};
@@ -202,6 +204,7 @@
 <span class="doccomment">/// assert_eq!(Ok(vec![sean, jim]), data.load(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;2.0.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use `ExpressionMethods::eq_any` instead&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">any</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">vals</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Any</span><span class="op">&lt;</span><span class="ident">T::Expression</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>,
@@ -229,6 +232,7 @@
 <span class="doccomment">/// assert_eq!(Ok(vec![tess]), data.load(connection));</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;2.0.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use `ExpressionMethods::ne_all` instead&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">all</span><span class="op">&lt;</span><span class="ident">ST</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">vals</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">All</span><span class="op">&lt;</span><span class="ident">T::Expression</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">AsArrayExpression</span><span class="op">&lt;</span><span class="ident">ST</span><span class="op">&gt;</span>,

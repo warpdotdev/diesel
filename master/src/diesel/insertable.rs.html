@@ -346,13 +346,58 @@
 <span id="346">346</span>
 <span id="347">347</span>
 <span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">Backend</span>, <span class="ident">SupportsDefaultKeyword</span>};
+<span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
+
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">sql_dialect</span>, <span class="ident">Backend</span>, <span class="ident">SqlDialect</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::grouped::Grouped</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">AppearsOnTable</span>, <span class="ident">Expression</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder</span>::{
-    <span class="ident">AstPass</span>, <span class="ident">BatchInsert</span>, <span class="ident">InsertStatement</span>, <span class="ident">QueryFragment</span>, <span class="ident">QueryId</span>, <span class="ident">UndecoratedInsertRecord</span>,
-    <span class="ident">ValuesClause</span>,
+    <span class="ident">AstPass</span>, <span class="ident">BatchInsert</span>, <span class="ident">InsertStatement</span>, <span class="ident">NoFromClause</span>, <span class="ident">QueryFragment</span>, <span class="ident">QueryId</span>,
+    <span class="ident">UndecoratedInsertRecord</span>, <span class="ident">ValuesClause</span>,
 };
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source</span>::{<span class="ident">Column</span>, <span class="ident">Table</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::result::QueryResult</span>;
@@ -468,13 +513,16 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">QueryId</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> {
-    <span class="ident">col</span>: <span class="ident">Col</span>,
     <span class="ident">expr</span>: <span class="ident">Expr</span>,
+    <span class="ident">p</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">Col</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> <span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">col</span>: <span class="ident">Col</span>, <span class="ident">expr</span>: <span class="ident">Expr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">col</span>, <span class="ident">expr</span> }
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">expr</span>: <span class="ident">Expr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">expr</span>,
+            <span class="ident">p</span>: <span class="ident">PhantomData</span>,
+        }
     }
 }
 
@@ -499,9 +547,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">InsertValues</span><span class="op">&lt;</span><span class="ident">Col::Table</span>, <span class="ident">DB</span><span class="op">&gt;</span>
     <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsDefaultKeyword</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SqlDialect</span><span class="op">&lt;</span><span class="ident">InsertWithDefaultKeyword</span> <span class="op">=</span> <span class="ident">sql_dialect::default_keyword_for_insert::IsoSqlDefaultKeyword</span><span class="op">&gt;</span>,
     <span class="ident">Col</span>: <span class="ident">Column</span>,
-    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span>,
     <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">column_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -514,7 +562,7 @@
 <span class="kw">where</span>
     <span class="ident">DB</span>: <span class="ident">Backend</span>,
     <span class="ident">Col</span>: <span class="ident">Column</span>,
-    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span>,
     <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">column_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -525,7 +573,17 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Expr</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SupportsDefaultKeyword</span>,
+    <span class="ident">DB</span>: <span class="ident">Backend</span>,
+    <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::InsertWithDefaultKeyword</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pass</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">DB::InsertWithDefaultKeyword</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::walk_ast</span>(<span class="self">self</span>, <span class="ident">pass</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Expr</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span>, <span class="ident">sql_dialect::default_keyword_for_insert::IsoSqlDefaultKeyword</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">SqlDialect</span><span class="op">&lt;</span><span class="ident">InsertWithDefaultKeyword</span> <span class="op">=</span> <span class="ident">sql_dialect::default_keyword_for_insert::IsoSqlDefaultKeyword</span><span class="op">&gt;</span>,
     <span class="ident">Expr</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -554,7 +612,7 @@
     <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">Col</span>: <span class="ident">Column</span>,
-    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span>()<span class="op">&gt;</span>,
+    <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span>,
     <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">column_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -566,8 +624,11 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>
-    <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span>
+    <span class="ident">QueryFragment</span><span class="op">&lt;</span>
+        <span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span>,
+        <span class="kw">crate</span><span class="ident">::backend::sql_dialect::default_keyword_for_insert::DoesNotSupportDefaultKeyword</span>,
+    <span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">Expr</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>,
 {
@@ -649,15 +710,40 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">V</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">mod</span> <span class="ident">private</span> {
+    <span class="comment">// This helper exists to differentiate between</span>
+    <span class="comment">// Insertable implementations for tuples and for single values</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InsertableOptionHelper</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">V</span><span class="op">&gt;</span>(
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">std::marker::PhantomData</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>,
+    );
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::private::InsertableOptionHelper</span>;
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Tab</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span>, <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">InsertableOptionHelper</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">V</span><span class="op">&gt;</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span>,
 {
-    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>, <span class="ident">Tab</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">InsertableOptionHelper</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
+
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+        <span class="ident">InsertableOptionHelper</span>(<span class="self">self</span>, <span class="ident">PhantomData</span>).<span class="ident">values</span>()
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Tab</span>, <span class="ident">Expr</span>, <span class="ident">Col</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">InsertableOptionHelper</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span>, <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span>, <span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+{
+    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Tab</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
         <span class="ident">ValuesClause::new</span>(
-            <span class="self">self</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">DefaultableColumnInsertValue::Expression</span>(<span class="ident">Insertable::values</span>(<span class="ident">v</span>).<span class="ident">values</span>))
+            <span class="self">self</span>.<span class="number">0</span>
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">DefaultableColumnInsertValue::Expression</span>(<span class="ident">Insertable::values</span>(<span class="ident">v</span>).<span class="ident">values</span>))
                 .<span class="ident">unwrap_or_default</span>(),
         )
     }

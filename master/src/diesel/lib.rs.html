@@ -435,6 +435,10 @@
 <span id="435">435</span>
 <span id="436">436</span>
 <span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
 </pre><pre class="rust">
 <span class="doccomment">//! # Diesel</span>
 <span class="doccomment">//!</span>
@@ -529,9 +533,7 @@
 <span class="doccomment">//! You can come ask for help at</span>
 <span class="doccomment">//! [gitter.im/diesel-rs/diesel](https://gitter.im/diesel-rs/diesel)</span>
 
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">feature</span>(<span class="ident">specialization</span>, <span class="ident">trait_alias</span>))]</span>
-<span class="comment">// For the `specialization` feature.</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">allow</span>(<span class="ident">incomplete_features</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">feature</span>(<span class="ident">trait_alias</span>))]</span>
 <span class="comment">// Built-in Lints</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
 <span class="attribute">#![<span class="ident">warn</span>(
@@ -656,6 +658,12 @@
 
     <span class="doccomment">/// Represents the return type of `.select(selection)`</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Select</span><span class="op">&lt;</span><span class="ident">Source</span>, <span class="ident">Selection</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Source</span> <span class="kw">as</span> <span class="ident">SelectDsl</span><span class="op">&lt;</span><span class="ident">Selection</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span>;
+
+    <span class="doccomment">/// Represents the return type of `diesel::select(selection)`</span>
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BareSelect</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Select</span><span class="op">&lt;</span>
+        <span class="kw">crate</span><span class="ident">::query_builder::SelectStatement</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::query_builder::select_statement::NoFromClause</span><span class="op">&gt;</span>,
+        <span class="ident">T</span>,
+    <span class="op">&gt;</span>;
 
     <span class="doccomment">/// Represents the return type of `.filter(predicate)`</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Filter</span><span class="op">&lt;</span><span class="ident">Source</span>, <span class="ident">Predicate</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">Source</span> <span class="kw">as</span> <span class="ident">FilterDsl</span><span class="op">&lt;</span><span class="ident">Predicate</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span>;
