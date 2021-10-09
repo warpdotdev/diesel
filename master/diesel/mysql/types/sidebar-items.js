@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Datetime","Represents the MySQL datetime type."],["Unsigned","Represents the MySQL unsigned type."]]});
+initSidebarItems({"struct":[["Datetime","Represents the MySQL datetime type."],["MysqlTime","Corresponding rust representation of the MYSQL_TIME struct from libmysqlclient"],["MysqlTimestampType","Rust representation of enum_mysql_timestamp_type"],["Unsigned","Represents the MySQL unsigned type."]]});

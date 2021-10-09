@@ -214,7 +214,7 @@
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::sql_types</span>::<span class="kw-2">*</span>;
 
 <span class="comment">// https://github.com/postgres/postgres/blob/113b0045e20d40f726a0a30e33214455e4f1385e/src/include/utils/rangetypes.h#L35-L43</span>
-<span class="macro">bitflags!</span> {
+<span class="macro">bitflags::bitflags!</span> {
     <span class="kw">struct</span> <span class="ident">RangeFlags</span>: <span class="ident">u8</span> {
         <span class="kw">const</span> <span class="ident">EMPTY</span> <span class="op">=</span> <span class="number">0x01</span>;
         <span class="kw">const</span> <span class="ident">LB_INC</span> <span class="op">=</span> <span class="number">0x02</span>;

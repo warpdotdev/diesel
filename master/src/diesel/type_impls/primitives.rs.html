@@ -262,6 +262,15 @@
 <span id="262">262</span>
 <span id="263">263</span>
 <span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">std::error::Error</span>;
 <span class="kw">use</span> <span class="ident">std::io::Write</span>;
@@ -285,7 +294,7 @@
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::TinyInt&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::TinyInt&quot;</span>)]</span>
     <span class="kw">struct</span> <span class="ident">I8Proxy</span>(<span class="ident">i8</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
@@ -306,25 +315,34 @@
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(
-        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>,
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>,
         <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;crate::sql_types::TinyInt&gt;&quot;</span>
     )]</span>
     <span class="kw">struct</span> <span class="ident">U8Proxy</span>(<span class="ident">u8</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;SmallInt&gt;&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>,
+        <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;SmallInt&gt;&quot;</span>
+    )]</span>
     <span class="kw">struct</span> <span class="ident">U16Proxy</span>(<span class="ident">u16</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;Integer&gt;&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Oid&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>,
+        <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;Integer&gt;&quot;</span>
+    )]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Oid&quot;</span>)]</span>
     <span class="kw">struct</span> <span class="ident">U32Proxy</span>(<span class="ident">u32</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;BigInt&gt;&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>,
+        <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Unsigned&lt;BigInt&gt;&quot;</span>
+    )]</span>
     <span class="kw">struct</span> <span class="ident">U64Proxy</span>(<span class="ident">u64</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>

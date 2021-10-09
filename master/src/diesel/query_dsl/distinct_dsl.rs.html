@@ -68,7 +68,7 @@
 <span id="68">68</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::SelectableExpression</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::TypedExpressionType</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::ValidGrouping</span>;
@@ -111,7 +111,7 @@
 <span class="doccomment">/// to call `distinct_on` from generic code.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`QueryDsl`]: crate::QueryDsl</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">DistinctOnDsl</span><span class="op">&lt;</span><span class="ident">Selection</span><span class="op">&gt;</span> {
     <span class="doccomment">/// The type returned by `.distinct_on`</span>
     <span class="kw">type</span> <span class="ident">Output</span>;
@@ -120,7 +120,7 @@
     <span class="kw">fn</span> <span class="ident">distinct_on</span>(<span class="self">self</span>, <span class="ident">selection</span>: <span class="ident">Selection</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">dsl::DistinctOn</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Selection</span><span class="op">&gt;</span>;
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Selection</span><span class="op">&gt;</span> <span class="ident">DistinctOnDsl</span><span class="op">&lt;</span><span class="ident">Selection</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
     <span class="ident">Selection</span>: <span class="ident">SelectableExpression</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,

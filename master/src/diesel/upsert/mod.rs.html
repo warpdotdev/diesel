@@ -46,7 +46,7 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::on_conflict_extension::DecoratableTarget</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::on_conflict_extension</span>::<span class="kw-2">*</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pg::query_builder::on_constraint</span>::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Represents `excluded.column` in an `ON CONFLICT DO UPDATE` clause.</span>

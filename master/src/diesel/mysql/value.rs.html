@@ -104,10 +104,11 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
+<span id="107">107</span>
 </pre><pre class="rust">
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::types::MysqlTime</span>;
 <span class="kw">use</span> <span class="kw">super</span><span class="ident">::MysqlType</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::deserialize</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql::types::MYSQL_TIME</span>;
 <span class="kw">use</span> <span class="ident">std::error::Error</span>;
 
 <span class="doccomment">/// Raw mysql value as received from the database</span>
@@ -118,7 +119,8 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">MysqlValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">tpe</span>: <span class="ident">MysqlType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">tpe</span>: <span class="ident">MysqlType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">raw</span>, <span class="ident">tpe</span> }
     }
 
@@ -133,15 +135,15 @@
     }
 
     <span class="doccomment">/// Checks that the type code is valid, and interprets the data as a</span>
-    <span class="doccomment">/// `MYSQL_TIME` pointer</span>
+    <span class="doccomment">/// `MysqlTime` pointer</span>
     <span class="comment">// We use `ptr.read_unaligned()` to read the potential unaligned ptr,</span>
     <span class="comment">// so clippy is clearly wrong here</span>
     <span class="comment">// https://github.com/rust-lang/rust-clippy/issues/2881</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">clippy::cast_ptr_alignment</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">time_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="ident">MYSQL_TIME</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">time_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">deserialize::Result</span><span class="op">&lt;</span><span class="ident">MysqlTime</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">tpe</span> {
             <span class="ident">MysqlType::Time</span> <span class="op">|</span> <span class="ident">MysqlType::Date</span> <span class="op">|</span> <span class="ident">MysqlType::DateTime</span> <span class="op">|</span> <span class="ident">MysqlType::Timestamp</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">MYSQL_TIME</span>;
+                <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">MysqlTime</span>;
                 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ptr</span>.<span class="ident">read_unaligned</span>() };
                 <span class="kw">if</span> <span class="ident">result</span>.<span class="ident">neg</span> {
                     <span class="prelude-val">Err</span>(<span class="string">&quot;Negative dates/times are not yet supported&quot;</span>.<span class="ident">into</span>())
@@ -163,10 +165,10 @@
                 <span class="ident">NumericRepresentation::Tiny</span>(<span class="self">self</span>.<span class="ident">raw</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">i8</span>)
             }
             <span class="ident">MysqlType::UnsignedShort</span> <span class="op">|</span> <span class="ident">MysqlType::Short</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation::Small</span>(<span class="ident">i16::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+                <span class="ident">NumericRepresentation::Small</span>(<span class="ident">i16::from_ne_bytes</span>((<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw</span>[..<span class="number">2</span>]).<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
             <span class="ident">MysqlType::UnsignedLong</span> <span class="op">|</span> <span class="ident">MysqlType::Long</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">NumericRepresentation::Medium</span>(<span class="ident">i32::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))
+                <span class="ident">NumericRepresentation::Medium</span>(<span class="ident">i32::from_ne_bytes</span>((<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw</span>[..<span class="number">4</span>]).<span class="ident">try_into</span>()<span class="question-mark">?</span>))
             }
             <span class="ident">MysqlType::UnsignedLongLong</span> <span class="op">|</span> <span class="ident">MysqlType::LongLong</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">NumericRepresentation::Big</span>(<span class="ident">i64::from_ne_bytes</span>(<span class="self">self</span>.<span class="ident">raw</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>))

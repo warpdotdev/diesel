@@ -39,6 +39,12 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class="rust">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 
@@ -72,13 +78,19 @@
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
     <span class="attribute">#[<span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;Timestamp&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Timestamptz&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Datetime&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>,
+        <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Timestamptz&quot;</span>
+    )]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql_backend&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Datetime&quot;</span>)]</span>
     <span class="kw">struct</span> <span class="ident">NaiveDateTimeProxy</span>(<span class="ident">NaiveDateTime</span>);
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">AsExpression</span>, <span class="ident">FromSqlRow</span>)]</span>
     <span class="attribute">#[<span class="ident">diesel</span>(<span class="ident">foreign_derive</span>)]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres&quot;</span>, <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Timestamptz&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>,
+        <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;crate::sql_types::Timestamptz&quot;</span>
+    )]</span>
     <span class="kw">struct</span> <span class="ident">DateTimeProxy</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span>(<span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>);
 }
 </pre></div>

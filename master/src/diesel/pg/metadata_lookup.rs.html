@@ -171,6 +171,21 @@
 <span id="171">171</span>
 <span id="172">172</span>
 <span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
 </pre><pre class="rust">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_parens</span>)]</span> <span class="comment">// FIXME: Remove this attribute once false positive is resolved.</span>
 
@@ -283,14 +298,24 @@
     <span class="prelude-val">Ok</span>(<span class="ident">metadata</span>)
 }
 
+<span class="doccomment">/// The key used to lookup cached type oid&#39;s inside of</span>
+<span class="doccomment">/// a [PgMetadataCache].</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">in</span> <span class="kw">crate</span><span class="ident">::pg</span>) <span class="kw">struct</span> <span class="ident">PgMetadataCacheKey</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">schema</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">type_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PgMetadataCacheKey</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">in</span> <span class="kw">crate</span><span class="ident">::pg</span>) <span class="ident">schema</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">in</span> <span class="kw">crate</span><span class="ident">::pg</span>) <span class="ident">type_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PgMetadataCacheKey</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PgMetadataCacheKey</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Construct a new cache key from an optional schema name and</span>
+    <span class="doccomment">/// a type name</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">schema</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">type_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">schema</span>, <span class="ident">type_name</span> }
+    }
+
+    <span class="doccomment">/// Convert the possibly borrowed version of this metadata cache key</span>
+    <span class="doccomment">/// into a lifetime independ owned version</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PgMetadataCacheKey</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">PgMetadataCacheKey</span> { <span class="ident">schema</span>, <span class="ident">type_name</span> } <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">PgMetadataCacheKey</span> {
             <span class="ident">schema</span>: <span class="ident">schema</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">Cow::Owned</span>(<span class="ident">s</span>.<span class="ident">into_owned</span>())),
@@ -315,13 +340,18 @@
     }
 
     <span class="doccomment">/// Lookup the OID of a custom type</span>
-    <span class="kw">fn</span> <span class="ident">lookup_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">type_name</span>: <span class="kw-2">&amp;</span><span class="ident">PgMetadataCacheKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PgTypeMetadata</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lookup_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">type_name</span>: <span class="kw-2">&amp;</span><span class="ident">PgMetadataCacheKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PgTypeMetadata</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="ident">PgTypeMetadata</span>(<span class="prelude-val">Ok</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">cache</span>.<span class="ident">get</span>(<span class="ident">type_name</span>)<span class="question-mark">?</span>)))
     }
 
     <span class="doccomment">/// Store the OID of a custom type</span>
-    <span class="kw">fn</span> <span class="ident">store_type</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">type_name</span>: <span class="ident">PgMetadataCacheKey</span>, <span class="ident">type_metadata</span>: <span class="ident">InnerPgTypeMetadata</span>) {
-        <span class="self">self</span>.<span class="ident">cache</span>.<span class="ident">insert</span>(<span class="ident">type_name</span>.<span class="ident">into_owned</span>(), <span class="ident">type_metadata</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">store_type</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">type_name</span>: <span class="ident">PgMetadataCacheKey</span>,
+        <span class="ident">type_metadata</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">InnerPgTypeMetadata</span><span class="op">&gt;</span>,
+    ) {
+        <span class="self">self</span>.<span class="ident">cache</span>
+            .<span class="ident">insert</span>(<span class="ident">type_name</span>.<span class="ident">into_owned</span>(), <span class="ident">type_metadata</span>.<span class="ident">into</span>());
     }
 }
 

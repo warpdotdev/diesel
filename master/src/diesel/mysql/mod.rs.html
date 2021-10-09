@@ -15,6 +15,17 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Provides types and functions related to working with MySQL</span>
 <span class="doccomment">//!</span>
@@ -23,6 +34,7 @@
 <span class="doccomment">//! MySQL, you may need to work with this module directly.</span>
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">backend</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">connection</span>;
 <span class="kw">mod</span> <span class="ident">value</span>;
 
@@ -30,9 +42,19 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::backend</span>::{<span class="ident">Mysql</span>, <span class="ident">MysqlType</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mysql&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::connection::MysqlConnection</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::query_builder::MysqlQueryBuilder</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::value</span>::{<span class="ident">MysqlValue</span>, <span class="ident">NumericRepresentation</span>};
+
+<span class="doccomment">/// Data structures for MysqSQL types which have no corresponding Rust type</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Most of these types are used to implement `ToSql` and `FromSql` for higher</span>
+<span class="doccomment">/// level types.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">data_types</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::types</span>::{<span class="ident">MysqlTime</span>, <span class="ident">MysqlTimestampType</span>};
+}
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>

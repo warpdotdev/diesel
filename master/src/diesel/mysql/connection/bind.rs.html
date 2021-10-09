@@ -1628,7 +1628,7 @@
 <span class="kw">use</span> <span class="kw">super</span><span class="ident">::stmt::MysqlFieldMetadata</span>;
 <span class="kw">use</span> <span class="kw">super</span><span class="ident">::stmt::Statement</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql::connection::stmt::StatementMetadata</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql::types::MYSQL_TIME</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql::types::MysqlTime</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::mysql</span>::{<span class="ident">MysqlType</span>, <span class="ident">MysqlValue</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::result::QueryResult</span>;
 
@@ -2245,7 +2245,7 @@
         <span class="ident">t::MYSQL_TYPE_TIME</span>
         <span class="op">|</span> <span class="ident">t::MYSQL_TYPE_DATE</span>
         <span class="op">|</span> <span class="ident">t::MYSQL_TYPE_DATETIME</span>
-        <span class="op">|</span> <span class="ident">t::MYSQL_TYPE_TIMESTAMP</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">MYSQL_TIME</span><span class="op">&gt;</span>()),
+        <span class="op">|</span> <span class="ident">t::MYSQL_TYPE_TIMESTAMP</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">MysqlTime</span><span class="op">&gt;</span>()),
         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
     }
 }
