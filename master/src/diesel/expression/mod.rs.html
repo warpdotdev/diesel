@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;expression&#x2F;mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;expression&#x2F;mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -847,8 +847,7 @@
 <span id="847">847</span>
 <span id="848">848</span>
 <span id="849">849</span>
-</pre><pre class="rust">
-<span class="doccomment">//! AST types representing various typed SQL expressions.</span>
+</pre><pre class="rust"><code><span class="doccomment">//! AST types representing various typed SQL expressions.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Almost all types implement either [`Expression`] or</span>
 <span class="doccomment">//! [`AsExpression`].</span>
@@ -901,45 +900,45 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">dsl</span> {
-    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl::SqlTypeOf</span>;
+    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::dsl::SqlTypeOf</span>;
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::count</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::count</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::exists::exists</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::exists::exists</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::functions::aggregate_folding</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::functions::aggregate_folding</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::functions::aggregate_ordering</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::functions::aggregate_ordering</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::functions::date_and_time</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::functions::date_and_time</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::not::not</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::not::not</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::sql_literal::sql</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::sql_literal::sql</span>;
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;postgres_backend&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pg::expression::dsl</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pg::expression::dsl</span>::<span class="kw-2">*</span>;
 
     <span class="doccomment">/// The return type of [`count(expr)`](crate::dsl::count())</span>
-    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::count::count::HelperType</span><span class="op">&lt;</span><span class="ident">SqlTypeOf</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>, <span class="ident">Expr</span><span class="op">&gt;</span>;
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::count::count::HelperType</span><span class="op">&lt;</span><span class="ident">SqlTypeOf</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>, <span class="ident">Expr</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// The return type of [`count_star()`](crate::dsl::count_star())</span>
-    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count_star</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::count::CountStar</span>;
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count_star</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::count::CountStar</span>;
 
     <span class="doccomment">/// The return type of [`count_distinct()`](crate::dsl::count_distinct())</span>
-    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count_distinct</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::count::CountDistinct</span><span class="op">&lt;</span><span class="ident">SqlTypeOf</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>, <span class="ident">Expr</span><span class="op">&gt;</span>;
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">count_distinct</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::count::CountDistinct</span><span class="op">&lt;</span><span class="ident">SqlTypeOf</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>, <span class="ident">Expr</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// The return type of [`date(expr)`](crate::dsl::date())</span>
-    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">date</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::functions::date_and_time::date::HelperType</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>;
+    <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">date</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::functions::date_and_time::date::HelperType</span><span class="op">&lt;</span><span class="ident">Expr</span><span class="op">&gt;</span>;
 }
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::sql_literal</span>::{<span class="ident">SqlLiteral</span>, <span class="ident">UncheckedBind</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::sql_literal</span>::{<span class="ident">SqlLiteral</span>, <span class="ident">UncheckedBind</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl::AsExprOf</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::sql_types</span>::{<span class="ident">HasSqlType</span>, <span class="ident">SingleValue</span>, <span class="ident">SqlType</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::backend::Backend</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::dsl::AsExprOf</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sql_types</span>::{<span class="ident">HasSqlType</span>, <span class="ident">SingleValue</span>, <span class="ident">SqlType</span>};
 
 <span class="doccomment">/// Represents a typed fragment of SQL.</span>
 <span class="doccomment">///</span>
@@ -961,8 +960,8 @@
 <span class="doccomment">///</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">expression_types</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">QueryMetadata</span>, <span class="ident">TypedExpressionType</span>};
-    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
-    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::sql_types::SingleValue</span>;
+    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::backend::Backend</span>;
+    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sql_types::SingleValue</span>;
 
     <span class="doccomment">/// Query nodes with this expression type do not have a statically at compile</span>
     <span class="doccomment">/// time known expression type.</span>
@@ -1013,7 +1012,7 @@
     <span class="doccomment">/// The exact return value of this function is considerded to be a</span>
     <span class="doccomment">/// backend specific implementation detail. You should not rely on those</span>
     <span class="doccomment">/// values if you not own the corresponding backend</span>
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="ident">::MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident"><span class="self">Self</span>::MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DB</span><span class="op">&gt;</span> <span class="ident">QueryMetadata</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DB</span>
@@ -1021,7 +1020,7 @@
     <span class="ident">DB</span>: <span class="ident">Backend</span> <span class="op">+</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">T</span>: <span class="ident">SingleValue</span>,
 {
-    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="ident">::MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">row_metadata</span>(<span class="ident">lookup</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident"><span class="self">Self</span>::MetadataLookup</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::TypeMetadata</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
         <span class="ident">out</span>.<span class="ident">push</span>(<span class="prelude-val">Some</span>(<span class="op">&lt;</span><span class="ident">DB</span> <span class="kw">as</span> <span class="ident">HasSqlType</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::metadata</span>(<span class="ident">lookup</span>)))
     }
 }
@@ -1057,7 +1056,7 @@
     <span class="doccomment">/// Perform the conversion</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
     <span class="comment">// That&#39;s public API we cannot change it to appease clippy</span>
-    <span class="kw">fn</span> <span class="ident">as_expression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Expression</span>;
+    <span class="kw">fn</span> <span class="ident">as_expression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Expression</span>;
 }
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
@@ -1265,7 +1264,7 @@
     <span class="kw">type</span> <span class="ident">SelectExpression</span>: <span class="ident">Expression</span>;
 
     <span class="doccomment">/// Construct an instance of the expression</span>
-    <span class="kw">fn</span> <span class="ident">construct_selection</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::SelectExpression</span>;
+    <span class="kw">fn</span> <span class="ident">construct_selection</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::SelectExpression</span>;
 }
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
@@ -1283,7 +1282,7 @@
 
     <span class="doccomment">/// An alias for `as_select` that can be used with returning clauses</span>
     <span class="kw">fn</span> <span class="ident">as_returning</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">select_by::SelectBy</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">DB</span><span class="op">&gt;</span> {
-        <span class="self">Self</span><span class="ident">::as_select</span>()
+        <span class="ident"><span class="self">Self</span>::as_select</span>()
     }
 }
 
@@ -1377,7 +1376,7 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_debug_implementations</span>, <span class="ident">missing_copy_implementations</span>)]</span>
 <span class="doccomment">/// Possible values for `ValidGrouping::IsAggregate`</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">is_aggregate</span> {
-    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::MixedAggregates</span>;
+    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::MixedAggregates</span>;
 
     <span class="doccomment">/// Yes, this expression is aggregate for the given group by clause.</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Yes</span>;
@@ -1469,7 +1468,7 @@
 {
 }
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder</span>::{<span class="ident">QueryFragment</span>, <span class="ident">QueryId</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::query_builder</span>::{<span class="ident">QueryFragment</span>, <span class="ident">QueryId</span>};
 
 <span class="doccomment">/// Helper trait used when boxing expressions.</span>
 <span class="doccomment">///</span>
@@ -1695,9 +1694,9 @@
     <span class="comment">// That&#39;s public API, we cannot change</span>
     <span class="comment">// that to appease clippy</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">as_expression_list</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Expression</span>;
+    <span class="kw">fn</span> <span class="ident">as_expression_list</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Expression</span>;
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
 </body></html>

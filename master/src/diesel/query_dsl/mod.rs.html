@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;query_dsl&#x2F;mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;query_dsl&#x2F;mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1631,8 +1631,7 @@
 <span id="1631">1631</span>
 <span id="1632">1632</span>
 <span id="1633">1633</span>
-</pre><pre class="rust">
-<span class="doccomment">//! Traits that construct SELECT statements</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Traits that construct SELECT statements</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Traits in this module have methods that generally map to the keyword for the corresponding clause in SQL,</span>
 <span class="doccomment">//! unless it conflicts with a Rust keyword (such as `WHERE`/`where`).</span>
@@ -1645,14 +1644,14 @@
 <span class="doccomment">//! [expression_methods]: super::expression_methods</span>
 <span class="doccomment">//! [dsl]: super::dsl</span>
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend::Backend</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::connection::Connection</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::count::CountStar</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::Expression</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::helper_types</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder::locking_clause</span> <span class="kw">as</span> <span class="ident">lock</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source</span>::{<span class="ident">joins</span>, <span class="ident">Table</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::result::QueryResult</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::backend::Backend</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::connection::Connection</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::expression::count::CountStar</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::expression::Expression</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::helper_types</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::query_builder::locking_clause</span> <span class="kw">as</span> <span class="ident">lock</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::query_source</span>::{<span class="ident">joins</span>, <span class="ident">Table</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::result::QueryResult</span>;
 
 <span class="kw">mod</span> <span class="ident">belonging_to_dsl</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
@@ -1679,14 +1678,14 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">select_dsl</span>;
 <span class="kw">mod</span> <span class="ident">single_value_dsl</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::belonging_to_dsl::BelongingToDsl</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::combine_dsl::CombineDsl</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::join_dsl</span>::{<span class="ident">InternalJoinDsl</span>, <span class="ident">JoinOnDsl</span>, <span class="ident">JoinWithImplicitOnClause</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::belonging_to_dsl::BelongingToDsl</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::combine_dsl::CombineDsl</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::join_dsl</span>::{<span class="ident">InternalJoinDsl</span>, <span class="ident">JoinOnDsl</span>, <span class="ident">JoinWithImplicitOnClause</span>};
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::load_dsl::CompatibleType</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::load_dsl::CompatibleType</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::load_dsl::LoadQuery</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::save_changes_dsl</span>::{<span class="ident">SaveChangesDsl</span>, <span class="ident">UpdateAndFetchResults</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::load_dsl::LoadQuery</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::save_changes_dsl</span>::{<span class="ident">SaveChangesDsl</span>, <span class="ident">UpdateAndFetchResults</span>};
 
 <span class="doccomment">/// The traits used by `QueryDsl`.</span>
 <span class="doccomment">///</span>
@@ -1695,20 +1694,20 @@
 <span class="doccomment">/// However, generic code may need to include a where clause that references</span>
 <span class="doccomment">/// these traits.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">methods</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::boxed_dsl::BoxedDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::distinct_dsl</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::boxed_dsl::BoxedDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::distinct_dsl</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::filter_dsl</span>::<span class="kw-2">*</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::group_by_dsl::GroupByDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::having_dsl::HavingDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::limit_dsl::LimitDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::load_dsl</span>::{<span class="ident">ExecuteDsl</span>, <span class="ident">LoadQuery</span>};
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::locking_dsl</span>::{<span class="ident">LockingDsl</span>, <span class="ident">ModifyLockDsl</span>};
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::nullable_select_dsl::SelectNullableDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::offset_dsl::OffsetDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::order_dsl</span>::{<span class="ident">OrderDsl</span>, <span class="ident">ThenOrderDsl</span>};
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::select_dsl::SelectDsl</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">super</span><span class="ident">::single_value_dsl::SingleValueDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::filter_dsl</span>::<span class="kw-2">*</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::group_by_dsl::GroupByDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::having_dsl::HavingDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::limit_dsl::LimitDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::load_dsl</span>::{<span class="ident">ExecuteDsl</span>, <span class="ident">LoadQuery</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::locking_dsl</span>::{<span class="ident">LockingDsl</span>, <span class="ident">ModifyLockDsl</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::nullable_select_dsl::SelectNullableDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::offset_dsl::OffsetDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::order_dsl</span>::{<span class="ident">OrderDsl</span>, <span class="ident">ThenOrderDsl</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::select_dsl::SelectDsl</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::single_value_dsl::SingleValueDsl</span>;
 }
 
 <span class="doccomment">/// Methods used to construct select statements.</span>
@@ -1950,7 +1949,7 @@
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">methods::SelectDsl</span><span class="op">&lt;</span><span class="ident">CountStar</span><span class="op">&gt;</span>,
     {
-        <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dsl::count_star</span>;
+        <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::dsl::count_star</span>;
 
         <span class="ident">QueryDsl::select</span>(<span class="self">self</span>, <span class="ident">count_star</span>())
     }
@@ -3199,7 +3198,7 @@
     {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">internal_load</span>(<span class="ident">conn</span>)<span class="question-mark">?</span>.<span class="ident">next</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::result::Error::NotFound</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident"><span class="kw">crate</span>::result::Error::NotFound</span>),
         }
     }
 
@@ -3265,7 +3264,7 @@
 <span class="comment">// ExecuteDsl is not satisfied` instead of a specific error telling them what</span>
 <span class="comment">// part of their query is wrong.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Conn</span><span class="op">&gt;</span> <span class="ident">RunQueryDsl</span><span class="op">&lt;</span><span class="ident">Conn</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Table</span> {}
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="diesel" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
 </body></html>

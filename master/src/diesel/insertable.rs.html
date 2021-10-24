@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;insertable.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>insertable.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `diesel&#x2F;src&#x2F;insertable.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>insertable.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../diesel/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -389,18 +389,17 @@
 <span id="389">389</span>
 <span id="390">390</span>
 <span id="391">391</span>
-</pre><pre class="rust">
-<span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::backend</span>::{<span class="ident">sql_dialect</span>, <span class="ident">Backend</span>, <span class="ident">SqlDialect</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression::grouped::Grouped</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::expression</span>::{<span class="ident">AppearsOnTable</span>, <span class="ident">Expression</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_builder</span>::{
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::backend</span>::{<span class="ident">sql_dialect</span>, <span class="ident">Backend</span>, <span class="ident">SqlDialect</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::expression::grouped::Grouped</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::expression</span>::{<span class="ident">AppearsOnTable</span>, <span class="ident">Expression</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::query_builder</span>::{
     <span class="ident">AstPass</span>, <span class="ident">BatchInsert</span>, <span class="ident">InsertStatement</span>, <span class="ident">NoFromClause</span>, <span class="ident">QueryFragment</span>, <span class="ident">QueryId</span>,
     <span class="ident">UndecoratedInsertRecord</span>, <span class="ident">ValuesClause</span>,
 };
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::query_source</span>::{<span class="ident">Column</span>, <span class="ident">Table</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::result::QueryResult</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::query_source</span>::{<span class="ident">Column</span>, <span class="ident">Table</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::result::QueryResult</span>;
 
 <span class="doccomment">/// Represents that a structure can be used to insert a new row into the</span>
 <span class="doccomment">/// database. This is automatically implemented for `&amp;[T]` and `&amp;Vec&lt;T&gt;` for</span>
@@ -420,7 +419,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Implementations of this trait typically call `.values`</span>
     <span class="doccomment">/// on other `Insertable` types.</span>
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span>;
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span>;
 
     <span class="doccomment">/// Insert `self` into a given table.</span>
     <span class="doccomment">///</span>
@@ -458,11 +457,11 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">insert_into</span>(<span class="self">self</span>, <span class="ident">table</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">InsertStatement</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="self">Self</span><span class="ident">::Values</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">insert_into</span>(<span class="self">self</span>, <span class="ident">table</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">InsertStatement</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident"><span class="self">Self</span>::Values</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
-        <span class="kw">crate</span><span class="ident">::insert_into</span>(<span class="ident">table</span>).<span class="ident">values</span>(<span class="self">self</span>)
+        <span class="ident"><span class="kw">crate</span>::insert_into</span>(<span class="ident">table</span>).<span class="ident">values</span>(<span class="self">self</span>)
     }
 }
 
@@ -588,7 +587,7 @@
 {
     <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident">DB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="ident">out</span>.<span class="ident">unsafe_to_cache_prepared</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Expression</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident"><span class="self">Self</span>::Expression</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">inner</span>.<span class="ident">walk_ast</span>(<span class="ident">out</span>.<span class="ident">reborrow</span>())<span class="question-mark">?</span>;
         } <span class="kw">else</span> {
             <span class="ident">out</span>.<span class="ident">push_sql</span>(<span class="string">&quot;DEFAULT&quot;</span>);
@@ -608,15 +607,15 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> <span class="ident">InsertValues</span><span class="op">&lt;</span><span class="ident">Col::Table</span>, <span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span> <span class="ident">InsertValues</span><span class="op">&lt;</span><span class="ident">Col::Table</span>, <span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span><span class="op">&gt;</span>
     <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">Col</span>: <span class="ident">Column</span>,
     <span class="ident">Expr</span>: <span class="ident">Expression</span><span class="op">&lt;</span><span class="ident">SqlType</span> <span class="op">=</span> <span class="ident">Col::SqlType</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AppearsOnTable</span><span class="op">&lt;</span><span class="ident">NoFromClause</span><span class="op">&gt;</span>,
-    <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>,
+    <span class="self">Self</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">column_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Expression</span>(..) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+    <span class="kw">fn</span> <span class="ident">column_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident"><span class="self">Self</span>::Expression</span>(..) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">out</span>.<span class="ident">push_identifier</span>(<span class="ident">Col::NAME</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
@@ -626,14 +625,14 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;sqlite&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span>
     <span class="ident">QueryFragment</span><span class="op">&lt;</span>
-        <span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span>,
-        <span class="kw">crate</span><span class="ident">::backend::sql_dialect::default_keyword_for_insert::DoesNotSupportDefaultKeyword</span>,
+        <span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span>,
+        <span class="ident"><span class="kw">crate</span>::backend::sql_dialect::default_keyword_for_insert::DoesNotSupportDefaultKeyword</span>,
     <span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">Expr</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>,
+    <span class="ident">Expr</span>: <span class="ident">QueryFragment</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::sqlite::Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="self">Self</span><span class="ident">::Expression</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+    <span class="kw">fn</span> <span class="ident">walk_ast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">AstPass</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sqlite::Sqlite</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident"><span class="self">Self</span>::Expression</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">inner</span>.<span class="ident">walk_ast</span>(<span class="ident">out</span>.<span class="ident">reborrow</span>())<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
@@ -646,7 +645,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>], <span class="ident">Tab</span>, (), <span class="bool-val">false</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">BatchInsert::new</span>(<span class="self">self</span>)
     }
 }
@@ -657,7 +656,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>] <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         (<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">values</span>()
     }
 }
@@ -668,7 +667,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Tab</span>, (), <span class="bool-val">false</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">BatchInsert::new</span>(<span class="self">self</span>)
     }
 }
@@ -679,7 +678,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span>[<span class="ident">T</span>; <span class="ident">N</span>], <span class="ident">Tab</span>, [<span class="ident">T::Values</span>; <span class="ident">N</span>], <span class="bool-val">true</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">BatchInsert::new</span>(<span class="self">self</span>)
     }
 }
@@ -692,7 +691,7 @@
     <span class="comment">// compiles down to the same query</span>
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>; <span class="ident">N</span>], <span class="ident">Tab</span>, [<span class="ident">T::Values</span>; <span class="ident">N</span>], <span class="bool-val">true</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">BatchInsert::new</span>(<span class="self">self</span>)
     }
 }
@@ -705,7 +704,7 @@
     <span class="comment">// compiles down to the same query</span>
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">BatchInsert</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">T</span>; <span class="ident">N</span>]<span class="op">&gt;</span>, <span class="ident">Tab</span>, [<span class="ident">T::Values</span>; <span class="ident">N</span>], <span class="bool-val">true</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">BatchInsert::new</span>(<span class="self">self</span>)
     }
 }
@@ -720,7 +719,7 @@
     );
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span><span class="ident">::private::InsertableOptionHelper</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident"><span class="self">self</span>::private::InsertableOptionHelper</span>;
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Tab</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -729,7 +728,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">InsertableOptionHelper</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">InsertableOptionHelper</span>(<span class="self">self</span>, <span class="ident">PhantomData</span>).<span class="ident">values</span>()
     }
 }
@@ -740,7 +739,7 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="ident">ValuesClause</span><span class="op">&lt;</span><span class="ident">DefaultableColumnInsertValue</span><span class="op">&lt;</span><span class="ident">ColumnInsertValue</span><span class="op">&lt;</span><span class="ident">Col</span>, <span class="ident">Expr</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Tab</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="ident">ValuesClause::new</span>(
             <span class="self">self</span>.<span class="number">0</span>
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">DefaultableColumnInsertValue::Expression</span>(<span class="ident">Insertable::values</span>(<span class="ident">v</span>).<span class="ident">values</span>))
@@ -755,33 +754,33 @@
 {
     <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">values</span>()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Grouped</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Grouped</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span>,
+    <span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span>,
 {
-    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
+    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">values</span>()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">L</span>, <span class="ident">R</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Grouped</span><span class="op">&lt;</span><span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">L</span>, <span class="ident">R</span>, <span class="ident">Tab</span><span class="op">&gt;</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Grouped</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span>,
+    <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>: <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span>,
 {
-    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">crate</span><span class="ident">::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
+    <span class="kw">type</span> <span class="ident">Values</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident"><span class="kw">crate</span>::expression::operators::Eq</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Insertable</span><span class="op">&lt;</span><span class="ident">Tab</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Values</span>;
 
-    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Values</span> {
+    <span class="kw">fn</span> <span class="ident">values</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Values</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">values</span>()
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="diesel" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
 </body></html>
