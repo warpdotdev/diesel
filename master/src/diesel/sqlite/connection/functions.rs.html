@@ -393,10 +393,10 @@
             <span class="kw">if</span> <span class="kw">let</span> <span class="ident">PrivateSqliteRow::Duplicated</span> { <span class="ident">column_names</span>, .. } <span class="op">=</span>
                 <span class="ident">DerefMut::deref_mut</span>(<span class="ident">RefCell::get_mut</span>(<span class="ident">args</span>))
             {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=</span> <span class="ident">Rc::get_mut</span>(<span class="ident">column_names</span>) {
+                <span class="kw">if</span> <span class="ident">Rc::strong_count</span>(<span class="ident">column_names</span>) <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
                     <span class="comment">// According the https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html#method.drop</span>
                     <span class="comment">// it&#39;s fine to just drop the values here</span>
-                    <span class="kw">unsafe</span> { <span class="ident">std::ptr::drop_in_place</span>(<span class="ident">inner</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>) }
+                    <span class="kw">unsafe</span> { <span class="ident">std::ptr::drop_in_place</span>(<span class="ident">column_names</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>) }
                 }
             }
         }

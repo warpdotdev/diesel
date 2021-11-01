@@ -143,6 +143,12 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
 </pre><pre class="rust"><code><span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libsqlite3_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
 <span class="kw">use</span> <span class="ident">std::cell::Ref</span>;
@@ -231,7 +237,13 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ffi::sqlite3_value_blob</span>(<span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ptr</span>());
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">ffi::sqlite3_value_bytes</span>(<span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ptr</span>());
-            <span class="ident">slice::from_raw_parts</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
+            <span class="kw">if</span> <span class="ident">len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="comment">// rusts std-lib has an debug_assert that prevents creating</span>
+                <span class="comment">// slices without elements from a pointer</span>
+                <span class="kw-2">&amp;</span>[]
+            } <span class="kw">else</span> {
+                <span class="ident">slice::from_raw_parts</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
+            }
         }
     }
 
