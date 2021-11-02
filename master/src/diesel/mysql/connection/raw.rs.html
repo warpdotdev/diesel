@@ -216,6 +216,7 @@
 <span id="216">216</span>
 <span id="217">217</span>
 <span id="218">218</span>
+<span id="219">219</span>
 </pre><pre class="rust"><code><span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mysqlclient_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 
 <span class="kw">use</span> <span class="ident">std::ffi::CStr</span>;
@@ -264,6 +265,7 @@
         <span class="kw">let</span> <span class="ident">database</span> <span class="op">=</span> <span class="ident">connection_options</span>.<span class="ident">database</span>();
         <span class="kw">let</span> <span class="ident">port</span> <span class="op">=</span> <span class="ident">connection_options</span>.<span class="ident">port</span>();
         <span class="kw">let</span> <span class="ident">unix_socket</span> <span class="op">=</span> <span class="ident">connection_options</span>.<span class="ident">unix_socket</span>();
+        <span class="kw">let</span> <span class="ident">client_flags</span> <span class="op">=</span> <span class="ident">connection_options</span>.<span class="ident">client_flags</span>();
 
         <span class="kw">unsafe</span> {
             <span class="comment">// Make sure you don&#39;t use the fake one!</span>
@@ -281,7 +283,7 @@
                 <span class="ident">unix_socket</span>
                     .<span class="ident">map</span>(<span class="ident">CStr::as_ptr</span>)
                     .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ptr::null_mut</span>()),
-                <span class="number">0</span>,
+                <span class="ident">client_flags</span>.<span class="ident">bits</span>().<span class="ident">into</span>(),
             )
         };
 
