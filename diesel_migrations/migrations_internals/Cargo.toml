@@ -7,7 +7,7 @@ description = "Internal implementation of diesels migration mechanism"
 homepage = "http://diesel.rs"
 
 [dependencies]
-diesel = { version = "~1.4.0", default-features = false }
+diesel = { path = "../../diesel", default-features = false }
 barrel = { version = ">= 0.5.0", optional = true, features = ["diesel"] }
 
 [dev-dependencies]
