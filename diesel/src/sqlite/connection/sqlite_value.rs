@@ -66,26 +66,20 @@ impl<'a, 'b> SqliteValue<'a, 'b> {
         }
     }
 
-    pub(crate) fn parse_string<'c, R>(&'c self, f: impl FnOnce(&'c str) -> R) -> R {
+    pub(crate) fn read_text(&self) -> Result<&str, str::Utf8Error> {
         let s = unsafe {
             let ptr = ffi::sqlite3_value_text(self.value.as_ptr());
             let len = ffi::sqlite3_value_bytes(self.value.as_ptr());
             let bytes = slice::from_raw_parts(ptr as *const u8, len as usize);
-            // The string is guaranteed to be utf8 according to
-            // https://www.sqlite.org/c3ref/value_blob.html
-            str::from_utf8_unchecked(bytes)
+            str::from_utf8(bytes)
         };
-        f(s)
-    }
-
-    pub(crate) fn read_text(&self) -> &str {
-        self.parse_string(|s| s)
+        s
     }
 
     pub(crate) fn read_blob(&self) -> &[u8] {
         unsafe {
-            let ptr = ffi::sqlite3_value_blob(self.value.as_ptr());
             let len = ffi::sqlite3_value_bytes(self.value.as_ptr());
+            let ptr = ffi::sqlite3_value_blob(self.value.as_ptr());
             if len == 0 {
                 // rusts std-lib has an debug_assert that prevents creating
                 // slices without elements from a pointer
@@ -120,7 +114,8 @@ impl<'a, 'b> SqliteValue<'a, 'b> {
             _ => unreachable!(
                 "Sqlite's documentation state that this case ({}) is not reachable. \
                  If you ever see this error message please open an issue at \
-                 https://github.com/diesel-rs/diesel."
+                 https://github.com/diesel-rs/diesel.",
+                tpe
             ),
         }
     }

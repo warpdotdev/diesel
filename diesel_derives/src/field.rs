@@ -100,7 +100,7 @@ impl Field {
         }
     }
 
-    pub fn ty_for_deserialize(&self) -> Result<Cow<syn::Type>, Diagnostic> {
+    pub fn ty_for_deserialize(&self) -> Result<Cow<'_, syn::Type>, Diagnostic> {
         if let Some(meta) = self.flags.nested_item("deserialize_as")? {
             meta.ty_value().map(Cow::Owned)
         } else {
