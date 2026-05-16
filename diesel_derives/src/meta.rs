@@ -149,7 +149,7 @@ impl MetaItem {
         }
     }
 
-    pub fn nested(&self) -> Result<Nested, Diagnostic> {
+    pub fn nested(&self) -> Result<Nested<'_>, Diagnostic> {
         use syn::Meta::*;
 
         match self.meta {

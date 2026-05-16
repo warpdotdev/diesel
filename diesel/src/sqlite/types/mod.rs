@@ -16,7 +16,7 @@ use crate::sql_types;
 /// `FromSql`
 impl FromSql<sql_types::VarChar, Sqlite> for *const str {
     fn from_sql(value: SqliteValue<'_, '_>) -> deserialize::Result<Self> {
-        let text = value.read_text();
+        let text = value.read_text()?;
         Ok(text as *const _)
     }
 }

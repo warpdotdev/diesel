@@ -94,6 +94,7 @@
 #![cfg_attr(feature = "unstable", feature(trait_alias))]
 // Built-in Lints
 #![deny(warnings)]
+#![allow(ambiguous_glob_reexports)]
 #![warn(
     missing_debug_implementations,
     missing_copy_implementations,
